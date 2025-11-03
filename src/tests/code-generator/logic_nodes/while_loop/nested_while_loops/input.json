@@ -1,0 +1,213 @@
+{
+  "id": "wf_68ef545aed24819097a88144f663daaf0db0d140782a910b",
+  "object": "workflow",
+  "created_at": 1760515162,
+  "creator_user_id": "user-paPVpBSglKhRmNVhFPSQqO10",
+  "default_version": null,
+  "edges": [
+    {
+      "id": "xy-edge__node_7x0ios0snode_7x0ios0s-out-node_s4j4o3bcnode_s4j4o3bc-target",
+      "source_node_id": "node_7x0ios0s",
+      "source_port_id": "out",
+      "target_node_id": "node_f0yfh6aa",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_f0yfh6aanode_f0yfh6aa-block-outgoing-node_c08hr8lhnode_c08hr8lh-target",
+      "source_node_id": "node_f0yfh6aa",
+      "source_port_id": "out",
+      "target_node_id": "node_up8t1jen",
+      "target_port_id": "in"
+    }
+  ],
+  "highest_version": null,
+  "input_variable_json_schema": {
+    "type": "object",
+    "properties": {
+      "input_as_text": {
+        "type": "string"
+      }
+    },
+    "required": ["input_as_text"],
+    "additionalProperties": false
+  },
+  "is_default": false,
+  "is_moderation_flagged": false,
+  "label": "TDD",
+  "moderation_flagged_categories": null,
+  "moderation_violations": null,
+  "name": "TDD",
+  "nodes": [
+    {
+      "id": "node_7x0ios0s",
+      "label": "Start",
+      "node_type": "builtins.Start"
+    },
+    {
+      "id": "node_f0yfh6aa",
+      "config": {
+        "body": {
+          "edges": [],
+          "nodes": [
+            {
+              "id": "node_70zbsthe",
+              "config": {
+                "body": {
+                  "edges": [],
+                  "nodes": [
+                    {
+                      "id": "node_ibuhnwqb",
+                      "config": {
+                        "hidden_properties": null,
+                        "messages": [],
+                        "model": {
+                          "expression": "\"gpt-5\"",
+                          "format": "cel"
+                        },
+                        "reads_from_history": true,
+                        "reasoning": {
+                          "effort": "low",
+                          "summary": "auto"
+                        },
+                        "show_progress_to_user": true,
+                        "text": {
+                          "format": {
+                            "type": "text"
+                          },
+                          "verbosity": "medium"
+                        },
+                        "tools": [],
+                        "user_visible": true,
+                        "variable_mapping": [],
+                        "writes_to_history": true
+                      },
+                      "input_schema": {
+                        "name": "input",
+                        "strict": true,
+                        "schema": {
+                          "type": "object",
+                          "properties": {},
+                          "additionalProperties": false,
+                          "required": []
+                        },
+                        "additionalProperties": false
+                      },
+                      "label": "Agent",
+                      "node_type": "builtins.Agent"
+                    }
+                  ],
+                  "start_node_id": "node_ibuhnwqb"
+                },
+                "condition": {
+                  "expression": "workflow.input_as_text == \"\"",
+                  "format": "cel"
+                }
+              },
+              "label": "While",
+              "node_type": "builtins.While"
+            }
+          ],
+          "start_node_id": "node_70zbsthe"
+        },
+        "condition": {
+          "expression": "state.string_var_name ",
+          "format": "cel"
+        }
+      },
+      "label": "While",
+      "node_type": "builtins.While"
+    },
+    {
+      "id": "node_up8t1jen",
+      "config": {
+        "expr": {
+          "expression": "input",
+          "format": "cel"
+        }
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false,
+          "required": []
+        },
+        "additionalProperties": false
+      },
+      "label": "End",
+      "node_type": "builtins.End"
+    }
+  ],
+  "start_node_id": "node_7x0ios0s",
+  "state_variable_json_schema": {
+    "type": "object",
+    "properties": {
+      "string_var_name": {
+        "type": "string",
+        "default": "tom"
+      }
+    },
+    "required": ["string_var_name"],
+    "additionalProperties": false
+  },
+  "state_vars": [
+    {
+      "id": "string_var_name",
+      "default": "tom",
+      "name": "string_var_name"
+    }
+  ],
+  "ui_metadata": {
+    "positionsByNodeId": {
+      "node_7x0ios0s": {
+        "x": 320,
+        "y": 0
+      },
+      "node_f0yfh6aa": {
+        "x": 514,
+        "y": "-350.0833333333333"
+      },
+      "node_70zbsthe": {
+        "x": 128,
+        "y": 84
+      },
+      "node_ibuhnwqb": {
+        "x": 94,
+        "y": "74.08333333333331"
+      },
+      "node_up8t1jen": {
+        "x": "1117.5",
+        "y": -177
+      }
+    },
+    "uiNodes": [],
+    "dataByNodeId": {
+      "node_7x0ios0s": {},
+      "node_f0yfh6aa": {},
+      "node_70zbsthe": {},
+      "node_ibuhnwqb": {
+        "widgetTools": []
+      },
+      "node_up8t1jen": {
+        "workflowOutput": null
+      }
+    },
+    "dimensionsByNodeId": {
+      "node_f0yfh6aa": {
+        "width": 577,
+        "height": 400
+      },
+      "node_70zbsthe": {
+        "width": 277,
+        "height": 194
+      }
+    },
+    "draft": {}
+  },
+  "updated_at": 1760515183,
+  "version": "draft",
+  "version_stage": "draft",
+  "workflow_type": "chat"
+}

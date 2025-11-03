@@ -1,0 +1,386 @@
+{
+  "id": "wf_68ef545aed24819097a88144f663daaf0db0d140782a910b",
+  "object": "workflow",
+  "created_at": 1760515162,
+  "creator_user_id": "user-paPVpBSglKhRmNVhFPSQqO10",
+  "default_version": null,
+  "edges": [
+    {
+      "id": "xy-edge__node_7x0ios0snode_7x0ios0s-out-node_cp04azsanode_cp04azsa-target",
+      "source_node_id": "node_7x0ios0s",
+      "source_port_id": "out",
+      "target_node_id": "node_6cmy4w9g",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_6cmy4w9gnode_6cmy4w9g-fallback-node_i3v1v0b4node_i3v1v0b4-target",
+      "source_node_id": "node_6cmy4w9g",
+      "source_port_id": "fallback",
+      "target_node_id": "node_rm62kd5r",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_6cmy4w9gnode_6cmy4w9g-case-0-node_9osmvooonode_9osmvooo-target",
+      "source_node_id": "node_6cmy4w9g",
+      "source_port_id": "case-0",
+      "target_node_id": "node_oxi3jkmm",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_oxi3jkmmnode_oxi3jkmm-on_pass-node_6nxch1jknode_6nxch1jk-target",
+      "source_node_id": "node_oxi3jkmm",
+      "source_port_id": "on_pass",
+      "target_node_id": "node_6nxch1jk",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_oxi3jkmmnode_oxi3jkmm-on_error-node_ak18rmpcnode_ak18rmpc-target",
+      "source_node_id": "node_oxi3jkmm",
+      "source_port_id": "on_error",
+      "target_node_id": "node_j9qg0auk",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_oxi3jkmmnode_oxi3jkmm-on_fail-node_2krzvqignode_2krzvqig-target",
+      "source_node_id": "node_oxi3jkmm",
+      "source_port_id": "on_fail",
+      "target_node_id": "node_2krzvqig",
+      "target_port_id": "in"
+    }
+  ],
+  "highest_version": null,
+  "input_variable_json_schema": {
+    "type": "object",
+    "properties": {
+      "input_as_text": {
+        "type": "string"
+      }
+    },
+    "required": ["input_as_text"],
+    "additionalProperties": false
+  },
+  "is_default": false,
+  "is_moderation_flagged": false,
+  "label": "TDD",
+  "moderation_flagged_categories": null,
+  "moderation_violations": null,
+  "name": "TDD",
+  "nodes": [
+    {
+      "id": "node_7x0ios0s",
+      "label": "Start",
+      "node_type": "builtins.Start"
+    },
+    {
+      "id": "node_6cmy4w9g",
+      "config": {
+        "cases": [
+          {
+            "label": "case-0",
+            "output_port_id": "case-0",
+            "predicate": {
+              "expression": "state.string_var_name ",
+              "format": "cel"
+            }
+          }
+        ],
+        "fallback": {
+          "label": "fallback",
+          "output_port_id": "fallback"
+        }
+      },
+      "label": "If / else",
+      "node_type": "builtins.IfElse"
+    },
+    {
+      "id": "node_6nxch1jk",
+      "config": {
+        "expr": {
+          "expression": "{\"safe_text\": input.safe_text}",
+          "format": "cel"
+        }
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {
+            "safe_text": {
+              "type": "string"
+            }
+          },
+          "required": ["safe_text"],
+          "additionalProperties": false
+        },
+        "additionalProperties": false
+      },
+      "label": "End",
+      "node_type": "builtins.End"
+    },
+    {
+      "id": "node_rm62kd5r",
+      "config": {
+        "expr": {
+          "expression": "input",
+          "format": "cel"
+        }
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false,
+          "required": []
+        },
+        "additionalProperties": false
+      },
+      "label": "End",
+      "node_type": "builtins.End"
+    },
+    {
+      "id": "node_oxi3jkmm",
+      "config": {
+        "continue_on_error": true,
+        "expr": {
+          "expression": "workflow.input_as_text",
+          "format": "cel"
+        },
+        "guardrails": [
+          {
+            "type": "moderation",
+            "config": {
+              "categories": [
+                "sexual/minors",
+                "hate/threatening",
+                "harassment/threatening",
+                "self-harm/instructions",
+                "violence/graphic",
+                "illicit/violent"
+              ]
+            }
+          }
+        ]
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false,
+          "required": []
+        },
+        "additionalProperties": false
+      },
+      "label": "Guardrails",
+      "node_type": "builtins.Guardrails"
+    },
+    {
+      "id": "node_j9qg0auk",
+      "config": {
+        "expr": {
+          "expression": "{\"message\": input.message}",
+          "format": "cel"
+        }
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {
+            "message": {
+              "type": "string"
+            }
+          },
+          "required": ["message"],
+          "additionalProperties": false
+        },
+        "additionalProperties": false
+      },
+      "label": "End",
+      "node_type": "builtins.End"
+    },
+    {
+      "id": "node_2krzvqig",
+      "config": {
+        "expr": {
+          "expression": "{\"input_text\": input.input_text, \"guardrails\": {\"pii\": {\"failed\": input.guardrails.pii.failed, \"detected_counts\": input.guardrails.pii.detected_counts}, \"moderation\": {\"failed\": input.guardrails.moderation.failed, \"flagged_categories\": input.guardrails.moderation.flagged_categories}, \"jailbreak\": {\"failed\": input.guardrails.jailbreak.failed}, \"hallucination\": {\"failed\": input.guardrails.hallucination.failed, \"reasoning\": input.guardrails.hallucination.reasoning, \"hallucination_type\": input.guardrails.hallucination.hallucination_type, \"hallucinated_statements\": input.guardrails.hallucination.hallucinated_statements}}}",
+          "format": "cel"
+        }
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {
+            "input_text": {
+              "type": "string"
+            },
+            "guardrails": {
+              "type": "object",
+              "properties": {
+                "pii": {
+                  "type": "object",
+                  "properties": {
+                    "failed": {
+                      "type": "boolean"
+                    },
+                    "detected_counts": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                "moderation": {
+                  "type": "object",
+                  "properties": {
+                    "failed": {
+                      "type": "boolean"
+                    },
+                    "flagged_categories": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                "jailbreak": {
+                  "type": "object",
+                  "properties": {
+                    "failed": {
+                      "type": "boolean"
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                "hallucination": {
+                  "type": "object",
+                  "properties": {
+                    "failed": {
+                      "type": "boolean"
+                    },
+                    "reasoning": {
+                      "type": "string"
+                    },
+                    "hallucination_type": {
+                      "type": "string"
+                    },
+                    "hallucinated_statements": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "required": ["input_text", "guardrails"],
+          "additionalProperties": false
+        },
+        "additionalProperties": false
+      },
+      "label": "End",
+      "node_type": "builtins.End"
+    }
+  ],
+  "start_node_id": "node_7x0ios0s",
+  "state_variable_json_schema": {
+    "type": "object",
+    "properties": {
+      "string_var_name": {
+        "type": "string",
+        "default": "tom"
+      },
+      "num_var": {
+        "type": "number",
+        "default": 0
+      }
+    },
+    "required": ["string_var_name", "num_var"],
+    "additionalProperties": false
+  },
+  "state_vars": [
+    {
+      "id": "string_var_name",
+      "default": "tom",
+      "name": "string_var_name"
+    },
+    {
+      "id": "num_var",
+      "default": 0,
+      "name": "num_var"
+    }
+  ],
+  "ui_metadata": {
+    "positionsByNodeId": {
+      "node_7x0ios0s": {
+        "x": "187.15707126262603",
+        "y": 0
+      },
+      "node_6cmy4w9g": {
+        "x": "292.5926194693925",
+        "y": "-13.416666666666707"
+      },
+      "node_6nxch1jk": {
+        "x": 608,
+        "y": "-59.46875"
+      },
+      "node_rm62kd5r": {
+        "x": "466.97056818045775",
+        "y": "92.81966145833331"
+      },
+      "node_oxi3jkmm": {
+        "x": 464,
+        "y": "-67.18033854166669"
+      },
+      "node_j9qg0auk": {
+        "x": 608,
+        "y": "69.9375"
+      },
+      "node_2krzvqig": {
+        "x": 608,
+        "y": "5.53125"
+      }
+    },
+    "uiNodes": [],
+    "dataByNodeId": {
+      "node_7x0ios0s": {},
+      "node_6cmy4w9g": {
+        "caseNames": [""]
+      },
+      "node_6nxch1jk": {
+        "workflowOutput": null
+      },
+      "node_rm62kd5r": {
+        "workflowOutput": null
+      },
+      "node_oxi3jkmm": {},
+      "node_j9qg0auk": {
+        "workflowOutput": null
+      },
+      "node_2krzvqig": {
+        "workflowOutput": null
+      }
+    },
+    "dimensionsByNodeId": {},
+    "draft": {}
+  },
+  "updated_at": 1760515183,
+  "version": "draft",
+  "version_stage": "draft",
+  "workflow_type": "chat"
+}

@@ -1,0 +1,504 @@
+{
+  "id": "wf_68ef545aed24819097a88144f663daaf0db0d140782a910b",
+  "object": "workflow",
+  "created_at": 1760515162,
+  "creator_user_id": "user-paPVpBSglKhRmNVhFPSQqO10",
+  "default_version": null,
+  "edges": [
+    {
+      "id": "xy-edge__node_7x0ios0snode_7x0ios0s-out-node_ff6nuf5vnode_ff6nuf5v-target",
+      "source_node_id": "node_7x0ios0s",
+      "source_port_id": "out",
+      "target_node_id": "node_31f1p55q",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_31f1p55qnode_31f1p55q-on_approve-node_1tib8bj2node_1tib8bj2-target",
+      "source_node_id": "node_31f1p55q",
+      "source_port_id": "on_approve",
+      "target_node_id": "node_st6u5l9a",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_st6u5l9anode_st6u5l9a-on_approve-node_v0vc67zrnode_v0vc67zr-target",
+      "source_node_id": "node_st6u5l9a",
+      "source_port_id": "on_approve",
+      "target_node_id": "node_h7vwzm4a",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_h7vwzm4anode_h7vwzm4a-on_approve-node_1jqnf1xvnode_1jqnf1xv-target",
+      "source_node_id": "node_h7vwzm4a",
+      "source_port_id": "on_approve",
+      "target_node_id": "node_6s514w5z",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_6s514w5znode_6s514w5z-on_approve-node_49o7q69cnode_49o7q69c-target",
+      "source_node_id": "node_6s514w5z",
+      "source_port_id": "on_approve",
+      "target_node_id": "node_nvunili7",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_31f1p55qnode_31f1p55q-on_reject-node_5gvu12iinode_5gvu12ii-target",
+      "source_node_id": "node_31f1p55q",
+      "source_port_id": "on_reject",
+      "target_node_id": "node_qudth25l",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_st6u5l9anode_st6u5l9a-on_reject-node_96h4d4mvnode_96h4d4mv-target",
+      "source_node_id": "node_st6u5l9a",
+      "source_port_id": "on_reject",
+      "target_node_id": "node_rgy7vd8g",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_h7vwzm4anode_h7vwzm4a-on_reject-node_lzoqk6icnode_lzoqk6ic-target",
+      "source_node_id": "node_h7vwzm4a",
+      "source_port_id": "on_reject",
+      "target_node_id": "node_6zn0nnof",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_nvunili7node_nvunili7-on_approve-node_1o4c6aednode_1o4c6aed-target",
+      "source_node_id": "node_nvunili7",
+      "source_port_id": "on_approve",
+      "target_node_id": "node_6cznokgw",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_6cznokgwnode_6cznokgw-on_result-node_0mh0fmm7node_0mh0fmm7-target",
+      "source_node_id": "node_6cznokgw",
+      "source_port_id": "on_result",
+      "target_node_id": "node_g7cgbbgu",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_6s514w5znode_6s514w5z-on_reject-node_vnnaqs1pnode_vnnaqs1p-target",
+      "source_node_id": "node_6s514w5z",
+      "source_port_id": "on_reject",
+      "target_node_id": "node_4qafqgz6",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_nvunili7node_nvunili7-on_reject-node_9z564gmsnode_9z564gms-target",
+      "source_node_id": "node_nvunili7",
+      "source_port_id": "on_reject",
+      "target_node_id": "node_dli15xci",
+      "target_port_id": "in"
+    }
+  ],
+  "highest_version": null,
+  "input_variable_json_schema": {
+    "type": "object",
+    "properties": {
+      "input_as_text": {
+        "type": "string"
+      }
+    },
+    "required": ["input_as_text"],
+    "additionalProperties": false
+  },
+  "is_default": false,
+  "is_moderation_flagged": false,
+  "label": "TDD",
+  "moderation_flagged_categories": null,
+  "moderation_violations": null,
+  "name": "TDD",
+  "nodes": [
+    {
+      "id": "node_7x0ios0s",
+      "label": "Start",
+      "node_type": "builtins.Start"
+    },
+    {
+      "id": "node_31f1p55q",
+      "config": {
+        "message": "",
+        "variable_mapping": []
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false,
+          "required": []
+        },
+        "additionalProperties": false
+      },
+      "label": "User approval",
+      "node_type": "builtins.BinaryApproval"
+    },
+    {
+      "id": "node_st6u5l9a",
+      "config": {
+        "message": "",
+        "variable_mapping": []
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false,
+          "required": []
+        },
+        "additionalProperties": false
+      },
+      "label": "User approval",
+      "node_type": "builtins.BinaryApproval"
+    },
+    {
+      "id": "node_h7vwzm4a",
+      "config": {
+        "message": "",
+        "variable_mapping": []
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false,
+          "required": []
+        },
+        "additionalProperties": false
+      },
+      "label": "User approval",
+      "node_type": "builtins.BinaryApproval"
+    },
+    {
+      "id": "node_6s514w5z",
+      "config": {
+        "message": "",
+        "variable_mapping": []
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false,
+          "required": []
+        },
+        "additionalProperties": false
+      },
+      "label": "User approval",
+      "node_type": "builtins.BinaryApproval"
+    },
+    {
+      "id": "node_nvunili7",
+      "config": {
+        "message": "",
+        "variable_mapping": []
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false,
+          "required": []
+        },
+        "additionalProperties": false
+      },
+      "label": "User approval",
+      "node_type": "builtins.BinaryApproval"
+    },
+    {
+      "id": "node_qudth25l",
+      "config": {
+        "expr": {
+          "expression": "input",
+          "format": "cel"
+        }
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false,
+          "required": []
+        },
+        "additionalProperties": false
+      },
+      "label": "End",
+      "node_type": "builtins.End"
+    },
+    {
+      "id": "node_rgy7vd8g",
+      "config": {
+        "expr": {
+          "expression": "input",
+          "format": "cel"
+        }
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false,
+          "required": []
+        },
+        "additionalProperties": false
+      },
+      "label": "End",
+      "node_type": "builtins.End"
+    },
+    {
+      "id": "node_6zn0nnof",
+      "config": {
+        "expr": {
+          "expression": "input",
+          "format": "cel"
+        }
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false,
+          "required": []
+        },
+        "additionalProperties": false
+      },
+      "label": "End",
+      "node_type": "builtins.End"
+    },
+    {
+      "id": "node_6cznokgw",
+      "config": {
+        "hidden_properties": null,
+        "messages": [],
+        "model": {
+          "expression": "\"gpt-5\"",
+          "format": "cel"
+        },
+        "reads_from_history": true,
+        "reasoning": {
+          "effort": "low",
+          "summary": "auto"
+        },
+        "text": {
+          "format": {
+            "type": "text"
+          },
+          "verbosity": "medium"
+        },
+        "tools": [],
+        "user_visible": true,
+        "variable_mapping": [],
+        "writes_to_history": true
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false,
+          "required": []
+        },
+        "additionalProperties": false
+      },
+      "label": "Agent",
+      "node_type": "builtins.Agent"
+    },
+    {
+      "id": "node_g7cgbbgu",
+      "config": {
+        "expr": {
+          "expression": "{\"output_text\": input.output_text}",
+          "format": "cel"
+        }
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "title": "ResponseSchema",
+          "type": "object",
+          "properties": {
+            "output_text": {
+              "type": "string"
+            }
+          },
+          "required": ["output_text"],
+          "additionalProperties": false
+        },
+        "additionalProperties": false
+      },
+      "label": "End",
+      "node_type": "builtins.End"
+    },
+    {
+      "id": "node_4qafqgz6",
+      "config": {
+        "expr": {
+          "expression": "input",
+          "format": "cel"
+        }
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false,
+          "required": []
+        },
+        "additionalProperties": false
+      },
+      "label": "End",
+      "node_type": "builtins.End"
+    },
+    {
+      "id": "node_dli15xci",
+      "config": {
+        "expr": {
+          "expression": "input",
+          "format": "cel"
+        }
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false,
+          "required": []
+        },
+        "additionalProperties": false
+      },
+      "label": "End",
+      "node_type": "builtins.End"
+    }
+  ],
+  "start_node_id": "node_7x0ios0s",
+  "state_variable_json_schema": {
+    "type": "object",
+    "properties": {
+      "string_var_name": {
+        "type": "string",
+        "default": "tom"
+      }
+    },
+    "required": ["string_var_name"],
+    "additionalProperties": false
+  },
+  "state_vars": [
+    {
+      "id": "string_var_name",
+      "default": "tom",
+      "name": "string_var_name"
+    }
+  ],
+  "ui_metadata": {
+    "positionsByNodeId": {
+      "node_7x0ios0s": {
+        "x": "334.6171875",
+        "y": -320
+      },
+      "node_31f1p55q": {
+        "x": "439.81640625",
+        "y": -352
+      },
+      "node_st6u5l9a": {
+        "x": "596.7890625",
+        "y": "-405.0025341098756"
+      },
+      "node_h7vwzm4a": {
+        "x": "749.7890625",
+        "y": "-451.44363007518047"
+      },
+      "node_6s514w5z": {
+        "x": "902.171875",
+        "y": -512
+      },
+      "node_nvunili7": {
+        "x": 1056,
+        "y": "-546.0284702178365"
+      },
+      "node_qudth25l": {
+        "x": "592.81640625",
+        "y": -272
+      },
+      "node_rgy7vd8g": {
+        "x": "773.7698681218154",
+        "y": "-321.44363007518047"
+      },
+      "node_6zn0nnof": {
+        "x": 912,
+        "y": -368
+      },
+      "node_6cznokgw": {
+        "x": 1216,
+        "y": -576
+      },
+      "node_g7cgbbgu": {
+        "x": 1328,
+        "y": -560
+      },
+      "node_4qafqgz6": {
+        "x": "1096.8495968493542",
+        "y": "-416.0284702178364"
+      },
+      "node_dli15xci": {
+        "x": 1216,
+        "y": -464
+      }
+    },
+    "uiNodes": [],
+    "dataByNodeId": {
+      "node_7x0ios0s": {},
+      "node_31f1p55q": {},
+      "node_st6u5l9a": {},
+      "node_h7vwzm4a": {},
+      "node_6s514w5z": {},
+      "node_nvunili7": {},
+      "node_qudth25l": {
+        "workflowOutput": null
+      },
+      "node_rgy7vd8g": {
+        "workflowOutput": null
+      },
+      "node_6zn0nnof": {
+        "workflowOutput": null
+      },
+      "node_6cznokgw": {
+        "widgetTools": []
+      },
+      "node_g7cgbbgu": {
+        "workflowOutput": null
+      },
+      "node_4qafqgz6": {
+        "workflowOutput": null
+      },
+      "node_dli15xci": {
+        "workflowOutput": null
+      }
+    },
+    "dimensionsByNodeId": {},
+    "draft": {}
+  },
+  "updated_at": 1760515183,
+  "version": "draft",
+  "version_stage": "draft",
+  "workflow_type": "chat"
+}

@@ -1,0 +1,100 @@
+{
+  "id": "wf_68edd79d0e848190a148ae695129bacb044312bf804f11ec",
+  "object": "workflow",
+  "created_at": 1760417693,
+  "creator_user_id": "user-bvP0pAEpXAIHpT9WGoyyRmqg",
+  "default_version": null,
+  "edges": [],
+  "highest_version": null,
+  "input_variable_json_schema": {
+    "type": "object",
+    "properties": {
+      "input_as_text": {
+        "type": "string"
+      }
+    },
+    "required": ["input_as_text"],
+    "additionalProperties": false
+  },
+  "is_default": false,
+  "is_moderation_flagged": false,
+  "label": "tdd",
+  "moderation_flagged_categories": null,
+  "moderation_violations": null,
+  "name": "tdd",
+  "nodes": [
+    {
+      "id": "node_ok4p8lqh",
+      "label": "Start",
+      "node_type": "builtins.Start"
+    }
+  ],
+  "start_node_id": "node_ok4p8lqh",
+  "state_variable_json_schema": {
+    "type": "object",
+    "properties": {
+      "string_state_variable": {
+        "type": "string",
+        "default": "default-string"
+      },
+      "number_state_variable": {
+        "type": "number"
+      },
+      "bool_state_variable": {
+        "type": "boolean"
+      },
+      "list_state_variable": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "default": ["tom", "jerry"]
+      }
+    },
+    "required": [
+      "string_state_variable",
+      "number_state_variable",
+      "bool_state_variable",
+      "list_state_variable"
+    ],
+    "additionalProperties": false
+  },
+  "state_vars": [
+    {
+      "id": "string_state_variable",
+      "default": "default-string",
+      "name": "string_state_variable"
+    },
+    {
+      "id": "number_state_variable",
+      "name": "number_state_variable"
+    },
+    {
+      "id": "bool_state_variable",
+      "name": "bool_state_variable"
+    },
+    {
+      "id": "list_state_variable",
+      "default": ["tom", "jerry"],
+      "name": "list_state_variable"
+    }
+  ],
+  "ui_metadata": {
+    "positionsByNodeId": {
+      "node_ok4p8lqh": {
+        "x": -155,
+        "y": 0
+      }
+    },
+    "uiNodes": [],
+    "dataByNodeId": {
+      "node_ok4p8lqh": {}
+    },
+    "dimensionsByNodeId": {},
+    "draft": {}
+  },
+  "updated_at": 1760417701,
+  "version": "draft",
+  "version_stage": "draft",
+  "workflow_type": "chat"
+}

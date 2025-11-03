@@ -1,0 +1,266 @@
+{
+  "id": "wf_68ef545aed24819097a88144f663daaf0db0d140782a910b",
+  "object": "workflow",
+  "created_at": 1760515162,
+  "creator_user_id": "user-paPVpBSglKhRmNVhFPSQqO10",
+  "default_version": null,
+  "edges": [
+    {
+      "id": "xy-edge__node_7x0ios0snode_7x0ios0s-out-node_rmvdqn08node_rmvdqn08-target",
+      "source_node_id": "node_7x0ios0s",
+      "source_port_id": "out",
+      "target_node_id": "node_65zxhz94",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_65zxhz94node_65zxhz94-on_pass-node_29egdm3vnode_29egdm3v-target",
+      "source_node_id": "node_65zxhz94",
+      "source_port_id": "on_pass",
+      "target_node_id": "node_xnwurdj6",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_xnwurdj6node_xnwurdj6-on_pass-node_2xhslpo3node_2xhslpo3-target",
+      "source_node_id": "node_xnwurdj6",
+      "source_port_id": "on_pass",
+      "target_node_id": "node_6lipt99d",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_6lipt99dnode_6lipt99d-on_pass-node_g9pdhkamnode_g9pdhkam-target",
+      "source_node_id": "node_6lipt99d",
+      "source_port_id": "on_pass",
+      "target_node_id": "node_hcqebgee",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_hcqebgeenode_hcqebgee-on_pass-node_dk2q3q45node_dk2q3q45-target",
+      "source_node_id": "node_hcqebgee",
+      "source_port_id": "on_pass",
+      "target_node_id": "node_8cgbd8ta",
+      "target_port_id": "in"
+    }
+  ],
+  "highest_version": null,
+  "input_variable_json_schema": {
+    "type": "object",
+    "properties": {
+      "input_as_text": {
+        "type": "string"
+      }
+    },
+    "required": ["input_as_text"],
+    "additionalProperties": false
+  },
+  "is_default": false,
+  "is_moderation_flagged": false,
+  "label": "TDD",
+  "moderation_flagged_categories": null,
+  "moderation_violations": null,
+  "name": "TDD",
+  "nodes": [
+    {
+      "id": "node_7x0ios0s",
+      "label": "Start",
+      "node_type": "builtins.Start"
+    },
+    {
+      "id": "node_65zxhz94",
+      "config": {
+        "continue_on_error": false,
+        "expr": {
+          "expression": "workflow.input_as_text",
+          "format": "cel"
+        },
+        "guardrails": []
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false,
+          "required": []
+        },
+        "additionalProperties": false
+      },
+      "label": "Guardrails",
+      "node_type": "builtins.Guardrails"
+    },
+    {
+      "id": "node_xnwurdj6",
+      "config": {
+        "continue_on_error": false,
+        "expr": {
+          "expression": "input.safe_text",
+          "format": "cel"
+        },
+        "guardrails": []
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {
+            "safe_text": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false,
+          "required": ["safe_text"]
+        },
+        "additionalProperties": false
+      },
+      "label": "Guardrails",
+      "node_type": "builtins.Guardrails"
+    },
+    {
+      "id": "node_6lipt99d",
+      "config": {
+        "continue_on_error": false,
+        "expr": {
+          "expression": "input.safe_text",
+          "format": "cel"
+        },
+        "guardrails": []
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {
+            "safe_text": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false,
+          "required": ["safe_text"]
+        },
+        "additionalProperties": false
+      },
+      "label": "Guardrails",
+      "node_type": "builtins.Guardrails"
+    },
+    {
+      "id": "node_hcqebgee",
+      "config": {
+        "continue_on_error": false,
+        "expr": {
+          "expression": "input.safe_text",
+          "format": "cel"
+        },
+        "guardrails": []
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {
+            "safe_text": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false,
+          "required": ["safe_text"]
+        },
+        "additionalProperties": false
+      },
+      "label": "Guardrails",
+      "node_type": "builtins.Guardrails"
+    },
+    {
+      "id": "node_8cgbd8ta",
+      "config": {
+        "continue_on_error": false,
+        "expr": {
+          "expression": "input.safe_text",
+          "format": "cel"
+        },
+        "guardrails": []
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {
+            "safe_text": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false,
+          "required": ["safe_text"]
+        },
+        "additionalProperties": false
+      },
+      "label": "Guardrails",
+      "node_type": "builtins.Guardrails"
+    }
+  ],
+  "start_node_id": "node_7x0ios0s",
+  "state_variable_json_schema": {
+    "type": "object",
+    "properties": {
+      "string_var_name": {
+        "type": "string",
+        "default": "tom"
+      }
+    },
+    "required": ["string_var_name"],
+    "additionalProperties": false
+  },
+  "state_vars": [
+    {
+      "id": "string_var_name",
+      "default": "tom",
+      "name": "string_var_name"
+    }
+  ],
+  "ui_metadata": {
+    "positionsByNodeId": {
+      "node_7x0ios0s": {
+        "x": 571,
+        "y": "-443.16708230026467"
+      },
+      "node_65zxhz94": {
+        "x": 560,
+        "y": "-378.91627536195733"
+      },
+      "node_xnwurdj6": {
+        "x": 560,
+        "y": "-313.91627536195733"
+      },
+      "node_6lipt99d": {
+        "x": 560,
+        "y": "-249.66546842364997"
+      },
+      "node_hcqebgee": {
+        "x": 560,
+        "y": "-185.6402376825953"
+      },
+      "node_8cgbd8ta": {
+        "x": 560,
+        "y": "-121.54254247160615"
+      }
+    },
+    "uiNodes": [],
+    "dataByNodeId": {
+      "node_7x0ios0s": {},
+      "node_65zxhz94": {},
+      "node_xnwurdj6": {},
+      "node_6lipt99d": {},
+      "node_hcqebgee": {},
+      "node_8cgbd8ta": {}
+    },
+    "dimensionsByNodeId": {},
+    "draft": {}
+  },
+  "updated_at": 1760515183,
+  "version": "draft",
+  "version_stage": "draft",
+  "workflow_type": "chat"
+}

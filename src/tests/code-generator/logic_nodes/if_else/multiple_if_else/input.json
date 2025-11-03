@@ -1,0 +1,377 @@
+{
+  "id": "wf_68ef545aed24819097a88144f663daaf0db0d140782a910b",
+  "object": "workflow",
+  "created_at": 1760515162,
+  "creator_user_id": "user-paPVpBSglKhRmNVhFPSQqO10",
+  "default_version": null,
+  "edges": [
+    {
+      "id": "xy-edge__node_7x0ios0snode_7x0ios0s-out-node_n7rvscstnode_n7rvscst-target",
+      "source_node_id": "node_7x0ios0s",
+      "source_port_id": "out",
+      "target_node_id": "node_do7c7iot",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_do7c7iotnode_do7c7iot-case-0-node_vwn2xhinnode_vwn2xhin-target",
+      "source_node_id": "node_do7c7iot",
+      "source_port_id": "case-0",
+      "target_node_id": "node_xlxowngs",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_xlxowngsnode_xlxowngs-case-0-node_h5ewtk4vnode_h5ewtk4v-target",
+      "source_node_id": "node_xlxowngs",
+      "source_port_id": "case-0",
+      "target_node_id": "node_fnp4f7x9",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_fnp4f7x9node_fnp4f7x9-case-0-node_9fardfb9node_9fardfb9-target",
+      "source_node_id": "node_fnp4f7x9",
+      "source_port_id": "case-0",
+      "target_node_id": "node_93qnlzve",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_93qnlzvenode_93qnlzve-on_result-node_kudj4oqgnode_kudj4oqg-target",
+      "source_node_id": "node_93qnlzve",
+      "source_port_id": "on_result",
+      "target_node_id": "node_1ufacywo",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_fnp4f7x9node_fnp4f7x9-fallback-node_1j7bw6d6node_1j7bw6d6-target",
+      "source_node_id": "node_fnp4f7x9",
+      "source_port_id": "fallback",
+      "target_node_id": "node_646tq043",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_xlxowngsnode_xlxowngs-fallback-node_2nf6vwuqnode_2nf6vwuq-target",
+      "source_node_id": "node_xlxowngs",
+      "source_port_id": "fallback",
+      "target_node_id": "node_ylthjuvh",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_do7c7iotnode_do7c7iot-fallback-node_6mnbmvafnode_6mnbmvaf-target",
+      "source_node_id": "node_do7c7iot",
+      "source_port_id": "fallback",
+      "target_node_id": "node_iplg39eg",
+      "target_port_id": "in"
+    }
+  ],
+  "highest_version": null,
+  "input_variable_json_schema": {
+    "type": "object",
+    "properties": {
+      "input_as_text": {
+        "type": "string"
+      }
+    },
+    "required": ["input_as_text"],
+    "additionalProperties": false
+  },
+  "is_default": false,
+  "is_moderation_flagged": false,
+  "label": "TDD",
+  "moderation_flagged_categories": null,
+  "moderation_violations": null,
+  "name": "TDD",
+  "nodes": [
+    {
+      "id": "node_7x0ios0s",
+      "label": "Start",
+      "node_type": "builtins.Start"
+    },
+    {
+      "id": "node_do7c7iot",
+      "config": {
+        "cases": [
+          {
+            "label": "case-0",
+            "output_port_id": "case-0",
+            "predicate": {
+              "expression": "state.string_var_name ",
+              "format": "cel"
+            }
+          }
+        ],
+        "fallback": {
+          "label": "fallback",
+          "output_port_id": "fallback"
+        }
+      },
+      "label": "If / else",
+      "node_type": "builtins.IfElse"
+    },
+    {
+      "id": "node_xlxowngs",
+      "config": {
+        "cases": [
+          {
+            "label": "case-0",
+            "output_port_id": "case-0",
+            "predicate": {
+              "expression": "state.string_var_name ",
+              "format": "cel"
+            }
+          }
+        ],
+        "fallback": {
+          "label": "fallback",
+          "output_port_id": "fallback"
+        }
+      },
+      "label": "If / else",
+      "node_type": "builtins.IfElse"
+    },
+    {
+      "id": "node_fnp4f7x9",
+      "config": {
+        "cases": [
+          {
+            "label": "case-0",
+            "output_port_id": "case-0",
+            "predicate": {
+              "expression": "state.string_var_name ",
+              "format": "cel"
+            }
+          }
+        ],
+        "fallback": {
+          "label": "fallback",
+          "output_port_id": "fallback"
+        }
+      },
+      "label": "If / else",
+      "node_type": "builtins.IfElse"
+    },
+    {
+      "id": "node_93qnlzve",
+      "config": {
+        "hidden_properties": null,
+        "messages": [],
+        "model": {
+          "expression": "\"gpt-5\"",
+          "format": "cel"
+        },
+        "reads_from_history": true,
+        "reasoning": {
+          "effort": "low",
+          "summary": "auto"
+        },
+        "text": {
+          "format": {
+            "type": "text"
+          },
+          "verbosity": "medium"
+        },
+        "tools": [],
+        "user_visible": true,
+        "variable_mapping": [],
+        "writes_to_history": true
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false,
+          "required": []
+        },
+        "additionalProperties": false
+      },
+      "label": "Agent",
+      "node_type": "builtins.Agent"
+    },
+    {
+      "id": "node_1ufacywo",
+      "config": {
+        "expr": {
+          "expression": "{\"output_text\": input.output_text}",
+          "format": "cel"
+        }
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "title": "ResponseSchema",
+          "type": "object",
+          "properties": {
+            "output_text": {
+              "type": "string"
+            }
+          },
+          "required": ["output_text"],
+          "additionalProperties": false
+        },
+        "additionalProperties": false
+      },
+      "label": "End",
+      "node_type": "builtins.End"
+    },
+    {
+      "id": "node_646tq043",
+      "config": {
+        "expr": {
+          "expression": "input",
+          "format": "cel"
+        }
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false,
+          "required": []
+        },
+        "additionalProperties": false
+      },
+      "label": "End",
+      "node_type": "builtins.End"
+    },
+    {
+      "id": "node_ylthjuvh",
+      "config": {
+        "expr": {
+          "expression": "input",
+          "format": "cel"
+        }
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false,
+          "required": []
+        },
+        "additionalProperties": false
+      },
+      "label": "End",
+      "node_type": "builtins.End"
+    },
+    {
+      "id": "node_iplg39eg",
+      "config": {
+        "expr": {
+          "expression": "input",
+          "format": "cel"
+        }
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false,
+          "required": []
+        },
+        "additionalProperties": false
+      },
+      "label": "End",
+      "node_type": "builtins.End"
+    }
+  ],
+  "start_node_id": "node_7x0ios0s",
+  "state_variable_json_schema": {
+    "type": "object",
+    "properties": {
+      "string_var_name": {
+        "type": "string",
+        "default": "tom"
+      }
+    },
+    "required": ["string_var_name"],
+    "additionalProperties": false
+  },
+  "state_vars": [
+    {
+      "id": "string_var_name",
+      "default": "tom",
+      "name": "string_var_name"
+    }
+  ],
+  "ui_metadata": {
+    "positionsByNodeId": {
+      "node_7x0ios0s": {
+        "x": 368,
+        "y": -320
+      },
+      "node_do7c7iot": {
+        "x": 528,
+        "y": -352
+      },
+      "node_xlxowngs": {
+        "x": "680.0027677684251",
+        "y": "-413.60737412528545"
+      },
+      "node_fnp4f7x9": {
+        "x": 864,
+        "y": -464
+      },
+      "node_93qnlzve": {
+        "x": 1008,
+        "y": -480
+      },
+      "node_1ufacywo": {
+        "x": 1136,
+        "y": -480
+      },
+      "node_646tq043": {
+        "x": 1008,
+        "y": -400
+      },
+      "node_ylthjuvh": {
+        "x": "912.0734221712974",
+        "y": "-321.55982281759066"
+      },
+      "node_iplg39eg": {
+        "x": "751.4067555046307",
+        "y": "-283.60737412528545"
+      }
+    },
+    "uiNodes": [],
+    "dataByNodeId": {
+      "node_7x0ios0s": {},
+      "node_do7c7iot": {
+        "caseNames": ["123"]
+      },
+      "node_xlxowngs": {
+        "caseNames": ["234"]
+      },
+      "node_fnp4f7x9": {
+        "caseNames": ["3243234234234"]
+      },
+      "node_93qnlzve": {
+        "widgetTools": []
+      },
+      "node_1ufacywo": {
+        "workflowOutput": null
+      },
+      "node_646tq043": {
+        "workflowOutput": null
+      },
+      "node_ylthjuvh": {
+        "workflowOutput": null
+      },
+      "node_iplg39eg": {
+        "workflowOutput": null
+      }
+    },
+    "dimensionsByNodeId": {},
+    "draft": {}
+  },
+  "updated_at": 1760515183,
+  "version": "draft",
+  "version_stage": "draft",
+  "workflow_type": "chat"
+}

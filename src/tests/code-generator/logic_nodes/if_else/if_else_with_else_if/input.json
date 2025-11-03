@@ -1,0 +1,96 @@
+{
+  "id": "wf_68ef545aed24819097a88144f663daaf0db0d140782a910b",
+  "object": "workflow",
+  "created_at": 1760515162,
+  "creator_user_id": "user-paPVpBSglKhRmNVhFPSQqO10",
+  "default_version": null,
+  "edges": [
+    {
+      "id": "xy-edge__node_7x0ios0snode_7x0ios0s-out-node_3aii240xnode_3aii240x-target",
+      "source_node_id": "node_7x0ios0s",
+      "source_port_id": "out",
+      "target_node_id": "node_3aii240x",
+      "target_port_id": "in"
+    }
+  ],
+  "highest_version": null,
+  "input_variable_json_schema": {
+    "type": "object",
+    "properties": {
+      "input_as_text": {
+        "type": "string"
+      }
+    },
+    "required": ["input_as_text"],
+    "additionalProperties": false
+  },
+  "is_default": false,
+  "is_moderation_flagged": false,
+  "label": "TDD",
+  "moderation_flagged_categories": null,
+  "moderation_violations": null,
+  "name": "TDD",
+  "nodes": [
+    {
+      "id": "node_7x0ios0s",
+      "label": "Start",
+      "node_type": "builtins.Start"
+    },
+    {
+      "id": "node_3aii240x",
+      "config": {
+        "cases": [
+          {
+            "label": "case-0",
+            "output_port_id": "case-0",
+            "predicate": {
+              "expression": "workflow.input_as_text == \"\"",
+              "format": "cel"
+            }
+          },
+          {
+            "label": "case-1",
+            "output_port_id": "case-1",
+            "predicate": {
+              "expression": "workflow.input_as_text == 70",
+              "format": "cel"
+            }
+          }
+        ],
+        "fallback": {
+          "label": "fallback",
+          "output_port_id": "fallback"
+        }
+      },
+      "label": "If / else",
+      "node_type": "builtins.IfElse"
+    }
+  ],
+  "start_node_id": "node_7x0ios0s",
+  "state_vars": [],
+  "ui_metadata": {
+    "positionsByNodeId": {
+      "node_7x0ios0s": {
+        "x": -150,
+        "y": 0
+      },
+      "node_3aii240x": {
+        "x": 48,
+        "y": -32
+      }
+    },
+    "uiNodes": [],
+    "dataByNodeId": {
+      "node_7x0ios0s": {},
+      "node_3aii240x": {
+        "caseNames": ["good case", "normal case"]
+      }
+    },
+    "dimensionsByNodeId": {},
+    "draft": {}
+  },
+  "updated_at": 1760515183,
+  "version": "draft",
+  "version_stage": "draft",
+  "workflow_type": "chat"
+}

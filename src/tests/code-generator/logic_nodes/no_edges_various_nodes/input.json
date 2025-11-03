@@ -1,0 +1,376 @@
+{
+  "id": "wf_68ef545aed24819097a88144f663daaf0db0d140782a910b",
+  "object": "workflow",
+  "created_at": 1760515162,
+  "creator_user_id": "user-paPVpBSglKhRmNVhFPSQqO10",
+  "default_version": null,
+  "edges": [],
+  "highest_version": null,
+  "input_variable_json_schema": {
+    "type": "object",
+    "properties": {
+      "input_as_text": {
+        "type": "string"
+      }
+    },
+    "required": ["input_as_text"],
+    "additionalProperties": false
+  },
+  "is_default": false,
+  "is_moderation_flagged": false,
+  "label": "TDD",
+  "moderation_flagged_categories": null,
+  "moderation_violations": null,
+  "name": "TDD",
+  "nodes": [
+    {
+      "id": "node_7x0ios0s",
+      "label": "Start",
+      "node_type": "builtins.Start"
+    },
+    {
+      "id": "node_onyjg0if",
+      "config": {
+        "hidden_properties": null,
+        "messages": [],
+        "model": {
+          "expression": "\"gpt-5\"",
+          "format": "cel"
+        },
+        "reads_from_history": true,
+        "reasoning": {
+          "effort": "low",
+          "summary": "auto"
+        },
+        "text": {
+          "format": {
+            "type": "text"
+          },
+          "verbosity": "medium"
+        },
+        "tools": [],
+        "user_visible": true,
+        "variable_mapping": [],
+        "writes_to_history": true
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false,
+          "required": []
+        },
+        "additionalProperties": false
+      },
+      "label": "Agent",
+      "node_type": "builtins.Agent"
+    },
+    {
+      "id": "node_gxsy4cmz",
+      "config": {
+        "expr": {
+          "expression": "input",
+          "format": "cel"
+        }
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {},
+          "required": [],
+          "additionalProperties": false
+        },
+        "additionalProperties": false
+      },
+      "label": "End",
+      "node_type": "builtins.End"
+    },
+    {
+      "id": "node_z3udvzns",
+      "config": {
+        "max_results": 10,
+        "query": {
+          "expression": "",
+          "format": "cel"
+        },
+        "vector_store_id": ""
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false,
+          "required": []
+        },
+        "additionalProperties": false
+      },
+      "label": "File Search",
+      "node_type": "builtins.tool.FileSearch"
+    },
+    {
+      "id": "node_3p56e6rc",
+      "config": {
+        "continue_on_error": false,
+        "expr": {
+          "expression": "input",
+          "format": "cel"
+        },
+        "guardrails": []
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false,
+          "required": []
+        },
+        "additionalProperties": false
+      },
+      "label": "Guardrails",
+      "node_type": "builtins.Guardrails"
+    },
+    {
+      "id": "node_76kf2gom",
+      "config": {
+        "allowed_tools": [],
+        "require_approval": true
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false,
+          "required": []
+        },
+        "additionalProperties": false
+      },
+      "label": "MCP",
+      "node_type": "builtins.tool.MCP"
+    },
+    {
+      "id": "node_4b66ed3u",
+      "config": {
+        "cases": [
+          {
+            "label": "case-0",
+            "output_port_id": "case-0",
+            "predicate": {
+              "expression": "",
+              "format": "cel"
+            }
+          }
+        ],
+        "fallback": {
+          "label": "fallback",
+          "output_port_id": "fallback"
+        }
+      },
+      "label": "If / else",
+      "node_type": "builtins.IfElse"
+    },
+    {
+      "id": "node_f2zp4c4s",
+      "config": {
+        "body": {
+          "edges": [],
+          "nodes": [],
+          "start_node_id": ""
+        },
+        "condition": {
+          "expression": "",
+          "format": "cel"
+        }
+      },
+      "label": "While",
+      "node_type": "builtins.While"
+    },
+    {
+      "id": "node_k6xbdsw8",
+      "config": {
+        "message": "",
+        "variable_mapping": []
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false,
+          "required": []
+        },
+        "additionalProperties": false
+      },
+      "label": "User approval",
+      "node_type": "builtins.BinaryApproval"
+    },
+    {
+      "id": "node_ppjcmghj",
+      "config": {
+        "expr": {
+          "expression": "{\"result\": }",
+          "format": "cel"
+        }
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false,
+          "required": []
+        },
+        "additionalProperties": false
+      },
+      "label": "Transform",
+      "node_type": "builtins.Transform"
+    },
+    {
+      "id": "node_s5hn8zyn",
+      "config": {
+        "assignments": []
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false,
+          "required": []
+        },
+        "additionalProperties": false
+      },
+      "label": "Set state",
+      "node_type": "builtins.SetState"
+    }
+  ],
+  "start_node_id": "node_7x0ios0s",
+  "state_variable_json_schema": {
+    "type": "object",
+    "properties": {
+      "string_var_name": {
+        "type": "string",
+        "default": "tom"
+      }
+    },
+    "required": ["string_var_name"],
+    "additionalProperties": false
+  },
+  "state_vars": [
+    {
+      "id": "string_var_name",
+      "default": "tom",
+      "name": "string_var_name"
+    }
+  ],
+  "ui_metadata": {
+    "positionsByNodeId": {
+      "node_7x0ios0s": {
+        "x": "317.07701287708534",
+        "y": -320
+      },
+      "node_onyjg0if": {
+        "x": "564.51760269005",
+        "y": "-550.843147090515"
+      },
+      "node_xzgwtwpm": {
+        "x": "564.51760269005",
+        "y": "3.23237365621658"
+      },
+      "node_gxsy4cmz": {
+        "x": "564.51760269005",
+        "y": "-57.777871566233614"
+      },
+      "node_z3udvzns": {
+        "x": "564.51760269005",
+        "y": "-488.3442974623383"
+      },
+      "node_3p56e6rc": {
+        "x": "564.51760269005",
+        "y": "-117.81061716841184"
+      },
+      "node_76kf2gom": {
+        "x": "564.51760269005",
+        "y": "-427.84435138235705"
+      },
+      "node_4b66ed3u": {
+        "x": "435.49416519005",
+        "y": "-292.2428583801316"
+      },
+      "node_f2zp4c4s": {
+        "x": "705.52932144005",
+        "y": "-328.2041133619259"
+      },
+      "node_k6xbdsw8": {
+        "x": "552.52932144005",
+        "y": "-242.5775112353938"
+      },
+      "node_ppjcmghj": {
+        "x": "564.51760269005",
+        "y": "-367.7109313088754"
+      },
+      "node_s5hn8zyn": {
+        "x": "564.51760269005",
+        "y": "-302.7109313088754"
+      }
+    },
+    "uiNodes": [
+      {
+        "id": "node_xzgwtwpm",
+        "type": "note",
+        "data": {
+          "name": null,
+          "userDefinedPassthroughVariables": [],
+          "text": "Sticky note"
+        }
+      }
+    ],
+    "dataByNodeId": {
+      "node_7x0ios0s": {},
+      "node_onyjg0if": {
+        "widgetTools": []
+      },
+      "node_gxsy4cmz": {
+        "workflowOutput": null
+      },
+      "node_z3udvzns": {},
+      "node_3p56e6rc": {},
+      "node_76kf2gom": {},
+      "node_4b66ed3u": {
+        "caseNames": [""]
+      },
+      "node_f2zp4c4s": {},
+      "node_k6xbdsw8": {},
+      "node_ppjcmghj": {
+        "objectSchema": null,
+        "expressions": [
+          {
+            "id": "expression_nnwofug3",
+            "key": "result",
+            "expression": ""
+          }
+        ],
+        "outputKind": "expressions"
+      },
+      "node_s5hn8zyn": {}
+    },
+    "dimensionsByNodeId": {},
+    "draft": {}
+  },
+  "updated_at": 1760515183,
+  "version": "draft",
+  "version_stage": "draft",
+  "workflow_type": "chat"
+}

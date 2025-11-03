@@ -1,0 +1,123 @@
+{
+  "id": "wf_68ef545aed24819097a88144f663daaf0db0d140782a910b",
+  "object": "workflow",
+  "created_at": 1760515162,
+  "creator_user_id": "user-paPVpBSglKhRmNVhFPSQqO10",
+  "default_version": null,
+  "edges": [
+    {
+      "id": "xy-edge__node_7x0ios0snode_7x0ios0s-out-node_khxw7eienode_khxw7eie-target",
+      "source_node_id": "node_7x0ios0s",
+      "source_port_id": "out",
+      "target_node_id": "node_9k85bx43",
+      "target_port_id": "in"
+    }
+  ],
+  "highest_version": null,
+  "input_variable_json_schema": {
+    "type": "object",
+    "properties": {
+      "input_as_text": {
+        "type": "string"
+      }
+    },
+    "required": ["input_as_text"],
+    "additionalProperties": false
+  },
+  "is_default": false,
+  "is_moderation_flagged": false,
+  "label": "TDD",
+  "moderation_flagged_categories": null,
+  "moderation_violations": null,
+  "name": "TDD",
+  "nodes": [
+    {
+      "id": "node_7x0ios0s",
+      "label": "Start",
+      "node_type": "builtins.Start"
+    },
+    {
+      "id": "node_9k85bx43",
+      "config": {
+        "assignments": [
+          {
+            "expression": {
+              "expression": "\"Hello, \" + workflow.input_as_text",
+              "format": "cel"
+            },
+            "name": "welcome"
+          },
+          {
+            "expression": {
+              "expression": "123",
+              "format": "cel"
+            },
+            "name": "age"
+          }
+        ]
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false,
+          "required": []
+        },
+        "additionalProperties": false
+      },
+      "label": "Set state",
+      "node_type": "builtins.SetState"
+    }
+  ],
+  "start_node_id": "node_7x0ios0s",
+  "state_variable_json_schema": {
+    "type": "object",
+    "properties": {
+      "welcome": {
+        "type": "string"
+      },
+      "age": {
+        "type": "number",
+        "default": 1
+      }
+    },
+    "required": ["welcome", "age"],
+    "additionalProperties": false
+  },
+  "state_vars": [
+    {
+      "id": "welcome",
+      "name": "welcome"
+    },
+    {
+      "id": "age",
+      "default": 1,
+      "name": "age"
+    }
+  ],
+  "ui_metadata": {
+    "positionsByNodeId": {
+      "node_7x0ios0s": {
+        "x": 32,
+        "y": 16
+      },
+      "node_9k85bx43": {
+        "x": 240,
+        "y": 48
+      }
+    },
+    "uiNodes": [],
+    "dataByNodeId": {
+      "node_7x0ios0s": {},
+      "node_9k85bx43": {}
+    },
+    "dimensionsByNodeId": {},
+    "draft": {}
+  },
+  "updated_at": 1760515183,
+  "version": "draft",
+  "version_stage": "draft",
+  "workflow_type": "chat"
+}

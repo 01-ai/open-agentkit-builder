@@ -1,0 +1,283 @@
+{
+  "id": "wf_68ef545aed24819097a88144f663daaf0db0d140782a910b",
+  "object": "workflow",
+  "created_at": 1760515162,
+  "creator_user_id": "user-paPVpBSglKhRmNVhFPSQqO10",
+  "default_version": null,
+  "edges": [
+    {
+      "id": "xy-edge__node_7x0ios0snode_7x0ios0s-out-node_qdp250jdnode_qdp250jd-target",
+      "source_node_id": "node_7x0ios0s",
+      "source_port_id": "out",
+      "target_node_id": "node_vmju1g00",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_vmju1g00node_vmju1g00-on_approve-node_doafp1mbnode_doafp1mb-target",
+      "source_node_id": "node_vmju1g00",
+      "source_port_id": "on_approve",
+      "target_node_id": "node_82g4hr2x",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_82g4hr2xnode_82g4hr2x-on_result-node_uecykjt1node_uecykjt1-target",
+      "source_node_id": "node_82g4hr2x",
+      "source_port_id": "on_result",
+      "target_node_id": "node_gl9p4hs1",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_gl9p4hs1node_gl9p4hs1-on_approve-node_zfdk6vmlnode_zfdk6vml-target",
+      "source_node_id": "node_gl9p4hs1",
+      "source_port_id": "on_approve",
+      "target_node_id": "node_usovvk42",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_usovvk42node_usovvk42-on_result-node_dccyuqgjnode_dccyuqgj-target",
+      "source_node_id": "node_usovvk42",
+      "source_port_id": "on_result",
+      "target_node_id": "node_0pi2xtfm",
+      "target_port_id": "in"
+    }
+  ],
+  "highest_version": null,
+  "input_variable_json_schema": {
+    "type": "object",
+    "properties": {
+      "input_as_text": {
+        "type": "string"
+      }
+    },
+    "required": ["input_as_text"],
+    "additionalProperties": false
+  },
+  "is_default": false,
+  "is_moderation_flagged": false,
+  "label": "TDD",
+  "moderation_flagged_categories": null,
+  "moderation_violations": null,
+  "name": "TDD",
+  "nodes": [
+    {
+      "id": "node_7x0ios0s",
+      "label": "Start",
+      "node_type": "builtins.Start"
+    },
+    {
+      "id": "node_vmju1g00",
+      "config": {
+        "message": "",
+        "variable_mapping": []
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false,
+          "required": []
+        },
+        "additionalProperties": false
+      },
+      "label": "User approval",
+      "node_type": "builtins.BinaryApproval"
+    },
+    {
+      "id": "node_82g4hr2x",
+      "config": {
+        "hidden_properties": null,
+        "messages": [],
+        "model": {
+          "expression": "\"gpt-5\"",
+          "format": "cel"
+        },
+        "reads_from_history": true,
+        "reasoning": {
+          "effort": "low",
+          "summary": "auto"
+        },
+        "show_progress_to_user": true,
+        "text": {
+          "format": {
+            "type": "text"
+          },
+          "verbosity": "medium"
+        },
+        "tools": [],
+        "user_visible": true,
+        "variable_mapping": [],
+        "writes_to_history": true
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false,
+          "required": []
+        },
+        "additionalProperties": false
+      },
+      "label": "Agent",
+      "node_type": "builtins.Agent"
+    },
+    {
+      "id": "node_gl9p4hs1",
+      "config": {
+        "message": "",
+        "variable_mapping": []
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false,
+          "required": []
+        },
+        "additionalProperties": false
+      },
+      "label": "User approval",
+      "node_type": "builtins.BinaryApproval"
+    },
+    {
+      "id": "node_usovvk42",
+      "config": {
+        "hidden_properties": null,
+        "messages": [],
+        "model": {
+          "expression": "\"gpt-5\"",
+          "format": "cel"
+        },
+        "reads_from_history": true,
+        "reasoning": {
+          "effort": "low",
+          "summary": "auto"
+        },
+        "show_progress_to_user": true,
+        "text": {
+          "format": {
+            "type": "text"
+          },
+          "verbosity": "medium"
+        },
+        "tools": [],
+        "user_visible": true,
+        "variable_mapping": [],
+        "writes_to_history": true
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false,
+          "required": []
+        },
+        "additionalProperties": false
+      },
+      "label": "Agent",
+      "node_type": "builtins.Agent"
+    },
+    {
+      "id": "node_0pi2xtfm",
+      "config": {
+        "expr": {
+          "expression": "{\"output_text\": input.output_text}",
+          "format": "cel"
+        }
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "title": "ResponseSchema",
+          "type": "object",
+          "properties": {
+            "output_text": {
+              "type": "string"
+            }
+          },
+          "required": ["output_text"],
+          "additionalProperties": false
+        },
+        "additionalProperties": false
+      },
+      "label": "End",
+      "node_type": "builtins.End"
+    }
+  ],
+  "start_node_id": "node_7x0ios0s",
+  "state_variable_json_schema": {
+    "type": "object",
+    "properties": {
+      "string_var_name": {
+        "type": "string",
+        "default": "tom"
+      }
+    },
+    "required": ["string_var_name"],
+    "additionalProperties": false
+  },
+  "state_vars": [
+    {
+      "id": "string_var_name",
+      "default": "tom",
+      "name": "string_var_name"
+    }
+  ],
+  "ui_metadata": {
+    "positionsByNodeId": {
+      "node_7x0ios0s": {
+        "x": 496,
+        "y": "-370.2734375"
+      },
+      "node_vmju1g00": {
+        "x": 464,
+        "y": "-305.93359375"
+      },
+      "node_82g4hr2x": {
+        "x": 480,
+        "y": "-175.93359375"
+      },
+      "node_gl9p4hs1": {
+        "x": 448,
+        "y": "-110.59375"
+      },
+      "node_usovvk42": {
+        "x": 480,
+        "y": "18.734375"
+      },
+      "node_0pi2xtfm": {
+        "x": 480,
+        "y": 96
+      }
+    },
+    "uiNodes": [],
+    "dataByNodeId": {
+      "node_7x0ios0s": {},
+      "node_vmju1g00": {},
+      "node_82g4hr2x": {
+        "widgetTools": []
+      },
+      "node_gl9p4hs1": {},
+      "node_usovvk42": {
+        "widgetTools": []
+      },
+      "node_0pi2xtfm": {
+        "workflowOutput": null
+      }
+    },
+    "dimensionsByNodeId": {},
+    "draft": {}
+  },
+  "updated_at": 1760515183,
+  "version": "draft",
+  "version_stage": "draft",
+  "workflow_type": "chat"
+}

@@ -1,0 +1,264 @@
+{
+  "id": "wf_68ef545aed24819097a88144f663daaf0db0d140782a910b",
+  "object": "workflow",
+  "created_at": 1760515162,
+  "creator_user_id": "user-paPVpBSglKhRmNVhFPSQqO10",
+  "default_version": null,
+  "edges": [
+    {
+      "id": "xy-edge__node_7x0ios0snode_7x0ios0s-out-node_cp04azsanode_cp04azsa-target",
+      "source_node_id": "node_7x0ios0s",
+      "source_port_id": "out",
+      "target_node_id": "node_6cmy4w9g",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_6cmy4w9gnode_6cmy4w9g-fallback-node_i3v1v0b4node_i3v1v0b4-target",
+      "source_node_id": "node_6cmy4w9g",
+      "source_port_id": "fallback",
+      "target_node_id": "node_rm62kd5r",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_6cmy4w9gnode_6cmy4w9g-case-0-node_k9xnbms0node_k9xnbms0-target",
+      "source_node_id": "node_6cmy4w9g",
+      "source_port_id": "case-0",
+      "target_node_id": "node_1zbga1nc",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_1zbga1ncnode_1zbga1nc-on_result-node_6nxch1jknode_6nxch1jk-target",
+      "source_node_id": "node_1zbga1nc",
+      "source_port_id": "on_result",
+      "target_node_id": "node_6nxch1jk",
+      "target_port_id": "in"
+    }
+  ],
+  "highest_version": null,
+  "input_variable_json_schema": {
+    "type": "object",
+    "properties": {
+      "input_as_text": {
+        "type": "string"
+      }
+    },
+    "required": ["input_as_text"],
+    "additionalProperties": false
+  },
+  "is_default": false,
+  "is_moderation_flagged": false,
+  "label": "TDD",
+  "moderation_flagged_categories": null,
+  "moderation_violations": null,
+  "name": "TDD",
+  "nodes": [
+    {
+      "id": "node_7x0ios0s",
+      "label": "Start",
+      "node_type": "builtins.Start"
+    },
+    {
+      "id": "node_6cmy4w9g",
+      "config": {
+        "cases": [
+          {
+            "label": "case-0",
+            "output_port_id": "case-0",
+            "predicate": {
+              "expression": "state.string_var_name ",
+              "format": "cel"
+            }
+          }
+        ],
+        "fallback": {
+          "label": "fallback",
+          "output_port_id": "fallback"
+        }
+      },
+      "label": "If / else",
+      "node_type": "builtins.IfElse"
+    },
+    {
+      "id": "node_6nxch1jk",
+      "config": {
+        "expr": {
+          "expression": "{\"results\": input.results}",
+          "format": "cel"
+        }
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {
+            "results": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "file_id": {
+                    "type": "string"
+                  },
+                  "filename": {
+                    "type": "string"
+                  },
+                  "score": {
+                    "type": "number"
+                  },
+                  "content": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "text": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "string"
+                        }
+                      },
+                      "required": ["text", "type"],
+                      "additionalProperties": false
+                    }
+                  },
+                  "attributes": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "type": ["string", "number", "boolean"]
+                    }
+                  }
+                },
+                "required": ["file_id", "filename", "score", "content"],
+                "additionalProperties": false
+              }
+            }
+          },
+          "required": ["results"],
+          "additionalProperties": false
+        },
+        "additionalProperties": false
+      },
+      "label": "End",
+      "node_type": "builtins.End"
+    },
+    {
+      "id": "node_rm62kd5r",
+      "config": {
+        "expr": {
+          "expression": "input",
+          "format": "cel"
+        }
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false,
+          "required": []
+        },
+        "additionalProperties": false
+      },
+      "label": "End",
+      "node_type": "builtins.End"
+    },
+    {
+      "id": "node_1zbga1nc",
+      "config": {
+        "max_results": 10,
+        "query": {
+          "expression": "",
+          "format": "cel"
+        },
+        "vector_store_id": ""
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false,
+          "required": []
+        },
+        "additionalProperties": false
+      },
+      "label": "File Search",
+      "node_type": "builtins.tool.FileSearch"
+    }
+  ],
+  "start_node_id": "node_7x0ios0s",
+  "state_variable_json_schema": {
+    "type": "object",
+    "properties": {
+      "string_var_name": {
+        "type": "string",
+        "default": "tom"
+      },
+      "num_var": {
+        "type": "number",
+        "default": 0
+      }
+    },
+    "required": ["string_var_name", "num_var"],
+    "additionalProperties": false
+  },
+  "state_vars": [
+    {
+      "id": "string_var_name",
+      "default": "tom",
+      "name": "string_var_name"
+    },
+    {
+      "id": "num_var",
+      "default": 0,
+      "name": "num_var"
+    }
+  ],
+  "ui_metadata": {
+    "positionsByNodeId": {
+      "node_7x0ios0s": {
+        "x": "187.15707126262603",
+        "y": 0
+      },
+      "node_6cmy4w9g": {
+        "x": "292.5926194693925",
+        "y": 0
+      },
+      "node_6nxch1jk": {
+        "x": "602.028167676159",
+        "y": 0
+      },
+      "node_rm62kd5r": {
+        "x": "466.97056818045775",
+        "y": "65.91666666666666"
+      },
+      "node_1zbga1nc": {
+        "x": "464.5926194693925",
+        "y": "-4.500000000000075"
+      }
+    },
+    "uiNodes": [],
+    "dataByNodeId": {
+      "node_7x0ios0s": {},
+      "node_6cmy4w9g": {
+        "caseNames": [""]
+      },
+      "node_6nxch1jk": {
+        "workflowOutput": null
+      },
+      "node_rm62kd5r": {
+        "workflowOutput": null
+      },
+      "node_1zbga1nc": {}
+    },
+    "dimensionsByNodeId": {},
+    "draft": {}
+  },
+  "updated_at": 1760515183,
+  "version": "draft",
+  "version_stage": "draft",
+  "workflow_type": "chat"
+}

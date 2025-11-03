@@ -1,0 +1,281 @@
+{
+  "id": "wf_68ef545aed24819097a88144f663daaf0db0d140782a910b",
+  "object": "workflow",
+  "created_at": 1760515162,
+  "creator_user_id": "user-paPVpBSglKhRmNVhFPSQqO10",
+  "default_version": null,
+  "edges": [
+    {
+      "id": "xy-edge__node_7x0ios0snode_7x0ios0s-out-node_xvucgky1node_xvucgky1-target",
+      "source_node_id": "node_7x0ios0s",
+      "source_port_id": "out",
+      "target_node_id": "node_ryt6fpr3",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_ryt6fpr3node_ryt6fpr3-on_result-node_u9en9b4fnode_u9en9b4f-target",
+      "source_node_id": "node_ryt6fpr3",
+      "source_port_id": "on_result",
+      "target_node_id": "node_gi7jvvw3",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_gi7jvvw3node_gi7jvvw3-on_result-node_g43heyctnode_g43heyct-target",
+      "source_node_id": "node_gi7jvvw3",
+      "source_port_id": "on_result",
+      "target_node_id": "node_n4nl2p6r",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_n4nl2p6rnode_n4nl2p6r-on_result-node_ng0szjkznode_ng0szjkz-target",
+      "source_node_id": "node_n4nl2p6r",
+      "source_port_id": "on_result",
+      "target_node_id": "node_ftx86vxx",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_ftx86vxxnode_ftx86vxx-on_result-node_h9lrt5u4node_h9lrt5u4-target",
+      "source_node_id": "node_ftx86vxx",
+      "source_port_id": "on_result",
+      "target_node_id": "node_n8tiaoeh",
+      "target_port_id": "in"
+    }
+  ],
+  "highest_version": null,
+  "input_variable_json_schema": {
+    "type": "object",
+    "properties": {
+      "input_as_text": {
+        "type": "string"
+      }
+    },
+    "required": ["input_as_text"],
+    "additionalProperties": false
+  },
+  "is_default": false,
+  "is_moderation_flagged": false,
+  "label": "TDD",
+  "moderation_flagged_categories": null,
+  "moderation_violations": null,
+  "name": "TDD",
+  "nodes": [
+    {
+      "id": "node_7x0ios0s",
+      "label": "Start",
+      "node_type": "builtins.Start"
+    },
+    {
+      "id": "node_ryt6fpr3",
+      "config": {
+        "max_results": 10,
+        "query": {
+          "expression": "",
+          "format": "cel"
+        },
+        "vector_store_id": ""
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false,
+          "required": []
+        },
+        "additionalProperties": false
+      },
+      "label": "File Search",
+      "node_type": "builtins.tool.FileSearch"
+    },
+    {
+      "id": "node_gi7jvvw3",
+      "config": {
+        "max_results": 10,
+        "query": {
+          "expression": "",
+          "format": "cel"
+        },
+        "vector_store_id": ""
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false,
+          "required": []
+        },
+        "additionalProperties": false
+      },
+      "label": "File Search",
+      "node_type": "builtins.tool.FileSearch"
+    },
+    {
+      "id": "node_n4nl2p6r",
+      "config": {
+        "max_results": 10,
+        "query": {
+          "expression": "",
+          "format": "cel"
+        },
+        "vector_store_id": ""
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false,
+          "required": []
+        },
+        "additionalProperties": false
+      },
+      "label": "File Search",
+      "node_type": "builtins.tool.FileSearch"
+    },
+    {
+      "id": "node_ftx86vxx",
+      "config": {
+        "max_results": 10,
+        "query": {
+          "expression": "",
+          "format": "cel"
+        },
+        "vector_store_id": ""
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false,
+          "required": []
+        },
+        "additionalProperties": false
+      },
+      "label": "File Search",
+      "node_type": "builtins.tool.FileSearch"
+    },
+    {
+      "id": "node_n8tiaoeh",
+      "config": {
+        "expr": {
+          "expression": "{\"results\": input.results}",
+          "format": "cel"
+        }
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {
+            "results": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "file_id": {
+                    "type": "string"
+                  },
+                  "filename": {
+                    "type": "string"
+                  },
+                  "score": {
+                    "type": "number"
+                  },
+                  "content": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "text": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "string"
+                        }
+                      },
+                      "required": ["text", "type"],
+                      "additionalProperties": false
+                    }
+                  },
+                  "attributes": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "type": ["string", "number", "boolean"]
+                    }
+                  }
+                },
+                "required": ["file_id", "filename", "score", "content"],
+                "additionalProperties": false
+              }
+            }
+          },
+          "required": ["results"],
+          "additionalProperties": false
+        },
+        "additionalProperties": false
+      },
+      "label": "End",
+      "node_type": "builtins.End"
+    }
+  ],
+  "start_node_id": "node_7x0ios0s",
+  "state_variable_json_schema": {
+    "type": "object",
+    "properties": {},
+    "required": [],
+    "additionalProperties": false
+  },
+  "state_vars": [],
+  "ui_metadata": {
+    "positionsByNodeId": {
+      "node_7x0ios0s": {
+        "x": 352,
+        "y": "-290.68150939326733"
+      },
+      "node_ryt6fpr3": {
+        "x": 336,
+        "y": "-226.92249935641303"
+      },
+      "node_gi7jvvw3": {
+        "x": 336,
+        "y": "-163.16587232988968"
+      },
+      "node_n4nl2p6r": {
+        "x": 336,
+        "y": "-99.09899781257991"
+      },
+      "node_ftx86vxx": {
+        "x": 336,
+        "y": "-34.09899781257991"
+      },
+      "node_n8tiaoeh": {
+        "x": 352,
+        "y": "29.96787670472986"
+      }
+    },
+    "uiNodes": [],
+    "dataByNodeId": {
+      "node_7x0ios0s": {},
+      "node_ryt6fpr3": {},
+      "node_gi7jvvw3": {},
+      "node_n4nl2p6r": {},
+      "node_ftx86vxx": {},
+      "node_n8tiaoeh": {
+        "workflowOutput": null
+      }
+    },
+    "dimensionsByNodeId": {},
+    "draft": {}
+  },
+  "updated_at": 1760515183,
+  "version": "draft",
+  "version_stage": "draft",
+  "workflow_type": "chat"
+}

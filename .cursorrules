@@ -1,0 +1,176 @@
+# Open Agent Builder - Cursor Project Rules
+
+## Project Overview
+
+This is a visual workflow agent builder platform that replicates OpenAI AgentBuilder functionality. Built with Next.js 15+, TypeScript, React Flow, and shadcn/ui.
+
+## Commit Message Rules
+
+- Always write commit messages in English
+- Use conventional commit format: `<type>(<scope>): <description>`
+- Types: feat, fix, docs, style, refactor, test, chore, perf, ci, build, revert
+- Keep commit messages concise and descriptive
+- Use imperative mood ("add" not "added")
+- Include detailed description with bullet points for complex changes
+
+### Examples
+
+```text
+feat(chat): add real-time chat functionality
+
+- Implement WebSocket connection
+- Add message sending and receiving features
+- Support emoji and file uploads
+```
+
+### More Examples
+
+```text
+feat(canvas): add node collision detection
+
+- Implement AABB collision detection algorithm
+- Add automatic node separation functionality
+- Support multi-node chain pushing
+
+fix(api): resolve workflow save issues
+
+- Fix concurrent save conflicts
+- Add data validation logic
+- Improve error handling mechanism
+
+refactor(ui): optimize node configuration panel
+
+- Extract reusable configuration components
+- Simplify state management logic
+- Enhance user experience
+```
+
+## Code Style Rules
+
+- Follow existing code style and patterns
+- Use TypeScript for type safety with strict mode
+- Prefer functional components with hooks
+- Use meaningful variable and function names
+- Add comments for complex logic
+- Follow Prettier formatting rules (no semicolons)
+- Use English for all code elements
+
+## File Organization
+
+- Keep related files together in logical directories
+- Use consistent file naming conventions (kebab-case for files)
+- Group imports logically: React, third-party libraries, local imports
+- Maintain clear component hierarchy
+- Follow Next.js App Router conventions
+
+## Language Preferences
+
+- **Code comments**: English
+- **Variable names**: English
+- **Function names**: English
+- **File names**: English
+- **Documentation**: English
+- **UI text**: English (buttons, labels, tooltips)
+- **API responses**: English
+- **Communication with user**: Chinese (for better UX)
+
+## Technology Stack
+
+- **Framework**: Next.js 15+ (App Router)
+- **Language**: TypeScript
+- **Package Manager**: pnpm (mandatory)
+- **UI Library**: shadcn/ui
+- **Canvas Library**: React Flow (xyflow)
+- **Styling**: Tailwind CSS
+- **Database**: Local JSON files (lowdb)
+
+## Project Structure
+
+```text
+app/
+├── (agent-builder)/          # Agent builder pages
+├── (canvas)/                 # Canvas editor pages
+├── api/                      # API routes
+components/
+├── ui/                       # shadcn UI components
+├── icons/                    # Custom icons
+lib/
+├── nodes/                    # Node definitions
+├── export/                   # Export utilities
+types/                        # TypeScript type definitions
+```
+
+## Best Practices
+
+- Write self-documenting code
+- Avoid magic numbers and strings
+- Handle errors gracefully
+- Test critical functionality
+- Keep functions small and focused
+- Use proper TypeScript types
+- Follow React best practices
+- Implement proper error boundaries
+
+## Node Development
+
+- Each node type should have its own definition file
+- Include proper TypeScript interfaces
+- Implement configuration panels
+- Add proper validation
+- Follow the existing node pattern
+
+## Canvas Development
+
+- Use React Flow for canvas functionality
+- Implement proper collision detection
+- Handle node operations efficiently
+- Maintain state consistency
+- Follow the collision engine patterns
+
+## Database Operations
+
+- Use the local JSON database (lib/db.ts)
+- Implement proper error handling
+- Validate data before saving
+- Follow the existing CRUD patterns
+
+## Testing
+
+- Write tests for critical functionality
+- Use Vitest for testing
+- Test node operations
+- Test workflow saving/loading
+- Test API endpoints
+
+## Code Quality
+
+- Use ESLint and Prettier
+- Fix linting errors before committing
+- Follow the project's formatting rules
+- Use meaningful commit messages
+- Keep commits focused and atomic
+
+## Development Workflow
+
+1. Create feature branch
+2. Implement changes following these rules
+3. Test thoroughly
+4. Fix any linting issues
+5. Commit with conventional format
+6. Create pull request
+
+## Code Commit Rules
+
+- **NEVER commit code directly** - Always ask for user permission before committing
+- **Ask before git operations** - Request confirmation before `git add`, `git commit`, `git push`
+- **Let user review first** - Allow user to review changes before committing
+- **Suggest commit messages** - Provide suggested commit messages but let user decide
+- **Respect user workflow** - User prefers to review code before committing
+
+## Important Notes
+
+- **Never do more than requested** - Ask before implementing additional features
+- **Always ask for clarification** if requirements are unclear
+- **Follow the existing patterns** in the codebase
+- **Use pnpm** for package management (never npm or yarn)
+- **Maintain consistency** with the existing code style

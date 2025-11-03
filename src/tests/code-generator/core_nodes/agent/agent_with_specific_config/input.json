@@ -1,0 +1,235 @@
+{
+  "id": "wf_68ef545aed24819097a88144f663daaf0db0d140782a910b",
+  "object": "workflow",
+  "created_at": 1760515162,
+  "creator_user_id": "user-paPVpBSglKhRmNVhFPSQqO10",
+  "default_version": null,
+  "edges": [
+    {
+      "id": "xy-edge__node_7x0ios0snode_7x0ios0s-out-node_i5yf2n9unode_i5yf2n9u-target",
+      "source_node_id": "node_7x0ios0s",
+      "source_port_id": "out",
+      "target_node_id": "node_vsalhozj",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_vsalhozjnode_vsalhozj-on_reject-node_jji80r83node_jji80r83-target",
+      "source_node_id": "node_vsalhozj",
+      "source_port_id": "on_reject",
+      "target_node_id": "node_vj964oey",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_vsalhozjnode_vsalhozj-on_approve-node_7jq44dkinode_7jq44dki-target",
+      "source_node_id": "node_vsalhozj",
+      "source_port_id": "on_approve",
+      "target_node_id": "node_hz8k7evf",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_hz8k7evfnode_hz8k7evf-on_result-node_7p3eevnunode_7p3eevnu-target",
+      "source_node_id": "node_hz8k7evf",
+      "source_port_id": "on_result",
+      "target_node_id": "node_lfgisk3b",
+      "target_port_id": "in"
+    }
+  ],
+  "highest_version": null,
+  "input_variable_json_schema": {
+    "type": "object",
+    "properties": {
+      "input_as_text": {
+        "type": "string"
+      }
+    },
+    "required": ["input_as_text"],
+    "additionalProperties": false
+  },
+  "is_default": false,
+  "is_moderation_flagged": false,
+  "label": "TDD",
+  "moderation_flagged_categories": null,
+  "moderation_violations": null,
+  "name": "TDD",
+  "nodes": [
+    {
+      "id": "node_7x0ios0s",
+      "label": "Start",
+      "node_type": "builtins.Start"
+    },
+    {
+      "id": "node_vsalhozj",
+      "config": {
+        "message": "should continue\uff1f",
+        "variable_mapping": []
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false,
+          "required": []
+        },
+        "additionalProperties": false
+      },
+      "label": "User approval 1",
+      "node_type": "builtins.BinaryApproval"
+    },
+    {
+      "id": "node_vj964oey",
+      "config": {
+        "expr": {
+          "expression": "input",
+          "format": "cel"
+        }
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false,
+          "required": []
+        },
+        "additionalProperties": false
+      },
+      "label": "End",
+      "node_type": "builtins.End"
+    },
+    {
+      "id": "node_hz8k7evf",
+      "config": {
+        "hidden_properties": null,
+        "instructions": {
+          "expression": "\"Instruction\"",
+          "format": "cel"
+        },
+        "messages": [
+          {
+            "role": "user",
+            "content": [
+              {
+                "type": "input_text",
+                "text": "User Instruction"
+              }
+            ]
+          }
+        ],
+        "model": {
+          "expression": "\"gpt-5\"",
+          "format": "cel"
+        },
+        "reads_from_history": true,
+        "reasoning": {
+          "effort": "low",
+          "summary": "auto"
+        },
+        "text": {
+          "format": {
+            "type": "text"
+          },
+          "verbosity": "medium"
+        },
+        "tools": [],
+        "user_visible": true,
+        "variable_mapping": [],
+        "writes_to_history": true
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false,
+          "required": []
+        },
+        "additionalProperties": false
+      },
+      "label": "Agent",
+      "node_type": "builtins.Agent"
+    },
+    {
+      "id": "node_lfgisk3b",
+      "config": {
+        "expr": {
+          "expression": "{\"output_text\": input.output_text}",
+          "format": "cel"
+        }
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "title": "ResponseSchema",
+          "type": "object",
+          "properties": {
+            "output_text": {
+              "type": "string"
+            }
+          },
+          "required": ["output_text"],
+          "additionalProperties": false
+        },
+        "additionalProperties": false
+      },
+      "label": "End",
+      "node_type": "builtins.End"
+    }
+  ],
+  "start_node_id": "node_7x0ios0s",
+  "state_variable_json_schema": {
+    "type": "object",
+    "properties": {},
+    "required": [],
+    "additionalProperties": false
+  },
+  "state_vars": [],
+  "ui_metadata": {
+    "positionsByNodeId": {
+      "node_7x0ios0s": {
+        "x": -80,
+        "y": 16
+      },
+      "node_vsalhozj": {
+        "x": 32,
+        "y": -16
+      },
+      "node_vj964oey": {
+        "x": 192,
+        "y": 49
+      },
+      "node_hz8k7evf": {
+        "x": 192,
+        "y": -17
+      },
+      "node_lfgisk3b": {
+        "x": 304,
+        "y": -16
+      }
+    },
+    "uiNodes": [],
+    "dataByNodeId": {
+      "node_7x0ios0s": {},
+      "node_vsalhozj": {},
+      "node_vj964oey": {
+        "workflowOutput": null
+      },
+      "node_hz8k7evf": {
+        "widgetTools": []
+      },
+      "node_lfgisk3b": {
+        "workflowOutput": null
+      }
+    },
+    "dimensionsByNodeId": {},
+    "draft": {}
+  },
+  "updated_at": 1760515183,
+  "version": "draft",
+  "version_stage": "draft",
+  "workflow_type": "chat"
+}

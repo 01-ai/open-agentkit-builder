@@ -1,0 +1,61 @@
+{
+  "id": "wf_test_mcp",
+  "object": "workflow",
+  "created_at": 1700000000,
+  "updated_at": 1700000000,
+  "nodes": [
+    {
+      "id": "node_start",
+      "label": "Start",
+      "node_type": "builtins.Start",
+      "config": {}
+    },
+    {
+      "id": "node_mcp",
+      "label": "MCP",
+      "node_type": "builtins.MCP",
+      "config": {
+        "transportType": "http",
+        "url": "https://api.example.com/mcp",
+        "authType": "bearer",
+        "bearerToken": "sk-test-token-123",
+        "timeout": 30,
+        "toolName": "database_query",
+        "parameters": "{\"table\": \"users\", \"limit\": 10}"
+      }
+    },
+    {
+      "id": "node_end",
+      "label": "End",
+      "node_type": "builtins.End",
+      "config": {}
+    }
+  ],
+  "edges": [
+    {
+      "id": "edge_1",
+      "source_node_id": "node_start",
+      "source_port_id": "on_result",
+      "target_node_id": "node_mcp",
+      "target_port_id": "in"
+    },
+    {
+      "id": "edge_2",
+      "source_node_id": "node_mcp",
+      "source_port_id": "out",
+      "target_node_id": "node_end",
+      "target_port_id": "in"
+    }
+  ],
+  "start_node_id": "node_start",
+  "state_vars": [],
+  "input_variable_json_schema": {
+    "type": "object",
+    "properties": {
+      "input_as_text": {
+        "type": "string"
+      }
+    },
+    "required": ["input_as_text"]
+  }
+}

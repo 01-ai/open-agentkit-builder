@@ -1,0 +1,754 @@
+{
+  "object": "workflow",
+  "created_at": 1761188176,
+  "default_version": null,
+  "edges": [
+    {
+      "id": "edge_knw9tyem",
+      "source_node_id": "node_otseot7d",
+      "source_port_id": "out",
+      "target_node_id": "node_zbarmfnx",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_bgnf1oornode_bgnf1oor-on_result-node_0pma2x6znode_0pma2x6z-target",
+      "source_node_id": "node_bgnf1oor",
+      "source_port_id": "on_result",
+      "target_node_id": "node_0pma2x6z",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_0pma2x6znode_0pma2x6z-on_approve-node_5dw581w8node_5dw581w8-target",
+      "source_node_id": "node_0pma2x6z",
+      "source_port_id": "on_approve",
+      "target_node_id": "node_5dw581w8",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_0pma2x6znode_0pma2x6z-on_reject-node_nxffjqywnode_nxffjqyw-target",
+      "source_node_id": "node_0pma2x6z",
+      "source_port_id": "on_reject",
+      "target_node_id": "node_nxffjqyw",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_zbarmfnxnode_zbarmfnx-on_result-node_wmxrmgbjnode_wmxrmgbj-target",
+      "source_node_id": "node_zbarmfnx",
+      "source_port_id": "on_result",
+      "target_node_id": "node_wmxrmgbj",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_wmxrmgbjnode_wmxrmgbj-case-0-node_bgnf1oornode_bgnf1oor-target",
+      "source_node_id": "node_wmxrmgbj",
+      "source_port_id": "case-0",
+      "target_node_id": "node_bgnf1oor",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_wmxrmgbjnode_wmxrmgbj-fallback-node_ctckuyannode_ctckuyan-target",
+      "source_node_id": "node_wmxrmgbj",
+      "source_port_id": "fallback",
+      "target_node_id": "node_ctckuyan",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_wmxrmgbjnode_wmxrmgbj-case-1-node_8q8ysu30node_8q8ysu30-target",
+      "source_node_id": "node_wmxrmgbj",
+      "source_port_id": "case-1",
+      "target_node_id": "node_8q8ysu30",
+      "target_port_id": "in"
+    }
+  ],
+  "highest_version": null,
+  "input_variable_json_schema": {
+    "type": "object",
+    "properties": {
+      "input_as_text": {
+        "type": "string"
+      }
+    },
+    "required": ["input_as_text"],
+    "additionalProperties": false
+  },
+  "is_default": false,
+  "is_moderation_flagged": false,
+  "label": "New workflow",
+  "moderation_flagged_categories": null,
+  "moderation_violations": null,
+  "name": "New workflow",
+  "nodes": [
+    {
+      "id": "node_otseot7d",
+      "label": "Start",
+      "node_type": "builtins.Start"
+    },
+    {
+      "id": "node_zbarmfnx",
+      "config": {
+        "hidden_properties": null,
+        "instructions": {
+          "expression": "\"Classify the user's request based on whether two documents have been provided recently in the conversation, and whether the user is asking a particular question.\\n\\nIf two documents are provided and there's no user question , respond with \\\"compare\\\".\\nIf two documents are provided and there is a user question , respond with \\\"answer_question\\\".\\nIf only one doc has been provided, or no docs have been provided, respond with \\\"request_upload\\\"\"",
+          "format": "cel"
+        },
+        "max_output_tokens": 2048,
+        "messages": [],
+        "model": {
+          "expression": "\"gpt-4.1\"",
+          "format": "cel"
+        },
+        "reads_from_history": true,
+        "reasoning": {
+          "effort": null,
+          "summary": null
+        },
+        "show_progress_to_user": true,
+        "temperature": 1.0,
+        "text": {
+          "format": {
+            "name": "doc_provision_classification",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "classification": {
+                  "type": "string",
+                  "enum": ["compare", "answer_question", "request_upload"],
+                  "description": "Document provision classification.",
+                  "default": ""
+                }
+              },
+              "additionalProperties": false,
+              "required": ["classification"],
+              "title": "doc_provision_classification"
+            },
+            "type": "json_schema",
+            "strict": true
+          },
+          "verbosity": null
+        },
+        "tools": [],
+        "top_p": 1.0,
+        "user_visible": true,
+        "variable_mapping": [],
+        "writes_to_history": true
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false,
+          "required": []
+        },
+        "additionalProperties": false
+      },
+      "label": "Triage request",
+      "node_type": "builtins.Agent"
+    },
+    {
+      "id": "node_bgnf1oor",
+      "config": {
+        "hidden_properties": null,
+        "instructions": {
+          "expression": "\"Given the differences between the two documents, assemble a single option for how to reconcile the difference. If no order has been described, consider the first document the user's version and the second document the potential set of changes returned back to the user. The proposal you create will be sent to the user for approval.\"",
+          "format": "cel"
+        },
+        "messages": [],
+        "model": {
+          "expression": "\"gpt-5\"",
+          "format": "cel"
+        },
+        "reads_from_history": true,
+        "reasoning": {
+          "effort": "minimal",
+          "summary": null
+        },
+        "show_progress_to_user": true,
+        "text": {
+          "format": {
+            "type": "text"
+          },
+          "verbosity": "medium"
+        },
+        "tools": [],
+        "user_visible": true,
+        "variable_mapping": [],
+        "writes_to_history": true
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false,
+          "required": []
+        },
+        "additionalProperties": false
+      },
+      "label": "Propose reconciliation",
+      "node_type": "builtins.Agent"
+    },
+    {
+      "id": "node_0pma2x6z",
+      "config": {
+        "message": "Please review the proposal {{input.output_text}}",
+        "variable_mapping": [
+          {
+            "expression": {
+              "expression": "input.output_text",
+              "format": "cel"
+            },
+            "name": "input.output_text"
+          }
+        ]
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {
+            "output_text": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false,
+          "required": ["output_text"]
+        },
+        "additionalProperties": false
+      },
+      "label": "Binary approval",
+      "node_type": "builtins.BinaryApproval"
+    },
+    {
+      "id": "node_5dw581w8",
+      "config": {
+        "hidden_properties": null,
+        "instructions": {
+          "expression": "\"Explain your approval reasoning. Help the user draft a proper response by filling out this data schema:\\n\\n{\\n  emailFrom: 'user@test.com',\\n  defaultTo: 'user@test.com',\\n  defaultSubject: 'Document comparison proposal',\\n  defaultBody: \\\"Hey there, \\\\n\\\\nHope you're doing well! Just wanted to check in and see if there are any updates on the ChatKit roadmap. We're excited to see what's coming next and how we can make the most of the upcoming features.\\\\n\\\\nEspecially curious to see how you support widgets!\\\\n\\\\nBest,\\\",\\n}\"",
+          "format": "cel"
+        },
+        "messages": [],
+        "model": {
+          "expression": "\"gpt-5-mini\"",
+          "format": "cel"
+        },
+        "reads_from_history": true,
+        "reasoning": {
+          "effort": "low",
+          "summary": null
+        },
+        "show_progress_to_user": true,
+        "text": {
+          "format": {
+            "name": "test-widget",
+            "schema": {
+              "$schema": "https://json-schema.org/draft/2020-12/schema",
+              "$id": "widget",
+              "type": "object",
+              "properties": {
+                "emailFrom": {
+                  "type": "string"
+                },
+                "defaultTo": {
+                  "type": "string"
+                },
+                "defaultSubject": {
+                  "type": "string"
+                },
+                "defaultBody": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "emailFrom",
+                "defaultTo",
+                "defaultSubject",
+                "defaultBody"
+              ],
+              "additionalProperties": false
+            },
+            "type": "json_schema",
+            "strict": false
+          },
+          "verbosity": "medium"
+        },
+        "tools": [],
+        "user_visible": true,
+        "variable_mapping": [],
+        "widget_config": {
+          "widget_data_schema": {
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "$id": "widget",
+            "type": "object",
+            "properties": {
+              "emailFrom": {
+                "type": "string"
+              },
+              "defaultTo": {
+                "type": "string"
+              },
+              "defaultSubject": {
+                "type": "string"
+              },
+              "defaultBody": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "emailFrom",
+              "defaultTo",
+              "defaultSubject",
+              "defaultBody"
+            ],
+            "additionalProperties": false
+          },
+          "widget_template": "{\"type\":\"Card\",\"size\":\"lg\",\"confirm\":{\"action\":{\"type\":\"email.send\"},\"label\":\"Send email\"},\"cancel\":{\"action\":{\"type\":\"email.discard\"},\"label\":\"Discard\"},\"children\":[{\"type\":\"Row\",\"children\":[{\"type\":\"Text\",\"value\":\"FROM\",\"width\":80,\"weight\":\"semibold\",\"color\":\"tertiary\",\"size\":\"xs\",\"children\":[]},{\"type\":\"Text\",\"value\":{{ (emailFrom) | tojson }},\"color\":\"tertiary\",\"children\":[]}]},{\"type\":\"Divider\",\"flush\":true,\"children\":[]},{\"type\":\"Row\",\"children\":[{\"type\":\"Text\",\"value\":\"TO\",\"width\":80,\"weight\":\"semibold\",\"color\":\"tertiary\",\"size\":\"xs\",\"children\":[]},{\"type\":\"Text\",\"value\":{{ (defaultTo) | tojson }},\"editable\":{\"name\":\"email.to\",\"required\":true,\"placeholder\":\"name@example.com\"},\"children\":[]}]},{\"type\":\"Divider\",\"flush\":true,\"children\":[]},{\"type\":\"Row\",\"children\":[{\"type\":\"Text\",\"value\":\"SUBJECT\",\"width\":80,\"weight\":\"semibold\",\"color\":\"tertiary\",\"size\":\"xs\",\"children\":[]},{\"type\":\"Text\",\"value\":{{ (defaultSubject) | tojson }},\"editable\":{\"name\":\"email.subject\",\"required\":true,\"placeholder\":\"Email subject\"},\"children\":[]}]},{\"type\":\"Divider\",\"flush\":true,\"children\":[]},{\"type\":\"Text\",\"value\":{{ (defaultBody) | tojson }},\"minLines\":9,\"editable\":{\"name\":\"email.body\",\"required\":true,\"placeholder\":\"Write your message\u2026\"},\"children\":[]}]}"
+        },
+        "writes_to_history": true
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false,
+          "required": []
+        },
+        "additionalProperties": false
+      },
+      "label": "Approval agent",
+      "node_type": "builtins.Agent"
+    },
+    {
+      "id": "node_nxffjqyw",
+      "config": {
+        "hidden_properties": null,
+        "instructions": {
+          "expression": "\"Explain your rejection reasoning.\"",
+          "format": "cel"
+        },
+        "messages": [],
+        "model": {
+          "expression": "\"gpt-5\"",
+          "format": "cel"
+        },
+        "reads_from_history": true,
+        "reasoning": {
+          "effort": "low",
+          "summary": null
+        },
+        "show_progress_to_user": true,
+        "text": {
+          "format": {
+            "type": "text"
+          },
+          "verbosity": "medium"
+        },
+        "tools": [],
+        "user_visible": true,
+        "variable_mapping": [],
+        "writes_to_history": true
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false,
+          "required": []
+        },
+        "additionalProperties": false
+      },
+      "label": "Rejection agent",
+      "node_type": "builtins.Agent"
+    },
+    {
+      "id": "node_wmxrmgbj",
+      "config": {
+        "cases": [
+          {
+            "label": "case-0",
+            "output_port_id": "case-0",
+            "predicate": {
+              "expression": "input.output_parsed.classification == \"compare\"",
+              "format": "cel"
+            }
+          },
+          {
+            "label": "case-1",
+            "output_port_id": "case-1",
+            "predicate": {
+              "expression": "input.output_parsed.classification == \"answer_question\"",
+              "format": "cel"
+            }
+          }
+        ],
+        "fallback": {
+          "label": "fallback",
+          "output_port_id": "fallback"
+        }
+      },
+      "label": "If / else",
+      "node_type": "builtins.IfElse"
+    },
+    {
+      "id": "node_ctckuyan",
+      "config": {
+        "hidden_properties": null,
+        "instructions": {
+          "expression": "\"The user has not uploaded the required two documents for comparison. Suggest that they upload a total of two documents, using the paperclip icon.\"",
+          "format": "cel"
+        },
+        "messages": [],
+        "model": {
+          "expression": "\"gpt-5-nano\"",
+          "format": "cel"
+        },
+        "reads_from_history": true,
+        "reasoning": {
+          "effort": "minimal",
+          "summary": null
+        },
+        "show_progress_to_user": true,
+        "text": {
+          "format": {
+            "type": "text"
+          },
+          "verbosity": "medium"
+        },
+        "tools": [],
+        "user_visible": true,
+        "variable_mapping": [],
+        "writes_to_history": true
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false,
+          "required": []
+        },
+        "additionalProperties": false
+      },
+      "label": "Retry agent",
+      "node_type": "builtins.Agent"
+    },
+    {
+      "id": "node_8q8ysu30",
+      "config": {
+        "hidden_properties": null,
+        "instructions": {
+          "expression": "\"Use the information in the uploaded documents to answer the user's question.\"",
+          "format": "cel"
+        },
+        "messages": [],
+        "model": {
+          "expression": "\"gpt-5-nano\"",
+          "format": "cel"
+        },
+        "reads_from_history": true,
+        "reasoning": {
+          "effort": "minimal",
+          "summary": null
+        },
+        "show_progress_to_user": true,
+        "text": {
+          "format": {
+            "type": "text"
+          },
+          "verbosity": "medium"
+        },
+        "tools": [],
+        "user_visible": true,
+        "variable_mapping": [],
+        "writes_to_history": true
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false,
+          "required": []
+        },
+        "additionalProperties": false
+      },
+      "label": "Provide explanation",
+      "node_type": "builtins.Agent"
+    }
+  ],
+  "start_node_id": "node_otseot7d",
+  "state_variable_json_schema": {
+    "type": "object",
+    "properties": {},
+    "required": [],
+    "additionalProperties": false
+  },
+  "state_vars": [],
+  "ui_metadata": {
+    "positionsByNodeId": {
+      "node_otseot7d": {
+        "x": -480,
+        "y": -32
+      },
+      "node_zbarmfnx": {
+        "x": -368,
+        "y": -32
+      },
+      "node_bgnf1oor": {
+        "x": "177.74491509093897",
+        "y": "-72.34375"
+      },
+      "node_0pma2x6z": {
+        "x": "409.744915090939",
+        "y": -96
+      },
+      "node_5dw581w8": {
+        "x": 672,
+        "y": -96
+      },
+      "node_nxffjqyw": {
+        "x": 672,
+        "y": -16
+      },
+      "node_wmxrmgbj": {
+        "x": -192,
+        "y": -64
+      },
+      "node_ctckuyan": {
+        "x": 176,
+        "y": 65
+      },
+      "node_8q8ysu30": {
+        "x": 176,
+        "y": 0
+      },
+      "node_z53ead0s": {
+        "x": -176,
+        "y": -176
+      },
+      "node_msa229f1": {
+        "x": 192,
+        "y": -176
+      },
+      "node_ka8x4ph6": {
+        "x": 416,
+        "y": -176
+      },
+      "node_ml9vc83m": {
+        "x": 672,
+        "y": -176
+      },
+      "node_y9pzhl2l": {
+        "x": -352,
+        "y": -176
+      },
+      "node_agbest13": {
+        "x": -720,
+        "y": -320
+      }
+    },
+    "uiNodes": [
+      {
+        "id": "node_z53ead0s",
+        "type": "note",
+        "data": {
+          "name": null,
+          "userDefinedPassthroughVariables": [],
+          "text": "Handle cases where user submitted incorrect documents."
+        }
+      },
+      {
+        "id": "node_msa229f1",
+        "type": "note",
+        "data": {
+          "name": null,
+          "userDefinedPassthroughVariables": [],
+          "text": "Propose a reconciliation given the diffs."
+        }
+      },
+      {
+        "id": "node_ka8x4ph6",
+        "type": "note",
+        "data": {
+          "name": null,
+          "userDefinedPassthroughVariables": [],
+          "text": "Provide the proposal to the user to approve or deny."
+        }
+      },
+      {
+        "id": "node_ml9vc83m",
+        "type": "note",
+        "data": {
+          "name": null,
+          "userDefinedPassthroughVariables": [],
+          "text": "Handle the approval or denial."
+        }
+      },
+      {
+        "id": "node_y9pzhl2l",
+        "type": "note",
+        "data": {
+          "name": null,
+          "userDefinedPassthroughVariables": [],
+          "text": "Ensure the user submitted two similar documents."
+        }
+      },
+      {
+        "id": "node_agbest13",
+        "type": "note",
+        "data": {
+          "name": null,
+          "userDefinedPassthroughVariables": [],
+          "text": "Upload two similar documents (e.g. two lease documents) to compare for key issues and recommend a proposed reconciliation or ask clarifying questions.\n\nYou can generate these via ChatGPT with this prompt:\n\n\"Generate two similar lease documents with one substantive difference and export them both as PDFs.\""
+        }
+      }
+    ],
+    "dataByNodeId": {
+      "node_otseot7d": {},
+      "node_zbarmfnx": {
+        "widgetTools": []
+      },
+      "node_bgnf1oor": {
+        "widgetTools": []
+      },
+      "node_0pma2x6z": {},
+      "node_5dw581w8": {
+        "widgetFile": {
+          "name": "test-widget",
+          "outputJsonPreview": {
+            "type": "Card",
+            "size": "lg",
+            "confirm": {
+              "action": {
+                "type": "email.send"
+              },
+              "label": "Send email"
+            },
+            "cancel": {
+              "action": {
+                "type": "email.discard"
+              },
+              "label": "Discard"
+            },
+            "children": [
+              {
+                "type": "Row",
+                "children": [
+                  {
+                    "type": "Text",
+                    "value": "FROM",
+                    "width": 80,
+                    "weight": "semibold",
+                    "color": "tertiary",
+                    "size": "xs"
+                  },
+                  {
+                    "type": "Text",
+                    "value": "zj@openai.com",
+                    "color": "tertiary"
+                  }
+                ]
+              },
+              {
+                "type": "Divider",
+                "flush": true
+              },
+              {
+                "type": "Row",
+                "children": [
+                  {
+                    "type": "Text",
+                    "value": "TO",
+                    "width": 80,
+                    "weight": "semibold",
+                    "color": "tertiary",
+                    "size": "xs"
+                  },
+                  {
+                    "type": "Text",
+                    "value": "weedon@openai.com",
+                    "editable": {
+                      "name": "email.to",
+                      "required": true,
+                      "placeholder": "name@example.com"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "Divider",
+                "flush": true
+              },
+              {
+                "type": "Row",
+                "children": [
+                  {
+                    "type": "Text",
+                    "value": "SUBJECT",
+                    "width": 80,
+                    "weight": "semibold",
+                    "color": "tertiary",
+                    "size": "xs"
+                  },
+                  {
+                    "type": "Text",
+                    "value": "ChatKit Roadmap",
+                    "editable": {
+                      "name": "email.subject",
+                      "required": true,
+                      "placeholder": "Email subject"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "Divider",
+                "flush": true
+              },
+              {
+                "type": "Text",
+                "value": "Hey David, \n\nHope you're doing well! Just wanted to check in and see if there are any updates on the ChatKit roadmap. We're excited to see what's coming next and how we can make the most of the upcoming features.\n\nEspecially curious to see how you support widgets!\n\nBest, Zach",
+                "minLines": 9,
+                "editable": {
+                  "name": "email.body",
+                  "required": true,
+                  "placeholder": "Write your message\u2026"
+                }
+              }
+            ]
+          },
+          "encodedWidget": "eyJpZCI6IndpZ19ibmNycGdjMCIsIm5hbWUiOiJ0ZXN0LXdpZGdldCIsInZpZXciOiI8Q2FyZFxuICAgIHNpemU9XCJsZ1wiXG4gICAgY29uZmlybT17e1xuICAgICAgICBhY3Rpb246IHsgdHlwZTogXCJlbWFpbC5zZW5kXCIgfSxcbiAgICAgICAgbGFiZWw6IFwiU2VuZCBlbWFpbFwiXG4gICAgfX1cbiAgICBjYW5jZWw9e3tcbiAgICAgICAgYWN0aW9uOiB7IHR5cGU6IFwiZW1haWwuZGlzY2FyZFwiIH0sXG4gICAgICAgIGxhYmVsOiBcIkRpc2NhcmRcIlxuICAgIH19XG4-XG4gICAgPFJvdyA-XG4gICAgICAgIDxUZXh0IHZhbHVlPVwiRlJPTVwiIHdpZHRoPXs4MH0gd2VpZ2h0PVwic2VtaWJvbGRcIiBjb2xvcj1cInRlcnRpYXJ5XCIgc2l6ZT1cInhzXCIgLz5cbiAgICAgICAgPFRleHQgdmFsdWU9e2VtYWlsRnJvbX0gY29sb3I9XCJ0ZXJ0aWFyeVwiIC8-XG4gICAgPC9Sb3c-XG5cbiAgICA8RGl2aWRlciBmbHVzaCAvPlxuXG4gICAgPFJvdz5cbiAgICAgICAgPFRleHQgdmFsdWU9XCJUT1wiIHdpZHRoPXs4MH0gd2VpZ2h0PVwic2VtaWJvbGRcIiBjb2xvcj1cInRlcnRpYXJ5XCIgc2l6ZT1cInhzXCIgLz5cbiAgICAgICAgPFRleHQgdmFsdWU9e2RlZmF1bHRUb30gZWRpdGFibGU9e3sgbmFtZTogXCJlbWFpbC50b1wiLCByZXF1aXJlZDogdHJ1ZSwgcGxhY2Vob2xkZXI6IFwibmFtZUBleGFtcGxlLmNvbVwiIH19IC8-XG4gICAgPC9Sb3c-XG5cbiAgICA8RGl2aWRlciBmbHVzaCAvPlxuXG4gICAgPFJvdz5cbiAgICAgICAgPFRleHQgdmFsdWU9XCJTVUJKRUNUXCIgd2lkdGg9ezgwfSB3ZWlnaHQ9XCJzZW1pYm9sZFwiIGNvbG9yPVwidGVydGlhcnlcIiBzaXplPVwieHNcIiAvPlxuICAgICAgICA8VGV4dCB2YWx1ZT17ZGVmYXVsdFN1YmplY3R9IGVkaXRhYmxlPXt7IG5hbWU6IFwiZW1haWwuc3ViamVjdFwiLCByZXF1aXJlZDogdHJ1ZSwgcGxhY2Vob2xkZXI6IFwiRW1haWwgc3ViamVjdFwiIH19IC8-XG4gICAgPC9Sb3c-XG4gICAgPERpdmlkZXIgZmx1c2ggLz5cbiAgICA8VGV4dFxuICAgICAgICB2YWx1ZT17ZGVmYXVsdEJvZHl9XG4gICAgICAgIG1pbkxpbmVzPXs5fVxuICAgICAgICBlZGl0YWJsZT17eyBuYW1lOiBcImVtYWlsLmJvZHlcIiwgcmVxdWlyZWQ6IHRydWUsIHBsYWNlaG9sZGVyOiBcIldyaXRlIHlvdXIgbWVzc2FnZeKAplwiIH19XG4gICAgLz5cbjwvQ2FyZD4iLCJkZWZhdWx0U3RhdGUiOnsiZW1haWxGcm9tIjoiempAb3BlbmFpLmNvbSIsImRlZmF1bHRUbyI6IndlZWRvbkBvcGVuYWkuY29tIiwiZGVmYXVsdFN1YmplY3QiOiJDaGF0S2l0IFJvYWRtYXAiLCJkZWZhdWx0Qm9keSI6IkhleSBEYXZpZCwgXG5cbkhvcGUgeW91J3JlIGRvaW5nIHdlbGwhIEp1c3Qgd2FudGVkIHRvIGNoZWNrIGluIGFuZCBzZWUgaWYgdGhlcmUgYXJlIGFueSB1cGRhdGVzIG9uIHRoZSBDaGF0S2l0IHJvYWRtYXAuIFdlJ3JlIGV4Y2l0ZWQgdG8gc2VlIHdoYXQncyBjb21pbmcgbmV4dCBhbmQgaG93IHdlIGNhbiBtYWtlIHRoZSBtb3N0IG9mIHRoZSB1cGNvbWluZyBmZWF0dXJlcy5cblxuRXNwZWNpYWxseSBjdXJpb3VzIHRvIHNlZSBob3cgeW91IHN1cHBvcnQgd2lkZ2V0cyFcblxuQmVzdCwgWmFjaCJ9LCJzdGF0ZXMiOltdfQ",
+          "template": "{\"type\":\"Card\",\"size\":\"lg\",\"confirm\":{\"action\":{\"type\":\"email.send\"},\"label\":\"Send email\"},\"cancel\":{\"action\":{\"type\":\"email.discard\"},\"label\":\"Discard\"},\"children\":[{\"type\":\"Row\",\"children\":[{\"type\":\"Text\",\"value\":\"FROM\",\"width\":80,\"weight\":\"semibold\",\"color\":\"tertiary\",\"size\":\"xs\",\"children\":[]},{\"type\":\"Text\",\"value\":{{ (emailFrom) | tojson }},\"color\":\"tertiary\",\"children\":[]}]},{\"type\":\"Divider\",\"flush\":true,\"children\":[]},{\"type\":\"Row\",\"children\":[{\"type\":\"Text\",\"value\":\"TO\",\"width\":80,\"weight\":\"semibold\",\"color\":\"tertiary\",\"size\":\"xs\",\"children\":[]},{\"type\":\"Text\",\"value\":{{ (defaultTo) | tojson }},\"editable\":{\"name\":\"email.to\",\"required\":true,\"placeholder\":\"name@example.com\"},\"children\":[]}]},{\"type\":\"Divider\",\"flush\":true,\"children\":[]},{\"type\":\"Row\",\"children\":[{\"type\":\"Text\",\"value\":\"SUBJECT\",\"width\":80,\"weight\":\"semibold\",\"color\":\"tertiary\",\"size\":\"xs\",\"children\":[]},{\"type\":\"Text\",\"value\":{{ (defaultSubject) | tojson }},\"editable\":{\"name\":\"email.subject\",\"required\":true,\"placeholder\":\"Email subject\"},\"children\":[]}]},{\"type\":\"Divider\",\"flush\":true,\"children\":[]},{\"type\":\"Text\",\"value\":{{ (defaultBody) | tojson }},\"minLines\":9,\"editable\":{\"name\":\"email.body\",\"required\":true,\"placeholder\":\"Write your message\u2026\"},\"children\":[]}]}"
+        },
+        "widgetTools": []
+      },
+      "node_nxffjqyw": {
+        "widgetTools": []
+      },
+      "node_wmxrmgbj": {
+        "caseNames": ["", ""]
+      },
+      "node_ctckuyan": {
+        "widgetTools": []
+      },
+      "node_8q8ysu30": {
+        "widgetTools": []
+      }
+    },
+    "dimensionsByNodeId": {},
+    "draft": {}
+  },
+  "updated_at": 1761188176,
+  "version": "draft",
+  "version_stage": "draft",
+  "workflow_type": "chat"
+}

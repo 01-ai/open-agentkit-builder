@@ -1,0 +1,683 @@
+{
+  "object": "workflow",
+  "created_at": 1761188099,
+  "default_version": null,
+  "edges": [
+    {
+      "id": "xy-edge__node_cq9oe9yjnode_cq9oe9yj-on_pass-node_lsywktvsnode_lsywktvs-target",
+      "source_node_id": "node_cq9oe9yj",
+      "source_port_id": "on_pass",
+      "target_node_id": "node_lsywktvs",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_3b4urjcpnode_3b4urjcp-out-node_cq9oe9yjnode_cq9oe9yj-target",
+      "source_node_id": "node_3b4urjcp",
+      "source_port_id": "out",
+      "target_node_id": "node_cq9oe9yj",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_lsywktvsnode_lsywktvs-on_result-node_qehp8shknode_qehp8shk-target",
+      "source_node_id": "node_lsywktvs",
+      "source_port_id": "on_result",
+      "target_node_id": "node_qehp8shk",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_qehp8shknode_qehp8shk-case-0-node_ggh5jzc4node_ggh5jzc4-target",
+      "source_node_id": "node_qehp8shk",
+      "source_port_id": "case-0",
+      "target_node_id": "node_ggh5jzc4",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_ggh5jzc4node_ggh5jzc4-on_result-node_vvpu1097node_vvpu1097-target",
+      "source_node_id": "node_ggh5jzc4",
+      "source_port_id": "on_result",
+      "target_node_id": "node_vvpu1097",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_qehp8shknode_qehp8shk-case-1-node_ezi86dmwnode_ezi86dmw-target",
+      "source_node_id": "node_qehp8shk",
+      "source_port_id": "case-1",
+      "target_node_id": "node_ezi86dmw",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_ezi86dmwnode_ezi86dmw-on_result-node_36ckgutpnode_36ckgutp-target",
+      "source_node_id": "node_ezi86dmw",
+      "source_port_id": "on_result",
+      "target_node_id": "node_36ckgutp",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_qehp8shknode_qehp8shk-fallback-node_i9m0kmi2node_i9m0kmi2-target",
+      "source_node_id": "node_qehp8shk",
+      "source_port_id": "fallback",
+      "target_node_id": "node_i9m0kmi2",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_cq9oe9yjnode_cq9oe9yj-on_fail-node_2cfz3wkmnode_2cfz3wkm-target",
+      "source_node_id": "node_cq9oe9yj",
+      "source_port_id": "on_fail",
+      "target_node_id": "node_2cfz3wkm",
+      "target_port_id": "in"
+    }
+  ],
+  "highest_version": null,
+  "input_variable_json_schema": {
+    "type": "object",
+    "properties": {
+      "input_as_text": {
+        "type": "string"
+      }
+    },
+    "required": ["input_as_text"],
+    "additionalProperties": false
+  },
+  "is_default": false,
+  "is_moderation_flagged": false,
+  "label": "New workflow",
+  "moderation_flagged_categories": null,
+  "moderation_violations": null,
+  "name": "New workflow",
+  "nodes": [
+    {
+      "id": "node_3b4urjcp",
+      "label": "Start",
+      "node_type": "builtins.Start"
+    },
+    {
+      "id": "node_cq9oe9yj",
+      "config": {
+        "continue_on_error": false,
+        "expr": {
+          "expression": "workflow.input_as_text",
+          "format": "cel"
+        },
+        "guardrails": [
+          {
+            "type": "moderation",
+            "config": {
+              "categories": [
+                "sexual",
+                "sexual/minors",
+                "hate",
+                "hate/threatening",
+                "harassment",
+                "harassment/threatening",
+                "self-harm",
+                "self-harm/intent",
+                "self-harm/instructions",
+                "violence",
+                "violence/graphic",
+                "illicit",
+                "illicit/violent"
+              ]
+            }
+          }
+        ]
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false,
+          "required": []
+        },
+        "additionalProperties": false
+      },
+      "label": "Guardrails",
+      "node_type": "builtins.Guardrails"
+    },
+    {
+      "id": "node_lsywktvs",
+      "config": {
+        "hidden_properties": null,
+        "instructions": {
+          "expression": "\"You classify a user\u2019s natural language question into a domain. Choose exactly one: \\\"commerce\\\" | \\\"personnel\\\" | \\\"other\\\".\\n\\nDomains:\\n\u2022 commerce \u2014 Retail/transactions about shoppers and purchases. Sample tables: customer (country_code, age_bracket, gender), merchant (merchant_category), payment_method (payment_type), date (date), purchase (status, total_amount_usd, gross_amount, discount_amount, tax_amount, channel, event_ts). Typical query intents: GMV/revenue/orders/AOV; countries, merchant categories, payment types (BNPL/wallet/card); time ranges (\u201clast 30 days\u201d); refunds/chargebacks.\\n\\n\u2022 personnel \u2014 HR/finance about employees, compensation, benefits, and attendance. Sample tables: employee (employment_status, pay_type, flsa_status, base_salary_amount), department (department_name), job (job_title, job_level), location (country_code), date (date), payroll (hours_overtime, base_pay_amount, bonus_amount, employer_benefit_cost_amount), benefits_enrollment (benefit_type, coverage_tier, employer_premium_amount). Typical query intents: headcount, overtime costs, payroll/benefits spend, absences by department.\\n\\nIf the query does not fit either domain, select \\\"other\\\". \"",
+          "format": "cel"
+        },
+        "messages": [],
+        "model": {
+          "expression": "\"gpt-5\"",
+          "format": "cel"
+        },
+        "reads_from_history": true,
+        "reasoning": {
+          "effort": "minimal",
+          "summary": null
+        },
+        "show_progress_to_user": true,
+        "text": {
+          "format": {
+            "name": "domain_selection_response",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "domain": {
+                  "type": "string",
+                  "enum": ["commerce", "personnel", "other"],
+                  "default": ""
+                }
+              },
+              "additionalProperties": false,
+              "required": ["domain"],
+              "title": "domain_selection_response"
+            },
+            "type": "json_schema",
+            "strict": true
+          },
+          "verbosity": "medium"
+        },
+        "tools": [],
+        "user_visible": true,
+        "variable_mapping": [],
+        "writes_to_history": true
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false,
+          "required": []
+        },
+        "additionalProperties": false
+      },
+      "label": "Select domain",
+      "node_type": "builtins.Agent"
+    },
+    {
+      "id": "node_qehp8shk",
+      "config": {
+        "cases": [
+          {
+            "label": "case-0",
+            "output_port_id": "case-0",
+            "predicate": {
+              "expression": "input.output_parsed.domain == \"commerce\"",
+              "format": "cel"
+            }
+          },
+          {
+            "label": "case-1",
+            "output_port_id": "case-1",
+            "predicate": {
+              "expression": "input.output_parsed.domain == \"personnel\"",
+              "format": "cel"
+            }
+          }
+        ],
+        "fallback": {
+          "label": "fallback",
+          "output_port_id": "fallback"
+        }
+      },
+      "label": "Condition",
+      "node_type": "builtins.IfElse"
+    },
+    {
+      "id": "node_ggh5jzc4",
+      "config": {
+        "hidden_properties": null,
+        "instructions": {
+          "expression": "\"You are a translator between natural language and domain-specific language for queries related to commerce (customers and products). \\n\\nYour role is to transform a natural-language analytics request into a single, correct, executable domain query using only what is declared in the provided full_ontology. The full_ontology is YAML that defines entities, columns, foreign keys, measures, semantic_layer metrics/dimensions, reference_views, and validation_rules.\\n\\nYou should follow these steps: (1) resolve the user's intent and map the query to specific metrics/dimensions/time, (2) select the right tables and (minimal) joins required to support the query, (3) construct validated SQL/DSL with safe defaults. \\n\\nDo not invent schema - follow the explicit schema defined below.\\n\\n<full_ontology>\\nversion: 1.0\\nnamespace: commerce_ontology\\n\\nenums:\\n  gender: [male, female, non_binary, unspecified, prefer_not_to_say]\\n  payment_type: [card, wallet, bank_transfer, bnpl, cash, gift_card, other]\\n  card_network: [visa, mastercard, amex, discover, unionpay, jcb, other]\\n  merchant_category:\\n    - grocery\\n    - restaurant\\n    - apparel\\n    - electronics\\n    - fuel\\n    - travel\\n    - marketplace\\n    - subscription\\n    - digital_goods\\n    - services\\n  purchase_status: [authorized, captured, refunded, chargeback, voided, failed]\\n  age_bracket: [\\\"<18\\\",\\\"18-24\\\",\\\"25-34\\\",\\\"35-44\\\",\\\"45-54\\\",\\\"55-64\\\",\\\"65+\\\",\\\"unknown\\\"]\\n  income_bracket_usd: [\\\"<25k\\\",\\\"25k-50k\\\",\\\"50k-75k\\\",\\\"75k-100k\\\",\\\"100k-150k\\\",\\\"150k-250k\\\",\\\">250k\\\",\\\"unknown\\\"]\\n  customer_segment: [new, active, lapsing, churned, vip, employee, test]\\n\\nentities:\\n  customer:\\n    grain: one_row_per_customer_version\\n    table: dim.customer\\n    keys:\\n      primary: customer_sk\\n      natural: customer_id_nk\\n    scd2:\\n      valid_from_ts: valid_from_ts\\n      valid_to_ts: valid_to_ts\\n      is_current: is_current\\n    columns:\\n      customer_sk: {type: BIGINT, nullable: false}\\n      customer_id_nk: {type: STRING, nullable: false}\\n      created_ts: {type: TIMESTAMP, nullable: false}\\n      valid_from_ts: {type: TIMESTAMP, nullable: false}\\n      valid_to_ts: {type: TIMESTAMP, nullable: true}\\n      is_current: {type: BOOLEAN, nullable: false}\\n      first_name: {type: STRING}\\n      last_name: {type: STRING}\\n      full_name: {type: STRING, generated: \\\"concat_ws(' ', first_name, last_name)\\\"}\\n      email: {type: STRING}\\n      phone_e164: {type: STRING}\\n      date_of_birth: {type: DATE}\\n      gender: {type: ENUM(gender)}\\n      address_line1: {type: STRING}\\n      address_line2: {type: STRING}\\n      city: {type: STRING}\\n      region_code: {type: STRING}\\n      postal_code: {type: STRING}\\n      country_code: {type: STRING(2)}\\n      latitude: {type: DECIMAL(9,6)}\\n      longitude: {type: DECIMAL(9,6)}\\n      demographic_profile_json: {type: JSON}\\n      age_bracket: {type: ENUM(age_bracket), generated: \\\"bucket_from_dob(date_of_birth)\\\"}\\n      household_income_bracket: {type: ENUM(income_bracket_usd)}\\n      preferred_currency: {type: STRING(3), default: \\\"USD\\\"}\\n      segment: {type: ENUM(customer_segment)}\\n      consent_marketing: {type: BOOLEAN}\\n      consent_personalization: {type: BOOLEAN}\\n      consent_updated_ts: {type: TIMESTAMP}\\n      acquisition_channel: {type: STRING}\\n      acquisition_campaign_id: {type: STRING}\\n      referrer_customer_id_nk: {type: STRING}\\n      lifecycle_stage: {type: STRING}\\n      deletion_requested_ts: {type: TIMESTAMP, nullable: true}\\n      gdpr_erasure_ts: {type: TIMESTAMP, nullable: true}\\n    indexes:\\n      - [customer_id_nk]\\n      - [email]\\n      - [country_code, region_code]\\n    lineage:\\n      sources: [crm.customers, auth.users, marketing.consent_logs]\\n\\n  merchant:\\n    grain: one_row_per_merchant\\n    table: dim.merchant\\n    keys:\\n      primary: merchant_sk\\n      natural: merchant_id_nk\\n    columns:\\n      merchant_sk: {type: BIGINT, nullable: false}\\n      merchant_id_nk: {type: STRING, nullable: false}\\n      merchant_name: {type: STRING}\\n      merchant_domain: {type: STRING}\\n      merchant_category: {type: ENUM(merchant_category)}\\n      mcc: {type: STRING(4)}\\n      country_code: {type: STRING(2)}\\n      region_code: {type: STRING}\\n      marketplace_flag: {type: BOOLEAN}\\n    indexes:\\n      - [merchant_id_nk]\\n      - [merchant_category]\\n\\n  payment_method:\\n    grain: one_row_per_customer_payment_profile\\n    table: dim.payment_method\\n    keys:\\n      primary: payment_method_sk\\n      natural: payment_method_id_nk\\n    columns:\\n      payment_method_sk: {type: BIGINT, nullable: false}\\n      payment_method_id_nk: {type: STRING, nullable: false}\\n      customer_sk_fk: {type: BIGINT, ref: dim.customer.customer_sk}\\n      payment_type: {type: ENUM(payment_type)}\\n      card_network: {type: ENUM(card_network), nullable: true}\\n      card_last4: {type: STRING(4)}\\n      issuer_country_code: {type: STRING(2)}\\n      wallet_provider: {type: STRING, nullable: true}\\n      bnpl_provider: {type: STRING, nullable: true}\\n      activated_ts: {type: TIMESTAMP}\\n      deactivated_ts: {type: TIMESTAMP}\\n      is_active: {type: BOOLEAN}\\n    indexes:\\n      - [customer_sk_fk, is_active]\\n\\n  date:\\n    grain: one_row_per_date\\n    table: dim.date\\n    keys: {primary: date_sk}\\n    columns:\\n      date_sk: {type: INT}\\n      date: {type: DATE}\\n      day_of_week: {type: TINYINT}\\n      week: {type: TINYINT}\\n      month: {type: TINYINT}\\n      quarter: {type: TINYINT}\\n      year: {type: SMALLINT}\\n      is_weekend: {type: BOOLEAN}\\n      iso_week_year: {type: SMALLINT}\\n      iso_week: {type: TINYINT}\\n\\n  fact_purchase:\\n    grain: one_row_per_purchase_event\\n    table: fact.purchase\\n    keys:\\n      primary: purchase_sk\\n      natural: purchase_id_nk\\n    foreign_keys:\\n      customer_sk_fk: dim.customer.customer_sk\\n      merchant_sk_fk: dim.merchant.merchant_sk\\n      payment_method_sk_fk: dim.payment_method.payment_method_sk\\n      purchase_date_sk_fk: dim.date.date_sk\\n    columns:\\n      purchase_sk: {type: BIGINT, nullable: false}\\n      purchase_id_nk: {type: STRING, nullable: false}\\n      event_ts: {type: TIMESTAMP, nullable: false}\\n      purchase_date_sk_fk: {type: INT, nullable: false}\\n      customer_sk_fk: {type: BIGINT, nullable: false}\\n      merchant_sk_fk: {type: BIGINT, nullable: false}\\n      payment_method_sk_fk: {type: BIGINT, nullable: true}\\n      status: {type: ENUM(purchase_status), nullable: false}\\n      line_count: {type: INT, default: 1}\\n      gross_amount: {type: DECIMAL(38,6), nullable: false}\\n      tax_amount: {type: DECIMAL(38,6), nullable: true}\\n      discount_amount: {type: DECIMAL(38,6), nullable: true}\\n      shipping_amount: {type: DECIMAL(38,6), nullable: true}\\n      total_amount: {type: DECIMAL(38,6), nullable: false, definition: \\\"gross - discount + tax + shipping\\\"}\\n      currency: {type: STRING(3), nullable: false}\\n      total_amount_usd: {type: DECIMAL(38,6), nullable: false, definition: \\\"fx_convert(total_amount, currency, 'USD', event_ts)\\\"}\\n      item_category: {type: STRING, nullable: true}\\n      is_subscription: {type: BOOLEAN, default: false}\\n      subscription_id_nk: {type: STRING, nullable: true}\\n      auth_ts: {type: TIMESTAMP, nullable: true}\\n      capture_ts: {type: TIMESTAMP, nullable: true}\\n      refund_ts: {type: TIMESTAMP, nullable: true}\\n      chargeback_ts: {type: TIMESTAMP, nullable: true}\\n      merchant_order_id: {type: STRING, nullable: true}\\n      device_type: {type: STRING, nullable: true}\\n      channel: {type: STRING, nullable: true}\\n      country_code_snapshot: {type: STRING(2)}\\n    measures:\\n      gmv: {expr: \\\"CASE WHEN status IN ('captured','refunded','chargeback') THEN total_amount_usd ELSE 0 END\\\", type: DECIMAL}\\n      net_revenue: {expr: \\\"CASE WHEN status='captured' THEN total_amount_usd WHEN status='refunded' THEN -ABS(total_amount_usd) ELSE 0 END\\\", type: DECIMAL}\\n      orders: {expr: \\\"CASE WHEN status IN ('captured','refunded','chargeback') THEN 1 ELSE 0 END\\\", type: BIGINT}\\n    indexes:\\n      - [customer_sk_fk, event_ts]\\n      - [merchant_sk_fk, event_ts]\\n      - [status, event_ts]\\n</full_ontology>\"",
+          "format": "cel"
+        },
+        "messages": [],
+        "model": {
+          "expression": "\"gpt-5\"",
+          "format": "cel"
+        },
+        "reads_from_history": true,
+        "reasoning": {
+          "effort": "low",
+          "summary": null
+        },
+        "show_progress_to_user": true,
+        "text": {
+          "format": {
+            "type": "text"
+          },
+          "verbosity": "medium"
+        },
+        "tools": [],
+        "user_visible": true,
+        "variable_mapping": [],
+        "writes_to_history": true
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false,
+          "required": []
+        },
+        "additionalProperties": false
+      },
+      "label": "Create commerce query",
+      "node_type": "builtins.Agent"
+    },
+    {
+      "id": "node_vvpu1097",
+      "config": {
+        "hidden_properties": null,
+        "instructions": {
+          "expression": "\"Your role is to return dummy data relating to a query about shoppers and purchases. For the dummy data, assume an e-commerce company with thousands of customers that make purchase across common retailers such as department stores, grocery stores, and gas stations.\\n\\nBased on the input query, return structured data representing the fictitious query results. Your  results can be in any format.\\n\\nDouble check that the results are not null or empty. You should return results for any query input.\"",
+          "format": "cel"
+        },
+        "messages": [],
+        "model": {
+          "expression": "\"gpt-5\"",
+          "format": "cel"
+        },
+        "reads_from_history": true,
+        "reasoning": {
+          "effort": "low",
+          "summary": null
+        },
+        "show_progress_to_user": true,
+        "text": {
+          "format": {
+            "type": "text"
+          },
+          "verbosity": "medium"
+        },
+        "tools": [],
+        "user_visible": true,
+        "variable_mapping": [],
+        "writes_to_history": true
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false,
+          "required": []
+        },
+        "additionalProperties": false
+      },
+      "label": "Execute commerce query",
+      "node_type": "builtins.Agent"
+    },
+    {
+      "id": "node_ezi86dmw",
+      "config": {
+        "hidden_properties": null,
+        "instructions": {
+          "expression": "\"You are a translator between natural language and domain-specific language for queries related to personnel (employees, compensation, benefits, and attendance). \\n\\nYour role is to transform a natural-language analytics request into a single, correct, executable domain query using only what is declared in the provided full_ontology. The full_ontology is YAML that defines entities, columns, foreign keys, measures, semantic_layer metrics/dimensions, reference_views, and validation_rules.\\n\\nYou should follow these steps: (1) resolve the user's intent and map the query to specific metrics/dimensions/time, (2) select the right tables and (minimal) joins required to support the query, (3) construct validated SQL/DSL with safe defaults. \\n\\nDo not invent schema - follow the explicit schema defined below.\\n\\n<full_ontology>\\nversion: 1.0\\nnamespace: hr_finance_ontology\\n\\nenums:\\n  gender: [male, female, non_binary, unspecified, prefer_not_to_say]\\n  employment_status: [active, leave, terminated, retired, contractor, intern]\\n  pay_type: [salary, hourly, contractor, intern, stipend]\\n  pay_frequency: [weekly, biweekly, semimonthly, monthly, adhoc]\\n  flsa_status: [exempt, non_exempt]\\n  benefit_type: [medical, dental, vision, life, disability, retirement, commuter, wellness, other]\\n  coverage_tier: [employee_only, employee_spouse, employee_children, family, opt_out]\\n  attendance_event: [work, overtime, leave_paid, leave_unpaid, holiday, training]\\n  leave_type: [pto, sick, parental, bereavement, jury_duty, unpaid, other]\\n  headcount_event_type: [hire, termination, transfer, promotion, demotion, salary_change, department_change]\\n  currency: [USD, EUR, GBP, CAD, AUD, JPY, INR, CNY, MXN, BRL, other]\\n\\nentities:\\n  employee:\\n    grain: one_row_per_employee_version\\n    table: dim.employee\\n    keys:\\n      primary: employee_sk\\n      natural: employee_id_nk\\n    scd2:\\n      valid_from_ts: valid_from_ts\\n      valid_to_ts: valid_to_ts\\n      is_current: is_current\\n    columns:\\n      employee_sk: {type: BIGINT, nullable: false}\\n      employee_id_nk: {type: STRING, nullable: false}\\n      created_ts: {type: TIMESTAMP, nullable: false}\\n      valid_from_ts: {type: TIMESTAMP, nullable: false}\\n      valid_to_ts: {type: TIMESTAMP, nullable: true}\\n      is_current: {type: BOOLEAN, nullable: false}\\n      first_name: {type: STRING}\\n      last_name: {type: STRING}\\n      full_name: {type: STRING, generated: \\\"concat_ws(' ', first_name, last_name)\\\"}\\n      email: {type: STRING}\\n      date_of_birth: {type: DATE}\\n      gender: {type: ENUM(gender)}\\n      employment_status: {type: ENUM(employment_status)}\\n      hire_date: {type: DATE}\\n      termination_date: {type: DATE, nullable: true}\\n      pay_type: {type: ENUM(pay_type)}\\n      pay_frequency: {type: ENUM(pay_frequency)}\\n      flsa_status: {type: ENUM(flsa_status)}\\n      base_salary_amount: {type: DECIMAL(38,6), nullable: true}\\n      base_salary_currency: {type: ENUM(currency), nullable: true}\\n      base_salary_amount_usd: {type: DECIMAL(38,6), nullable: true}\\n      manager_employee_id_nk: {type: STRING, nullable: true}\\n      department_sk_fk: {type: BIGINT}\\n      job_sk_fk: {type: BIGINT}\\n      location_sk_fk: {type: BIGINT}\\n      cost_center_code: {type: STRING}\\n      union_member_flag: {type: BOOLEAN}\\n      remote_flag: {type: BOOLEAN}\\n    indexes:\\n      - [employee_id_nk]\\n      - [department_sk_fk, employment_status]\\n    lineage:\\n      sources: [hris.employees, ats.hires, it.directory]\\n\\n  department:\\n    grain: one_row_per_department\\n    table: dim.department\\n    keys:\\n      primary: department_sk\\n      natural: department_id_nk\\n    columns:\\n      department_sk: {type: BIGINT, nullable: false}\\n      department_id_nk: {type: STRING, nullable: false}\\n      department_name: {type: STRING}\\n      division_name: {type: STRING}\\n      cost_center_code: {type: STRING}\\n      parent_department_id_nk: {type: STRING, nullable: true}\\n    indexes:\\n      - [department_id_nk]\\n      - [division_name]\\n\\n  job:\\n    grain: one_row_per_job\\n    table: dim.job\\n    keys:\\n      primary: job_sk\\n      natural: job_code_nk\\n    columns:\\n      job_sk: {type: BIGINT, nullable: false}\\n      job_code_nk: {type: STRING, nullable: false}\\n      job_title: {type: STRING}\\n      job_family: {type: STRING}\\n      job_level: {type: STRING}\\n      grade: {type: STRING}\\n      standard_hours_per_week: {type: DECIMAL(10,2)}\\n    indexes:\\n      - [job_code_nk]\\n      - [job_family, job_level]\\n\\n  location:\\n    grain: one_row_per_location\\n    table: dim.location\\n    keys:\\n      primary: location_sk\\n      natural: location_code_nk\\n    columns:\\n      location_sk: {type: BIGINT, nullable: false}\\n      location_code_nk: {type: STRING, nullable: false}\\n      site_name: {type: STRING}\\n      country_code: {type: STRING(2)}\\n      region_code: {type: STRING}\\n      city: {type: STRING}\\n      postal_code: {type: STRING}\\n      timezone: {type: STRING}\\n      onsite_flag: {type: BOOLEAN}\\n    indexes:\\n      - [country_code, region_code]\\n\\n  benefits_plan:\\n    grain: one_row_per_benefit_plan\\n    table: dim.benefits_plan\\n    keys:\\n      primary: benefits_plan_sk\\n      natural: benefits_plan_id_nk\\n    columns:\\n      benefits_plan_sk: {type: BIGINT, nullable: false}\\n      benefits_plan_id_nk: {type: STRING, nullable: false}\\n      benefit_type: {type: ENUM(benefit_type)}\\n      plan_name: {type: STRING}\\n      coverage_tier: {type: ENUM(coverage_tier)}\\n      provider_name: {type: STRING}\\n      employer_contrib_pct: {type: DECIMAL(10,4), nullable: true}\\n      employee_contrib_pct: {type: DECIMAL(10,4), nullable: true}\\n\\n  date:\\n    grain: one_row_per_date\\n    table: dim.date\\n    keys: {primary: date_sk}\\n    columns:\\n      date_sk: {type: INT}\\n      date: {type: DATE}\\n      day_of_week: {type: TINYINT}\\n      week: {type: TINYINT}\\n      month: {type: TINYINT}\\n      quarter: {type: TINYINT}\\n      year: {type: SMALLINT}\\n      is_weekend: {type: BOOLEAN}\\n      iso_week_year: {type: SMALLINT}\\n      iso_week: {type: TINYINT}\\n\\n  fact_payroll:\\n    grain: one_row_per_employee_pay_period\\n    table: fact.payroll\\n    keys:\\n      primary: payroll_sk\\n      natural: payroll_run_id_nk\\n    foreign_keys:\\n      employee_sk_fk: dim.employee.employee_sk\\n      department_sk_fk: dim.department.department_sk\\n      job_sk_fk: dim.job.job_sk\\n      location_sk_fk: dim.location.location_sk\\n      pay_period_start_date_sk_fk: dim.date.date_sk\\n      pay_period_end_date_sk_fk: dim.date.date_sk\\n      pay_date_sk_fk: dim.date.date_sk\\n    columns:\\n      payroll_sk: {type: BIGINT, nullable: false}\\n      payroll_run_id_nk: {type: STRING, nullable: false}\\n      employee_sk_fk: {type: BIGINT, nullable: false}\\n      department_sk_fk: {type: BIGINT, nullable: false}\\n      job_sk_fk: {type: BIGINT, nullable: false}\\n      location_sk_fk: {type: BIGINT, nullable: false}\\n      pay_period_start_date_sk_fk: {type: INT, nullable: false}\\n      pay_period_end_date_sk_fk: {type: INT, nullable: false}\\n      pay_date_sk_fk: {type: INT, nullable: false}\\n      hours_regular: {type: DECIMAL(10,2), nullable: true}\\n      hours_overtime: {type: DECIMAL(10,2), nullable: true}\\n      overtime_multiplier: {type: DECIMAL(10,4), nullable: true}\\n      base_pay_amount: {type: DECIMAL(38,6), nullable: true}\\n      overtime_pay_amount: {type: DECIMAL(38,6), nullable: true}\\n      bonus_amount: {type: DECIMAL(38,6), nullable: true}\\n      commission_amount: {type: DECIMAL(38,6), nullable: true}\\n      employer_tax_amount: {type: DECIMAL(38,6), nullable: true}\\n      employer_benefit_cost_amount: {type: DECIMAL(38,6), nullable: true}\\n      employee_deduction_amount: {type: DECIMAL(38,6), nullable: true}\\n      gross_pay_amount: {type: DECIMAL(38,6), nullable: true}\\n      net_pay_amount: {type: DECIMAL(38,6), nullable: true}\\n      currency: {type: ENUM(currency), nullable: false}\\n      total_cost_amount_usd: {type: DECIMAL(38,6), definition: \\\"base_pay_amount + overtime_pay_amount + bonus_amount + commission_amount + employer_tax_amount + employer_benefit_cost_amount (FX\u2192USD)\\\"}\\n      overtime_cost_amount_usd: {type: DECIMAL(38,6), definition: \\\"overtime_pay_amount (FX\u2192USD)\\\"}\\n    measures:\\n      payroll_cost_usd: {expr: \\\"COALESCE(total_cost_amount_usd,0)\\\", type: DECIMAL}\\n      overtime_cost_usd: {expr: \\\"COALESCE(overtime_cost_amount_usd,0)\\\", type: DECIMAL}\\n      base_pay_usd: {expr: \\\"COALESCE(base_pay_amount,0)\\\", type: DECIMAL}\\n      bonus_usd: {expr: \\\"COALESCE(bonus_amount,0)\\\", type: DECIMAL}\\n      commission_usd: {expr: \\\"COALESCE(commission_amount,0)\\\", type: DECIMAL}\\n      employer_benefits_usd: {expr: \\\"COALESCE(employer_benefit_cost_amount,0)\\\", type: DECIMAL}\\n      hours_regular: {expr: \\\"COALESCE(hours_regular,0)\\\", type: DECIMAL}\\n      hours_overtime: {expr: \\\"COALESCE(hours_overtime,0)\\\", type: DECIMAL}\\n    indexes:\\n      - [employee_sk_fk, pay_date_sk_fk]\\n      - [department_sk_fk, pay_date_sk_fk]\\n\\n  fact_time_attendance:\\n    grain: one_row_per_employee_per_day\\n    table: fact.time_attendance\\n    keys:\\n      primary: attendance_sk\\n      natural: attendance_id_nk\\n    foreign_keys:\\n      employee_sk_fk: dim.employee.employee_sk\\n      department_sk_fk: dim.department.department_sk\\n      job_sk_fk: dim.job.job_sk\\n      location_sk_fk: dim.location.location_sk\\n      work_date_sk_fk: dim.date.date_sk\\n    columns:\\n      attendance_sk: {type: BIGINT, nullable: false}\\n      attendance_id_nk: {type: STRING, nullable: false}\\n      employee_sk_fk: {type: BIGINT, nullable: false}\\n      department_sk_fk: {type: BIGINT, nullable: false}\\n      job_sk_fk: {type: BIGINT, nullable: false}\\n      location_sk_fk: {type: BIGINT, nullable: false}\\n      work_date_sk_fk: {type: INT, nullable: false}\\n      event_type: {type: ENUM(attendance_event), nullable: false}\\n      leave_type: {type: ENUM(leave_type), nullable: true}\\n      scheduled_hours: {type: DECIMAL(10,2), nullable: true}\\n      worked_hours: {type: DECIMAL(10,2), nullable: true}\\n      overtime_hours: {type: DECIMAL(10,2), nullable: true}\\n      oncall_hours: {type: DECIMAL(10,2), nullable: true}\\n      absence_flag: {type: BOOLEAN, default: false}\\n      tardy_minutes: {type: INT, nullable: true}\\n    measures:\\n      days_present: {expr: \\\"CASE WHEN event_type IN ('work','overtime','training') AND worked_hours>0 THEN 1 ELSE 0 END\\\", type: BIGINT}\\n      days_absent: {expr: \\\"CASE WHEN absence_flag THEN 1 ELSE 0 END\\\", type: BIGINT}\\n      overtime_hours: {expr: \\\"COALESCE(overtime_hours,0)\\\", type: DECIMAL}\\n    indexes:\\n      - [employee_sk_fk, work_date_sk_fk]\\n      - [department_sk_fk, work_date_sk_fk]\\n\\n  fact_benefits_enrollment:\\n    grain: one_row_per_employee_plan_period\\n    table: fact.benefits_enrollment\\n    keys:\\n      primary: enrollment_sk\\n      natural: enrollment_id_nk\\n    foreign_keys:\\n      employee_sk_fk: dim.employee.employee_sk\\n      benefits_plan_sk_fk: dim.benefits_plan.benefits_plan_sk\\n      coverage_start_date_sk_fk: dim.date.date_sk\\n      coverage_end_date_sk_fk: dim.date.date_sk\\n    columns:\\n      enrollment_sk: {type: BIGINT, nullable: false}\\n      enrollment_id_nk: {type: STRING, nullable: false}\\n      employee_sk_fk: {type: BIGINT, nullable: false}\\n      benefits_plan_sk_fk: {type: BIGINT, nullable: false}\\n      coverage_start_date_sk_fk: {type: INT, nullable: false}\\n      coverage_end_date_sk_fk: {type: INT, nullable: true}\\n      benefit_type: {type: ENUM(benefit_type), nullable: false}\\n      coverage_tier: {type: ENUM(coverage_tier), nullable: false}\\n      employee_premium_amount: {type: DECIMAL(38,6), nullable: true}\\n      employer_premium_amount: {type: DECIMAL(38,6), nullable: true}\\n      currency: {type: ENUM(currency), nullable: false}\\n      employee_premium_amount_usd: {type: DECIMAL(38,6)}\\n      employer_premium_amount_usd: {type: DECIMAL(38,6)}\\n    measures:\\n      employee_premium_usd: {expr: \\\"COALESCE(employee_premium_amount_usd,0)\\\", type: DECIMAL}\\n      employer_premium_usd: {expr: \\\"COALESCE(employer_premium_amount_usd,0)\\\", type: DECIMAL}\\n    indexes:\\n      - [employee_sk_fk, benefits_plan_sk_fk, coverage_start_date_sk_fk]\\n\\n  fact_headcount_event:\\n    grain: one_row_per_employee_event\\n    table: fact.headcount_event\\n    keys:\\n      primary: hc_event_sk\\n      natural: hc_event_id_nk\\n    foreign_keys:\\n      employee_sk_fk: dim.employee.employee_sk\\n      department_sk_fk: dim.department.department_sk\\n      job_sk_fk: dim.job.job_sk\\n      location_sk_fk: dim.location.location_sk\\n      event_date_sk_fk: dim.date.date_sk\\n    columns:\\n      hc_event_sk: {type: BIGINT, nullable: false}\\n      hc_event_id_nk: {type: STRING, nullable: false}\\n      employee_sk_fk: {type: BIGINT, nullable: false}\\n      department_sk_fk: {type: BIGINT, nullable: false}\\n      job_sk_fk: {type: BIGINT, nullable: false}\\n      location_sk_fk: {type: BIGINT, nullable: false}\\n      event_date_sk_fk: {type: INT, nullable: false}\\n      event_type: {type: ENUM(headcount_event_type), nullable: false}\\n      old_department_sk_fk: {type: BIGINT, nullable: true}\\n      new_department_sk_fk: {type: BIGINT, nullable: true}\\n      old_job_sk_fk: {type: BIGINT, nullable: true}\\n      new_job_sk_fk: {type: BIGINT, nullable: true}\\n      comp_change_amount_usd: {type: DECIMAL(38,6), nullable: true}\\n    measures:\\n      hires: {expr: \\\"CASE WHEN event_type='hire' THEN 1 ELSE 0 END\\\", type: BIGINT}\\n      terminations: {expr: \\\"CASE WHEN event_type='termination' THEN 1 ELSE 0 END\\\", type: BIGINT}\\n    indexes:\\n      - [department_sk_fk, event_date_sk_fk]\\n      - [event_type, event_date_sk_fk]\\n</full_ontology>\\n\\nBased on the input query, return structured data representing the fictitious query results. Your  results can be in any format.\\n\\nDouble check that the results are not null or empty. You should return results for any query input.\"",
+          "format": "cel"
+        },
+        "messages": [],
+        "model": {
+          "expression": "\"gpt-5\"",
+          "format": "cel"
+        },
+        "reads_from_history": true,
+        "reasoning": {
+          "effort": "low",
+          "summary": null
+        },
+        "show_progress_to_user": true,
+        "text": {
+          "format": {
+            "type": "text"
+          },
+          "verbosity": "medium"
+        },
+        "tools": [],
+        "user_visible": true,
+        "variable_mapping": [],
+        "writes_to_history": true
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false,
+          "required": []
+        },
+        "additionalProperties": false
+      },
+      "label": "Create personnel query",
+      "node_type": "builtins.Agent"
+    },
+    {
+      "id": "node_36ckgutp",
+      "config": {
+        "hidden_properties": null,
+        "instructions": {
+          "expression": "\"Your role is to return dummy data relating to a query about personnel (employees, compensation, benefits, and attendance). For the dummy data, assume a medium-sized company with several hundred employees, organized across different geographies, departments, job functions, seniority levels.\\n\\nBased on the input query, return structured data representing the fictitious query results. Your  results can be in any format.\\n\\nDouble check that the results are not null or empty. You should return results for any query input.\\n\\nBased on the input query, return structured data representing the fictitious query results. Your  results can be in any format.\\n\\nDouble check that the results are not null or empty. You should return results for any query input.\"",
+          "format": "cel"
+        },
+        "messages": [],
+        "model": {
+          "expression": "\"gpt-5\"",
+          "format": "cel"
+        },
+        "reads_from_history": true,
+        "reasoning": {
+          "effort": "low",
+          "summary": null
+        },
+        "show_progress_to_user": true,
+        "text": {
+          "format": {
+            "type": "text"
+          },
+          "verbosity": "medium"
+        },
+        "tools": [],
+        "user_visible": true,
+        "variable_mapping": [],
+        "writes_to_history": true
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false,
+          "required": []
+        },
+        "additionalProperties": false
+      },
+      "label": "Execute personnel query",
+      "node_type": "builtins.Agent"
+    },
+    {
+      "id": "node_i9m0kmi2",
+      "config": {
+        "expr": {
+          "expression": "{\"output_parsed\": {\"domain\": input.output_parsed.domain}}",
+          "format": "cel"
+        }
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {
+            "output_parsed": {
+              "type": "object",
+              "properties": {
+                "domain": {
+                  "type": "string",
+                  "enum": ["commerce", "personnel", "other"],
+                  "default": ""
+                }
+              },
+              "additionalProperties": false,
+              "required": ["domain", "domain"]
+            }
+          },
+          "additionalProperties": false,
+          "required": ["output_parsed"]
+        },
+        "additionalProperties": false
+      },
+      "label": "End",
+      "node_type": "builtins.End"
+    },
+    {
+      "id": "node_2cfz3wkm",
+      "config": {
+        "expr": {
+          "expression": "{\"input_text\": input.input_text, \"guardrails\": {\"pii\": {\"failed\": input.guardrails.pii.failed, \"detected_counts\": input.guardrails.pii.detected_counts}, \"moderation\": {\"failed\": input.guardrails.moderation.failed, \"flagged_categories\": input.guardrails.moderation.flagged_categories}, \"jailbreak\": {\"failed\": input.guardrails.jailbreak.failed}, \"hallucination\": {\"failed\": input.guardrails.hallucination.failed, \"reasoning\": input.guardrails.hallucination.reasoning, \"hallucination_type\": input.guardrails.hallucination.hallucination_type, \"hallucinated_statements\": input.guardrails.hallucination.hallucinated_statements}}}",
+          "format": "cel"
+        }
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {
+            "input_text": {
+              "type": "string"
+            },
+            "guardrails": {
+              "type": "object",
+              "properties": {
+                "pii": {
+                  "type": "object",
+                  "properties": {
+                    "failed": {
+                      "type": "boolean"
+                    },
+                    "detected_counts": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                "moderation": {
+                  "type": "object",
+                  "properties": {
+                    "failed": {
+                      "type": "boolean"
+                    },
+                    "flagged_categories": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                "jailbreak": {
+                  "type": "object",
+                  "properties": {
+                    "failed": {
+                      "type": "boolean"
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                "hallucination": {
+                  "type": "object",
+                  "properties": {
+                    "failed": {
+                      "type": "boolean"
+                    },
+                    "reasoning": {
+                      "type": "string"
+                    },
+                    "hallucination_type": {
+                      "type": "string"
+                    },
+                    "hallucinated_statements": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "required": ["input_text", "guardrails"],
+          "additionalProperties": false
+        },
+        "additionalProperties": false
+      },
+      "label": "End",
+      "node_type": "builtins.End"
+    }
+  ],
+  "start_node_id": "node_3b4urjcp",
+  "state_variable_json_schema": {
+    "type": "object",
+    "properties": {},
+    "required": [],
+    "additionalProperties": false
+  },
+  "state_vars": [],
+  "ui_metadata": {
+    "positionsByNodeId": {
+      "node_3b4urjcp": {
+        "x": -160,
+        "y": 64
+      },
+      "node_cq9oe9yj": {
+        "x": -32,
+        "y": 32
+      },
+      "node_lsywktvs": {
+        "x": 144,
+        "y": 47
+      },
+      "node_qehp8shk": {
+        "x": 320,
+        "y": 16
+      },
+      "node_ggh5jzc4": {
+        "x": 640,
+        "y": 15
+      },
+      "node_vvpu1097": {
+        "x": 880,
+        "y": 15
+      },
+      "node_ezi86dmw": {
+        "x": 640,
+        "y": 81
+      },
+      "node_36ckgutp": {
+        "x": 880,
+        "y": 81
+      },
+      "node_i9m0kmi2": {
+        "x": 640,
+        "y": 160
+      },
+      "node_2cfz3wkm": {
+        "x": 144,
+        "y": 113
+      },
+      "node_4x6ouwv3": {
+        "x": -192,
+        "y": -288
+      },
+      "node_g3nuxbmf": {
+        "x": -32,
+        "y": -96
+      },
+      "node_pavhuggw": {
+        "x": 336,
+        "y": -96
+      },
+      "node_aybfw8e6": {
+        "x": 896,
+        "y": -96
+      },
+      "node_e6c8pjt8": {
+        "x": 640,
+        "y": -96
+      }
+    },
+    "uiNodes": [
+      {
+        "id": "node_4x6ouwv3",
+        "type": "note",
+        "data": {
+          "name": null,
+          "userDefinedPassthroughVariables": [],
+          "text": "An analyst asks a natural-language question. A classifier routes it to the right domain agent, which converts it to a structured query and executes it. A summarizer then returns a plain-language answer, with guardrails on inputs and outputs.\n\n\nExample input: How many orders did we sell in 2015?"
+        }
+      },
+      {
+        "id": "node_g3nuxbmf",
+        "type": "note",
+        "data": {
+          "name": null,
+          "userDefinedPassthroughVariables": [],
+          "text": "Assess if user input violates moderation standards."
+        }
+      },
+      {
+        "id": "node_pavhuggw",
+        "type": "note",
+        "data": {
+          "name": null,
+          "userDefinedPassthroughVariables": [],
+          "text": "Identify query category."
+        }
+      },
+      {
+        "id": "node_aybfw8e6",
+        "type": "note",
+        "data": {
+          "name": null,
+          "userDefinedPassthroughVariables": [],
+          "text": "Execute query."
+        }
+      },
+      {
+        "id": "node_e6c8pjt8",
+        "type": "note",
+        "data": {
+          "name": null,
+          "userDefinedPassthroughVariables": [],
+          "text": "Handle each query distinctly."
+        }
+      }
+    ],
+    "dataByNodeId": {
+      "node_3b4urjcp": {},
+      "node_cq9oe9yj": {},
+      "node_lsywktvs": {
+        "widgetTools": []
+      },
+      "node_qehp8shk": {
+        "caseNames": ["", ""]
+      },
+      "node_ggh5jzc4": {
+        "widgetTools": []
+      },
+      "node_vvpu1097": {
+        "widgetTools": []
+      },
+      "node_ezi86dmw": {
+        "widgetTools": []
+      },
+      "node_36ckgutp": {
+        "widgetTools": []
+      },
+      "node_i9m0kmi2": {
+        "workflowOutput": null
+      },
+      "node_2cfz3wkm": {
+        "workflowOutput": null
+      }
+    },
+    "dimensionsByNodeId": {},
+    "draft": {}
+  },
+  "updated_at": 1761188099,
+  "version": "draft",
+  "version_stage": "draft",
+  "workflow_type": "chat"
+}

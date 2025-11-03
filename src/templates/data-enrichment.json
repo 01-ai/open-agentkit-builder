@@ -1,0 +1,543 @@
+{
+  "object": "workflow",
+  "created_at": 1761113353,
+  "default_version": null,
+  "edges": [
+    {
+      "id": "edge_1bd497ad",
+      "source_node_id": "node_g9yd4vbm",
+      "source_port_id": "out",
+      "target_node_id": "node_jn2x1lnf",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_jn2x1lnfnode_jn2x1lnf-on_result-node_jsk72bannode_jsk72ban-target",
+      "source_node_id": "node_jn2x1lnf",
+      "source_port_id": "on_result",
+      "target_node_id": "node_jsk72ban",
+      "target_port_id": "in"
+    }
+  ],
+  "highest_version": null,
+  "input_variable_json_schema": {
+    "type": "object",
+    "properties": {
+      "input_as_text": {
+        "type": "string"
+      }
+    },
+    "required": ["input_as_text"],
+    "additionalProperties": false
+  },
+  "is_default": false,
+  "is_moderation_flagged": false,
+  "label": "New workflow",
+  "moderation_flagged_categories": null,
+  "moderation_violations": null,
+  "name": "New workflow",
+  "nodes": [
+    {
+      "id": "node_g9yd4vbm",
+      "label": "Start",
+      "node_type": "builtins.Start"
+    },
+    {
+      "id": "node_jn2x1lnf",
+      "config": {
+        "hidden_properties": null,
+        "instructions": {
+          "expression": "\"You are a helpful assistant. Use web search to find information about the following company I can use in marketing asset based on the underlying topic.\"",
+          "format": "cel"
+        },
+        "messages": [],
+        "model": {
+          "expression": "\"gpt-5-mini\"",
+          "format": "cel"
+        },
+        "reads_from_history": true,
+        "reasoning": {
+          "effort": "low",
+          "summary": null
+        },
+        "show_progress_to_user": true,
+        "text": {
+          "format": {
+            "name": "company_info_marketing_batch",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "companies": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "company_name": {
+                        "type": "string",
+                        "description": "The official name of the company.",
+                        "default": ""
+                      },
+                      "industry": {
+                        "type": "string",
+                        "description": "Industry or sector in which the company operates.",
+                        "default": ""
+                      },
+                      "headquarters_location": {
+                        "type": "string",
+                        "description": "Primary city and country of the company's headquarters.",
+                        "default": ""
+                      },
+                      "company_size": {
+                        "type": "string",
+                        "description": "General range of employee count (e.g., '100-500', '5000+').",
+                        "default": ""
+                      },
+                      "website": {
+                        "type": "string",
+                        "description": "Primary URL to the company's website.",
+                        "default": ""
+                      },
+                      "description": {
+                        "type": "string",
+                        "description": "Brief overview of the company's activities, services, or products.",
+                        "default": ""
+                      },
+                      "founded_year": {
+                        "type": "number",
+                        "description": "Year the company was founded."
+                      }
+                    },
+                    "required": [
+                      "company_name",
+                      "industry",
+                      "headquarters_location",
+                      "company_size",
+                      "website",
+                      "description",
+                      "founded_year"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "description": "A list of company information objects.",
+                  "default": []
+                }
+              },
+              "additionalProperties": false,
+              "required": ["companies"],
+              "title": "company_info_marketing_batch"
+            },
+            "type": "json_schema",
+            "strict": true
+          },
+          "verbosity": "medium"
+        },
+        "tools": [],
+        "user_visible": true,
+        "variable_mapping": [],
+        "writes_to_history": true
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false,
+          "required": []
+        },
+        "additionalProperties": false
+      },
+      "label": "Web research agent",
+      "node_type": "builtins.Agent"
+    },
+    {
+      "id": "node_jsk72ban",
+      "config": {
+        "hidden_properties": null,
+        "instructions": {
+          "expression": "\"Put the research together in a nice display using the output format described.\\n\"",
+          "format": "cel"
+        },
+        "messages": [],
+        "model": {
+          "expression": "\"gpt-5\"",
+          "format": "cel"
+        },
+        "reads_from_history": true,
+        "reasoning": {
+          "effort": "minimal",
+          "summary": null
+        },
+        "show_progress_to_user": true,
+        "text": {
+          "format": {
+            "name": "company-display",
+            "schema": {
+              "$schema": "https://json-schema.org/draft/2020-12/schema",
+              "$id": "widget",
+              "type": "object",
+              "properties": {
+                "company_name": {
+                  "type": "string"
+                },
+                "industry": {
+                  "type": "string"
+                },
+                "headquarters_location": {
+                  "type": "string"
+                },
+                "company_size": {
+                  "type": "string"
+                },
+                "website": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "founded_year": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "company_name",
+                "industry",
+                "headquarters_location",
+                "company_size",
+                "website",
+                "description",
+                "founded_year"
+              ],
+              "additionalProperties": false
+            },
+            "type": "json_schema",
+            "strict": true
+          },
+          "verbosity": "medium"
+        },
+        "tools": [],
+        "user_visible": true,
+        "variable_mapping": [],
+        "widget_config": {
+          "widget_data_schema": {
+            "$schema": "https://json-schema.org/draft/2020-12/schema",
+            "$id": "widget",
+            "type": "object",
+            "properties": {
+              "company_name": {
+                "type": "string"
+              },
+              "industry": {
+                "type": "string"
+              },
+              "headquarters_location": {
+                "type": "string"
+              },
+              "company_size": {
+                "type": "string"
+              },
+              "website": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "founded_year": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "company_name",
+              "industry",
+              "headquarters_location",
+              "company_size",
+              "website",
+              "description",
+              "founded_year"
+            ],
+            "additionalProperties": false
+          },
+          "widget_template": "{\"type\":\"Card\",\"size\":\"lg\",\"confirm\":{\"action\":{\"type\":\"view.details\"},\"label\":\"View details\"},\"cancel\":{\"action\":{\"type\":\"close\"},\"label\":\"Close\"},\"children\":[{\"type\":\"Row\",\"children\":[{\"type\":\"Text\",\"value\":\"Company Name\",\"width\":150,\"color\":\"tertiary\",\"size\":\"sm\",\"children\":[]},{\"type\":\"Text\",\"value\":{{ (company_name) | tojson }},\"color\":\"secondary\",\"children\":[]}]},{\"type\":\"Divider\",\"flush\":true,\"children\":[]},{\"type\":\"Row\",\"children\":[{\"type\":\"Text\",\"value\":\"Industry\",\"width\":150,\"weight\":\"semibold\",\"color\":\"tertiary\",\"size\":\"sm\",\"children\":[]},{\"type\":\"Text\",\"value\":{{ (industry) | tojson }},\"color\":\"secondary\",\"children\":[]}]},{\"type\":\"Divider\",\"flush\":true,\"children\":[]},{\"type\":\"Row\",\"children\":[{\"type\":\"Text\",\"value\":\"Headquarters\",\"width\":150,\"weight\":\"semibold\",\"color\":\"tertiary\",\"size\":\"sm\",\"children\":[]},{\"type\":\"Text\",\"value\":{{ (headquarters_location) | tojson }},\"color\":\"secondary\",\"children\":[]}]},{\"type\":\"Divider\",\"flush\":true,\"children\":[]},{\"type\":\"Row\",\"children\":[{\"type\":\"Text\",\"value\":\"Company Size\",\"width\":150,\"weight\":\"semibold\",\"color\":\"tertiary\",\"size\":\"sm\",\"children\":[]},{\"type\":\"Text\",\"value\":{{ (company_size) | tojson }},\"color\":\"secondary\",\"children\":[]}]},{\"type\":\"Divider\",\"flush\":true,\"children\":[]},{\"type\":\"Row\",\"children\":[{\"type\":\"Text\",\"value\":\"Website\",\"width\":150,\"weight\":\"semibold\",\"color\":\"tertiary\",\"size\":\"sm\",\"children\":[]},{\"type\":\"Button\",\"label\":\"Company website\",\"style\":\"primary\",\"children\":[]}]},{\"type\":\"Divider\",\"flush\":true,\"children\":[]},{\"type\":\"Row\",\"children\":[{\"type\":\"Text\",\"value\":\"Founded Year\",\"width\":150,\"weight\":\"semibold\",\"color\":\"tertiary\",\"size\":\"sm\",\"children\":[]},{\"type\":\"Text\",\"value\":{{ ((\"\" ~ founded_year)) | tojson }},\"color\":\"secondary\",\"children\":[]}]},{\"type\":\"Divider\",\"flush\":true,\"children\":[]},{\"type\":\"Row\",\"children\":[{\"type\":\"Text\",\"value\":\"Description\",\"width\":150,\"weight\":\"semibold\",\"color\":\"tertiary\",\"size\":\"sm\",\"children\":[]},{\"type\":\"Text\",\"value\":{{ (description) | tojson }},\"color\":\"secondary\",\"children\":[]}]}]}"
+        },
+        "writes_to_history": false
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false,
+          "required": []
+        },
+        "additionalProperties": false
+      },
+      "label": "Summarize and display",
+      "node_type": "builtins.Agent"
+    }
+  ],
+  "start_node_id": "node_g9yd4vbm",
+  "state_variable_json_schema": {
+    "type": "object",
+    "properties": {},
+    "required": [],
+    "additionalProperties": false
+  },
+  "state_vars": [],
+  "ui_metadata": {
+    "positionsByNodeId": {
+      "node_g9yd4vbm": {
+        "x": -128,
+        "y": -16
+      },
+      "node_jn2x1lnf": {
+        "x": 0,
+        "y": -16
+      },
+      "node_jsk72ban": {
+        "x": 208,
+        "y": -16
+      },
+      "node_ghb7ofl1": {
+        "x": 0,
+        "y": -96
+      },
+      "node_acbfe8hu": {
+        "x": 176,
+        "y": -96
+      },
+      "node_7m4qrw5e": {
+        "x": -128,
+        "y": -288
+      },
+      "node_98r14n6o": {
+        "x": 352,
+        "y": -96
+      }
+    },
+    "uiNodes": [
+      {
+        "id": "node_ghb7ofl1",
+        "type": "note",
+        "data": {
+          "name": null,
+          "userDefinedPassthroughVariables": [],
+          "text": "Find company information using web search.\n\nConsider adding an MCP tool to hydrate in additional internal information."
+        }
+      },
+      {
+        "id": "node_acbfe8hu",
+        "type": "note",
+        "data": {
+          "name": null,
+          "userDefinedPassthroughVariables": [],
+          "text": "Summarize research for user using a ChatKit widget."
+        }
+      },
+      {
+        "id": "node_7m4qrw5e",
+        "type": "note",
+        "data": {
+          "name": null,
+          "userDefinedPassthroughVariables": [],
+          "text": "Simple workflow to research a set of companies using web search and provide a summary analysis.\n\nExample input: \"Analyze NVDA\" "
+        }
+      },
+      {
+        "id": "node_98r14n6o",
+        "type": "note",
+        "data": {
+          "name": null,
+          "userDefinedPassthroughVariables": [],
+          "text": "Alternatively, convert the result to structured data and hydrate into an external system via MCP."
+        }
+      }
+    ],
+    "dataByNodeId": {
+      "node_g9yd4vbm": {},
+      "node_jn2x1lnf": {
+        "widgetTools": []
+      },
+      "node_jsk72ban": {
+        "widgetFile": {
+          "name": "company-display",
+          "outputJsonPreview": {
+            "type": "Card",
+            "size": "lg",
+            "confirm": {
+              "action": {
+                "type": "view.details"
+              },
+              "label": "View details"
+            },
+            "cancel": {
+              "action": {
+                "type": "close"
+              },
+              "label": "Close"
+            },
+            "children": [
+              {
+                "type": "Row",
+                "children": [
+                  {
+                    "type": "Text",
+                    "value": "Company Name",
+                    "width": 150,
+                    "color": "tertiary",
+                    "size": "sm"
+                  },
+                  {
+                    "type": "Text",
+                    "value": "Apex Systems Inc.",
+                    "color": "secondary"
+                  }
+                ]
+              },
+              {
+                "type": "Divider",
+                "flush": true
+              },
+              {
+                "type": "Row",
+                "children": [
+                  {
+                    "type": "Text",
+                    "value": "Industry",
+                    "width": 150,
+                    "weight": "semibold",
+                    "color": "tertiary",
+                    "size": "sm"
+                  },
+                  {
+                    "type": "Text",
+                    "value": "Information Technology Services",
+                    "color": "secondary"
+                  }
+                ]
+              },
+              {
+                "type": "Divider",
+                "flush": true
+              },
+              {
+                "type": "Row",
+                "children": [
+                  {
+                    "type": "Text",
+                    "value": "Headquarters",
+                    "width": 150,
+                    "weight": "semibold",
+                    "color": "tertiary",
+                    "size": "sm"
+                  },
+                  {
+                    "type": "Text",
+                    "value": "Austin, Texas, United States",
+                    "color": "secondary"
+                  }
+                ]
+              },
+              {
+                "type": "Divider",
+                "flush": true
+              },
+              {
+                "type": "Row",
+                "children": [
+                  {
+                    "type": "Text",
+                    "value": "Company Size",
+                    "width": 150,
+                    "weight": "semibold",
+                    "color": "tertiary",
+                    "size": "sm"
+                  },
+                  {
+                    "type": "Text",
+                    "value": "1,000\u20135,000 employees",
+                    "color": "secondary"
+                  }
+                ]
+              },
+              {
+                "type": "Divider",
+                "flush": true
+              },
+              {
+                "type": "Row",
+                "children": [
+                  {
+                    "type": "Text",
+                    "value": "Website",
+                    "width": 150,
+                    "weight": "semibold",
+                    "color": "tertiary",
+                    "size": "sm"
+                  },
+                  {
+                    "type": "Button",
+                    "label": "Company website",
+                    "style": "primary"
+                  }
+                ]
+              },
+              {
+                "type": "Divider",
+                "flush": true
+              },
+              {
+                "type": "Row",
+                "children": [
+                  {
+                    "type": "Text",
+                    "value": "Founded Year",
+                    "width": 150,
+                    "weight": "semibold",
+                    "color": "tertiary",
+                    "size": "sm"
+                  },
+                  {
+                    "type": "Text",
+                    "value": "1995",
+                    "color": "secondary"
+                  }
+                ]
+              },
+              {
+                "type": "Divider",
+                "flush": true
+              },
+              {
+                "type": "Row",
+                "children": [
+                  {
+                    "type": "Text",
+                    "value": "Description",
+                    "width": 150,
+                    "weight": "semibold",
+                    "color": "tertiary",
+                    "size": "sm"
+                  },
+                  {
+                    "type": "Text",
+                    "value": "Apex Systems is a leading provider of technology services, specializing in IT staffing, consulting, and workforce management solutions across multiple industries. The company partners with organizations to deliver end-to-end solutions in digital transformation, software development, and enterprise IT modernization.",
+                    "color": "secondary"
+                  }
+                ]
+              }
+            ]
+          },
+          "encodedWidget": "eyJpZCI6IndpZ182cjYxYmYyaiIsIm5hbWUiOiJjb21wYW55LWRpc3BsYXkiLCJ2aWV3IjoiPENhcmRcbnNpemU9XCJsZ1wiXG5jb25maXJtPXt7XG5hY3Rpb246IHsgdHlwZTogXCJ2aWV3LmRldGFpbHNcIiB9LFxubGFiZWw6IFwiVmlldyBkZXRhaWxzXCJcbn19XG5jYW5jZWw9e3tcbmFjdGlvbjogeyB0eXBlOiBcImNsb3NlXCIgfSxcbmxhYmVsOiBcIkNsb3NlXCJcbn19XG4-XG5cbjxSb3c-XG4gICAgPFRleHQgdmFsdWU9XCJDb21wYW55IE5hbWVcIiB3aWR0aD17MTUwfSBjb2xvcj1cInRlcnRpYXJ5XCIgc2l6ZT1cInNtXCIgLz5cbiAgICA8VGV4dCB2YWx1ZT17Y29tcGFueV9uYW1lfSBjb2xvcj1cInNlY29uZGFyeVwiIC8-XG48L1Jvdz5cblxuPERpdmlkZXIgZmx1c2ggLz5cblxuPFJvdz5cbiAgICA8VGV4dCB2YWx1ZT1cIkluZHVzdHJ5XCIgd2lkdGg9ezE1MH0gd2VpZ2h0PVwic2VtaWJvbGRcIiBjb2xvcj1cInRlcnRpYXJ5XCIgc2l6ZT1cInNtXCIgLz5cbiAgICAgICAgPFRleHQgdmFsdWU9e2luZHVzdHJ5fSBjb2xvcj1cInNlY29uZGFyeVwiIC8-XG48L1Jvdz5cblxuPERpdmlkZXIgZmx1c2ggLz5cblxuPFJvdz5cbiAgICA8VGV4dCB2YWx1ZT1cIkhlYWRxdWFydGVyc1wiIHdpZHRoPXsxNTB9IHdlaWdodD1cInNlbWlib2xkXCIgY29sb3I9XCJ0ZXJ0aWFyeVwiIHNpemU9XCJzbVwiIC8-XG4gICAgICAgIDxUZXh0IHZhbHVlPXtoZWFkcXVhcnRlcnNfbG9jYXRpb259IGNvbG9yPVwic2Vjb25kYXJ5XCIgLz5cbjwvUm93PlxuXG48RGl2aWRlciBmbHVzaCAvPlxuXG48Um93PlxuICAgIDxUZXh0IHZhbHVlPVwiQ29tcGFueSBTaXplXCIgd2lkdGg9ezE1MH0gd2VpZ2h0PVwic2VtaWJvbGRcIiBjb2xvcj1cInRlcnRpYXJ5XCIgc2l6ZT1cInNtXCIgLz5cbiAgICAgICAgPFRleHQgdmFsdWU9e2NvbXBhbnlfc2l6ZX0gY29sb3I9XCJzZWNvbmRhcnlcIiAvPlxuPC9Sb3c-XG5cbjxEaXZpZGVyIGZsdXNoIC8-XG5cbjxSb3c-XG4gICAgPFRleHQgdmFsdWU9XCJXZWJzaXRlXCIgd2lkdGg9ezE1MH0gd2VpZ2h0PVwic2VtaWJvbGRcIiBjb2xvcj1cInRlcnRpYXJ5XCIgc2l6ZT1cInNtXCIgLz5cbiAgICA8QnV0dG9uIGxhYmVsPVwiQ29tcGFueSB3ZWJzaXRlXCIgc3R5bGU9XCJwcmltYXJ5XCIgIC8-XG48L1Jvdz5cblxuPERpdmlkZXIgZmx1c2ggLz5cblxuPFJvdz5cbiAgICA8VGV4dCB2YWx1ZT1cIkZvdW5kZWQgWWVhclwiIHdpZHRoPXsxNTB9IHdlaWdodD1cInNlbWlib2xkXCIgY29sb3I9XCJ0ZXJ0aWFyeVwiIHNpemU9XCJzbVwiIC8-XG4gICAgICAgIDxUZXh0IHZhbHVlPXtcIlwiK2ZvdW5kZWRfeWVhcn0gY29sb3I9XCJzZWNvbmRhcnlcIiAvPlxuPC9Sb3c-XG5cbjxEaXZpZGVyIGZsdXNoIC8-XG5cbjxSb3c-XG4gICAgPFRleHQgdmFsdWU9XCJEZXNjcmlwdGlvblwiIHdpZHRoPXsxNTB9IHdlaWdodD1cInNlbWlib2xkXCIgY29sb3I9XCJ0ZXJ0aWFyeVwiIHNpemU9XCJzbVwiIC8-XG4gICAgICAgIDxUZXh0IHZhbHVlPXtkZXNjcmlwdGlvbn0gY29sb3I9XCJzZWNvbmRhcnlcIiAvPlxuPC9Sb3c-XG48L0NhcmQ-IiwiZGVmYXVsdFN0YXRlIjp7ImNvbXBhbnlfbmFtZSI6IkFwZXggU3lzdGVtcyBJbmMuIiwiaW5kdXN0cnkiOiJJbmZvcm1hdGlvbiBUZWNobm9sb2d5IFNlcnZpY2VzIiwiaGVhZHF1YXJ0ZXJzX2xvY2F0aW9uIjoiQXVzdGluLCBUZXhhcywgVW5pdGVkIFN0YXRlcyIsImNvbXBhbnlfc2l6ZSI6IjEsMDAw4oCTNSwwMDAgZW1wbG95ZWVzIiwid2Vic2l0ZSI6IltodHRwczovL3d3dy5hcGV4c3lzdGVtcy5jb21dKGh0dHBzOi8vd3d3LmFwZXhzeXN0ZW1zLmNvbSkiLCJkZXNjcmlwdGlvbiI6IkFwZXggU3lzdGVtcyBpcyBhIGxlYWRpbmcgcHJvdmlkZXIgb2YgdGVjaG5vbG9neSBzZXJ2aWNlcywgc3BlY2lhbGl6aW5nIGluIElUIHN0YWZmaW5nLCBjb25zdWx0aW5nLCBhbmQgd29ya2ZvcmNlIG1hbmFnZW1lbnQgc29sdXRpb25zIGFjcm9zcyBtdWx0aXBsZSBpbmR1c3RyaWVzLiBUaGUgY29tcGFueSBwYXJ0bmVycyB3aXRoIG9yZ2FuaXphdGlvbnMgdG8gZGVsaXZlciBlbmQtdG8tZW5kIHNvbHV0aW9ucyBpbiBkaWdpdGFsIHRyYW5zZm9ybWF0aW9uLCBzb2Z0d2FyZSBkZXZlbG9wbWVudCwgYW5kIGVudGVycHJpc2UgSVQgbW9kZXJuaXphdGlvbi4iLCJmb3VuZGVkX3llYXIiOjE5OTV9LCJzdGF0ZXMiOltdfQ",
+          "template": "{\"type\":\"Card\",\"size\":\"lg\",\"confirm\":{\"action\":{\"type\":\"view.details\"},\"label\":\"View details\"},\"cancel\":{\"action\":{\"type\":\"close\"},\"label\":\"Close\"},\"children\":[{\"type\":\"Row\",\"children\":[{\"type\":\"Text\",\"value\":\"Company Name\",\"width\":150,\"color\":\"tertiary\",\"size\":\"sm\",\"children\":[]},{\"type\":\"Text\",\"value\":{{ (company_name) | tojson }},\"color\":\"secondary\",\"children\":[]}]},{\"type\":\"Divider\",\"flush\":true,\"children\":[]},{\"type\":\"Row\",\"children\":[{\"type\":\"Text\",\"value\":\"Industry\",\"width\":150,\"weight\":\"semibold\",\"color\":\"tertiary\",\"size\":\"sm\",\"children\":[]},{\"type\":\"Text\",\"value\":{{ (industry) | tojson }},\"color\":\"secondary\",\"children\":[]}]},{\"type\":\"Divider\",\"flush\":true,\"children\":[]},{\"type\":\"Row\",\"children\":[{\"type\":\"Text\",\"value\":\"Headquarters\",\"width\":150,\"weight\":\"semibold\",\"color\":\"tertiary\",\"size\":\"sm\",\"children\":[]},{\"type\":\"Text\",\"value\":{{ (headquarters_location) | tojson }},\"color\":\"secondary\",\"children\":[]}]},{\"type\":\"Divider\",\"flush\":true,\"children\":[]},{\"type\":\"Row\",\"children\":[{\"type\":\"Text\",\"value\":\"Company Size\",\"width\":150,\"weight\":\"semibold\",\"color\":\"tertiary\",\"size\":\"sm\",\"children\":[]},{\"type\":\"Text\",\"value\":{{ (company_size) | tojson }},\"color\":\"secondary\",\"children\":[]}]},{\"type\":\"Divider\",\"flush\":true,\"children\":[]},{\"type\":\"Row\",\"children\":[{\"type\":\"Text\",\"value\":\"Website\",\"width\":150,\"weight\":\"semibold\",\"color\":\"tertiary\",\"size\":\"sm\",\"children\":[]},{\"type\":\"Button\",\"label\":\"Company website\",\"style\":\"primary\",\"children\":[]}]},{\"type\":\"Divider\",\"flush\":true,\"children\":[]},{\"type\":\"Row\",\"children\":[{\"type\":\"Text\",\"value\":\"Founded Year\",\"width\":150,\"weight\":\"semibold\",\"color\":\"tertiary\",\"size\":\"sm\",\"children\":[]},{\"type\":\"Text\",\"value\":{{ ((\"\" ~ founded_year)) | tojson }},\"color\":\"secondary\",\"children\":[]}]},{\"type\":\"Divider\",\"flush\":true,\"children\":[]},{\"type\":\"Row\",\"children\":[{\"type\":\"Text\",\"value\":\"Description\",\"width\":150,\"weight\":\"semibold\",\"color\":\"tertiary\",\"size\":\"sm\",\"children\":[]},{\"type\":\"Text\",\"value\":{{ (description) | tojson }},\"color\":\"secondary\",\"children\":[]}]}]}"
+        },
+        "widgetTools": []
+      }
+    },
+    "dimensionsByNodeId": {},
+    "draft": {}
+  },
+  "updated_at": 1761113501,
+  "version": "draft",
+  "version_stage": "draft",
+  "workflow_type": "chat"
+}

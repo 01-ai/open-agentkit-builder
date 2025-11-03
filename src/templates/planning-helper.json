@@ -1,0 +1,348 @@
+{
+  "object": "workflow",
+  "created_at": 1761187744,
+  "default_version": null,
+  "edges": [
+    {
+      "id": "edge_6lq6g9jp",
+      "source_node_id": "node_yzd2wh9k",
+      "source_port_id": "out",
+      "target_node_id": "node_k0ixmmrv",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_0ks67g9dnode_0ks67g9d-case-0-node_tw9czouunode_tw9czouu-target",
+      "source_node_id": "node_0ks67g9d",
+      "source_port_id": "case-0",
+      "target_node_id": "node_tw9czouu",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_0ks67g9dnode_0ks67g9d-fallback-node_0pt6jf9onode_0pt6jf9o-target",
+      "source_node_id": "node_0ks67g9d",
+      "source_port_id": "fallback",
+      "target_node_id": "node_0pt6jf9o",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_k0ixmmrvnode_k0ixmmrv-on_result-node_0ks67g9dnode_0ks67g9d-target",
+      "source_node_id": "node_k0ixmmrv",
+      "source_port_id": "on_result",
+      "target_node_id": "node_0ks67g9d",
+      "target_port_id": "in"
+    }
+  ],
+  "highest_version": null,
+  "input_variable_json_schema": {
+    "type": "object",
+    "properties": {
+      "input_as_text": {
+        "type": "string"
+      }
+    },
+    "required": ["input_as_text"],
+    "additionalProperties": false
+  },
+  "is_default": false,
+  "is_moderation_flagged": false,
+  "label": "New workflow",
+  "moderation_flagged_categories": null,
+  "moderation_violations": null,
+  "name": "New workflow",
+  "nodes": [
+    {
+      "id": "node_yzd2wh9k",
+      "label": "Start",
+      "node_type": "builtins.Start"
+    },
+    {
+      "id": "node_k0ixmmrv",
+      "config": {
+        "hidden_properties": null,
+        "instructions": {
+          "expression": "\"You are an assistant that gathers the key details needed to create a business initiative plan.\\n\\nLook through the conversation to extract the following:\\n1. Initiative goal (what the team or organization aims to achieve)\\n2. Target completion date or timeframe\\n3. Available resources or current capacity (e.g., headcount, budget, or tool access)\\n\\nIf all three details are present anywhere in the conversation, return:\\n{\\n  \\\"has_all_details\\\": true,\\n  \\\"initiative_goal\\\": \\\"<user-provided goal>\\\",\\n  \\\"target_timeframe\\\": \\\"<user-provided date or period>\\\",\\n  \\\"current_resources\\\": \\\"<user-provided resources>\\\"\\n}\"",
+          "format": "cel"
+        },
+        "messages": [],
+        "model": {
+          "expression": "\"gpt-5\"",
+          "format": "cel"
+        },
+        "reads_from_history": true,
+        "reasoning": {
+          "effort": "minimal",
+          "summary": null
+        },
+        "show_progress_to_user": true,
+        "text": {
+          "format": {
+            "name": "response_schema",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "has_all_details": {
+                  "type": "boolean",
+                  "default": false
+                },
+                "initative_goal": {
+                  "type": "string",
+                  "default": ""
+                },
+                "target_timeframe": {
+                  "type": "string",
+                  "default": ""
+                },
+                "current_resources": {
+                  "type": "string",
+                  "default": ""
+                }
+              },
+              "additionalProperties": false,
+              "required": [
+                "has_all_details",
+                "initative_goal",
+                "target_timeframe",
+                "current_resources"
+              ],
+              "title": "response_schema"
+            },
+            "type": "json_schema",
+            "strict": true
+          },
+          "verbosity": "medium"
+        },
+        "tools": [],
+        "user_visible": true,
+        "variable_mapping": [],
+        "writes_to_history": true
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false,
+          "required": []
+        },
+        "additionalProperties": false
+      },
+      "label": "Triage",
+      "node_type": "builtins.Agent"
+    },
+    {
+      "id": "node_0ks67g9d",
+      "config": {
+        "cases": [
+          {
+            "label": "case-0",
+            "output_port_id": "case-0",
+            "predicate": {
+              "expression": "input.output_parsed.has_all_details == true",
+              "format": "cel"
+            }
+          }
+        ],
+        "fallback": {
+          "label": "fallback",
+          "output_port_id": "fallback"
+        }
+      },
+      "label": "Condition",
+      "node_type": "builtins.IfElse"
+    },
+    {
+      "id": "node_tw9czouu",
+      "config": {
+        "hidden_properties": null,
+        "instructions": {
+          "expression": "\"Come up with a tailored plan to help the user run a new business initiative. Consider all the details they've provide and offer a succinct, bullet point list for how to run the initiative.\\n\\nUse the web search tool to get additional context and synthesize a succinct answer that clearly explains how to run the project, identifying unique opportunities, highlighting risks and laying out mitigations that make sense.\\n\"",
+          "format": "cel"
+        },
+        "max_output_tokens": 2048,
+        "messages": [],
+        "model": {
+          "expression": "\"gpt-4.1-mini\"",
+          "format": "cel"
+        },
+        "reads_from_history": true,
+        "reasoning": {
+          "effort": null,
+          "summary": null
+        },
+        "show_progress_to_user": true,
+        "temperature": 1.0,
+        "text": {
+          "format": {
+            "type": "text"
+          },
+          "verbosity": null
+        },
+        "tools": [
+          {
+            "type": "web_search",
+            "search_context_size": "medium",
+            "user_location": {
+              "type": "approximate"
+            }
+          }
+        ],
+        "top_p": 1.0,
+        "user_visible": true,
+        "variable_mapping": [],
+        "writes_to_history": true
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false,
+          "required": []
+        },
+        "additionalProperties": false
+      },
+      "label": "Launch helper",
+      "node_type": "builtins.Agent"
+    },
+    {
+      "id": "node_0pt6jf9o",
+      "config": {
+        "hidden_properties": null,
+        "instructions": {
+          "expression": "\"Collect the missing data from the user \\n\\nLook through the conversation to extract the following:\\n1. Initiative goal (what the team or organization aims to achieve)\\n2. Target completion date or timeframe\\n3. Available resources or current capacity (e.g., headcount, budget, or tool access)\\n\\nMake sure they are provided, be concise.\"",
+          "format": "cel"
+        },
+        "messages": [],
+        "model": {
+          "expression": "\"gpt-5\"",
+          "format": "cel"
+        },
+        "reads_from_history": true,
+        "reasoning": {
+          "effort": "minimal",
+          "summary": null
+        },
+        "show_progress_to_user": true,
+        "text": {
+          "format": {
+            "type": "text"
+          },
+          "verbosity": "medium"
+        },
+        "tools": [],
+        "user_visible": true,
+        "variable_mapping": [],
+        "writes_to_history": true
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false,
+          "required": []
+        },
+        "additionalProperties": false
+      },
+      "label": "Get data",
+      "node_type": "builtins.Agent"
+    }
+  ],
+  "start_node_id": "node_yzd2wh9k",
+  "state_variable_json_schema": {
+    "type": "object",
+    "properties": {},
+    "required": [],
+    "additionalProperties": false
+  },
+  "state_vars": [],
+  "ui_metadata": {
+    "positionsByNodeId": {
+      "node_yzd2wh9k": {
+        "x": -144,
+        "y": 48
+      },
+      "node_k0ixmmrv": {
+        "x": -16,
+        "y": 48
+      },
+      "node_0ks67g9d": {
+        "x": "137.5506540934245",
+        "y": "14.259323279989683"
+      },
+      "node_tw9czouu": {
+        "x": 432,
+        "y": "7.648164153330757"
+      },
+      "node_0pt6jf9o": {
+        "x": 432,
+        "y": 96
+      },
+      "node_yaxk2osq": {
+        "x": -16,
+        "y": -64
+      },
+      "node_f59z7i33": {
+        "x": 224,
+        "y": -64
+      },
+      "node_0tquo5jp": {
+        "x": 432,
+        "y": -80
+      }
+    },
+    "uiNodes": [
+      {
+        "id": "node_yaxk2osq",
+        "type": "note",
+        "data": {
+          "name": null,
+          "userDefinedPassthroughVariables": [],
+          "text": "Check if necessary data is provided"
+        }
+      },
+      {
+        "id": "node_f59z7i33",
+        "type": "note",
+        "data": {
+          "name": null,
+          "userDefinedPassthroughVariables": [],
+          "text": "If any data is missing, ask the user"
+        }
+      },
+      {
+        "id": "node_0tquo5jp",
+        "type": "note",
+        "data": {
+          "name": null,
+          "userDefinedPassthroughVariables": [],
+          "text": "Provide a plan or ask follow-up questions"
+        }
+      }
+    ],
+    "dataByNodeId": {
+      "node_yzd2wh9k": {},
+      "node_k0ixmmrv": {
+        "widgetTools": []
+      },
+      "node_0ks67g9d": {
+        "caseNames": [""]
+      },
+      "node_tw9czouu": {
+        "widgetTools": []
+      },
+      "node_0pt6jf9o": {
+        "widgetTools": []
+      }
+    },
+    "dimensionsByNodeId": {},
+    "draft": {}
+  },
+  "updated_at": 1761187744,
+  "version": "draft",
+  "version_stage": "draft",
+  "workflow_type": "chat"
+}

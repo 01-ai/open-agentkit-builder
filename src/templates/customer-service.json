@@ -1,0 +1,845 @@
+{
+  "object": "workflow",
+  "created_at": 1761187946,
+  "default_version": null,
+  "edges": [
+    {
+      "id": "xy-edge__node_l5auwluonode_l5auwluo-on_result-node_9q7s8m0tnode_9q7s8m0t-target",
+      "source_node_id": "node_l5auwluo",
+      "source_port_id": "on_result",
+      "target_node_id": "node_9q7s8m0t",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_9q7s8m0tnode_9q7s8m0t-case-0-node_mjag8hqanode_mjag8hqa-target",
+      "source_node_id": "node_9q7s8m0t",
+      "source_port_id": "case-0",
+      "target_node_id": "node_mjag8hqa",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_9q7s8m0tnode_9q7s8m0t-case-1-node_knzmjx1ynode_knzmjx1y-target",
+      "source_node_id": "node_9q7s8m0t",
+      "source_port_id": "case-1",
+      "target_node_id": "node_knzmjx1y",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_9q7s8m0tnode_9q7s8m0t-fallback-node_adizz848node_adizz848-target",
+      "source_node_id": "node_9q7s8m0t",
+      "source_port_id": "fallback",
+      "target_node_id": "node_adizz848",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_shp02dmpnode_shp02dmp-on_pass-node_l5auwluonode_l5auwluo-target",
+      "source_node_id": "node_shp02dmp",
+      "source_port_id": "on_pass",
+      "target_node_id": "node_l5auwluo",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_shp02dmpnode_shp02dmp-on_fail-node_bo86wyb4node_bo86wyb4-target",
+      "source_node_id": "node_shp02dmp",
+      "source_port_id": "on_fail",
+      "target_node_id": "node_bo86wyb4",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_lk9g0572node_lk9g0572-out-node_shp02dmpnode_shp02dmp-target",
+      "source_node_id": "node_lk9g0572",
+      "source_port_id": "out",
+      "target_node_id": "node_shp02dmp",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_9q7s8m0tnode_9q7s8m0t-case-2-node_fzvtn6ssnode_fzvtn6ss-target",
+      "source_node_id": "node_9q7s8m0t",
+      "source_port_id": "case-2",
+      "target_node_id": "node_fzvtn6ss",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_mjag8hqanode_mjag8hqa-on_result-node_svpu68r1node_svpu68r1-target",
+      "source_node_id": "node_mjag8hqa",
+      "source_port_id": "on_result",
+      "target_node_id": "node_svpu68r1",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_svpu68r1node_svpu68r1-on_approve-node_wult9jnfnode_wult9jnf-target",
+      "source_node_id": "node_svpu68r1",
+      "source_port_id": "on_approve",
+      "target_node_id": "node_bv4bbypd",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_svpu68r1node_svpu68r1-on_reject-node_8a5irm5xnode_8a5irm5x-target",
+      "source_node_id": "node_svpu68r1",
+      "source_port_id": "on_reject",
+      "target_node_id": "node_p5i23uf1",
+      "target_port_id": "in"
+    }
+  ],
+  "highest_version": null,
+  "input_variable_json_schema": {
+    "type": "object",
+    "properties": {
+      "input_as_text": {
+        "type": "string"
+      }
+    },
+    "required": ["input_as_text"],
+    "additionalProperties": false
+  },
+  "is_default": false,
+  "is_moderation_flagged": false,
+  "label": "New workflow",
+  "moderation_flagged_categories": null,
+  "moderation_violations": null,
+  "name": "New workflow",
+  "nodes": [
+    {
+      "id": "node_lk9g0572",
+      "label": "Start",
+      "node_type": "builtins.Start"
+    },
+    {
+      "id": "node_l5auwluo",
+      "config": {
+        "hidden_properties": null,
+        "instructions": {
+          "expression": "\"Classify the user\u2019s intent into one of the following categories: \\\"return_item\\\", \\\"cancel_subscription\\\", or \\\"get_information\\\". \\n\\n1. Any device-related return requests should route to return_item.\\n2. Any retention or cancellation risk, including any request for discounts should route to cancel_subscription.\\n3. Any other requests should go to get_information.\"",
+          "format": "cel"
+        },
+        "max_output_tokens": 2048,
+        "messages": [],
+        "model": {
+          "expression": "\"gpt-4.1-mini\"",
+          "format": "cel"
+        },
+        "reads_from_history": true,
+        "reasoning": {
+          "effort": null,
+          "summary": null
+        },
+        "show_progress_to_user": true,
+        "temperature": 1.0,
+        "text": {
+          "format": {
+            "name": "response_schema",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "classification": {
+                  "type": "string",
+                  "enum": [
+                    "return_item",
+                    "cancel_subscription",
+                    "get_information"
+                  ],
+                  "description": "classification of user intent",
+                  "default": ""
+                }
+              },
+              "additionalProperties": false,
+              "required": ["classification"],
+              "title": "response_schema"
+            },
+            "type": "json_schema",
+            "strict": true
+          },
+          "verbosity": null
+        },
+        "tools": [],
+        "top_p": 1.0,
+        "user_visible": true,
+        "variable_mapping": [],
+        "writes_to_history": true
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false,
+          "required": []
+        },
+        "additionalProperties": false
+      },
+      "label": "Classification agent",
+      "node_type": "builtins.Agent"
+    },
+    {
+      "id": "node_9q7s8m0t",
+      "config": {
+        "cases": [
+          {
+            "label": "case-0",
+            "output_port_id": "case-0",
+            "predicate": {
+              "expression": "input.output_parsed.classification == \"return_item\"",
+              "format": "cel"
+            }
+          },
+          {
+            "label": "case-1",
+            "output_port_id": "case-1",
+            "predicate": {
+              "expression": "input.output_parsed.classification == \"cancel_subscription\"",
+              "format": "cel"
+            }
+          },
+          {
+            "label": "case-2",
+            "output_port_id": "case-2",
+            "predicate": {
+              "expression": "input.output_parsed.classification == \"get_information\"",
+              "format": "cel"
+            }
+          }
+        ],
+        "fallback": {
+          "label": "fallback",
+          "output_port_id": "fallback"
+        }
+      },
+      "label": "Condition",
+      "node_type": "builtins.IfElse"
+    },
+    {
+      "id": "node_mjag8hqa",
+      "config": {
+        "hidden_properties": null,
+        "instructions": {
+          "expression": "\"Offer a replacement device with free shipping.\\n\"",
+          "format": "cel"
+        },
+        "max_output_tokens": 2048,
+        "messages": [],
+        "model": {
+          "expression": "\"gpt-4.1-mini\"",
+          "format": "cel"
+        },
+        "reads_from_history": true,
+        "reasoning": {
+          "effort": null,
+          "summary": null
+        },
+        "show_progress_to_user": true,
+        "temperature": 1.0,
+        "text": {
+          "format": {
+            "type": "text"
+          },
+          "verbosity": null
+        },
+        "tools": [],
+        "top_p": 1.0,
+        "user_visible": true,
+        "variable_mapping": [],
+        "writes_to_history": true
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false,
+          "required": []
+        },
+        "additionalProperties": false
+      },
+      "label": "Return agent",
+      "node_type": "builtins.Agent"
+    },
+    {
+      "id": "node_knzmjx1y",
+      "config": {
+        "hidden_properties": null,
+        "instructions": {
+          "expression": "\"You are a customer retention conversational agent whose goal is to prevent subscription cancellations. Ask for their current plan and reason for dissatisfaction. Use the get_retention_offers to identify return options. For now, just say there is a 20% offer available for 1 year.\"",
+          "format": "cel"
+        },
+        "max_output_tokens": 2048,
+        "messages": [],
+        "model": {
+          "expression": "\"gpt-4.1-mini\"",
+          "format": "cel"
+        },
+        "parallel_tool_calls": true,
+        "reads_from_history": true,
+        "reasoning": {
+          "effort": null,
+          "summary": null
+        },
+        "show_progress_to_user": true,
+        "temperature": 1.0,
+        "text": {
+          "format": {
+            "type": "text"
+          },
+          "verbosity": null
+        },
+        "tools": [
+          {
+            "name": "get_retention_offers",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "customer_id": {
+                  "type": "string",
+                  "description": "Unique identifier of the customer"
+                },
+                "account_type": {
+                  "type": "string",
+                  "description": "Type of customer account, such as 'mobile', 'internet', or 'cable'"
+                },
+                "current_plan": {
+                  "type": "string",
+                  "description": "Name or ID of the customer's current service plan"
+                },
+                "tenure_months": {
+                  "type": "integer",
+                  "description": "Number of months the customer has held the account"
+                },
+                "recent_complaints": {
+                  "type": "boolean",
+                  "description": "Indicates if the customer has made complaints recently"
+                }
+              },
+              "required": [
+                "customer_id",
+                "account_type",
+                "current_plan",
+                "tenure_months",
+                "recent_complaints"
+              ],
+              "additionalProperties": false
+            },
+            "strict": true,
+            "type": "function",
+            "description": "Retrieve possible retention offers for a customer"
+          }
+        ],
+        "top_p": 1.0,
+        "user_visible": true,
+        "variable_mapping": [],
+        "writes_to_history": true
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false,
+          "required": []
+        },
+        "additionalProperties": false
+      },
+      "label": "Retention Agent",
+      "node_type": "builtins.Agent"
+    },
+    {
+      "id": "node_fzvtn6ss",
+      "config": {
+        "hidden_properties": null,
+        "instructions": {
+          "expression": "\"You are an information agent for answering informational queries. Your aim is to provide clear, concise responses to user questions. Use the policy below to assemble your answer.\\n\\nCompany Name: HorizonTel Communications Industry: Telecommunications Region: North America\\n\ud83d\udccb Policy Summary: Mobile Service Plan Adjustments\\nPolicy ID: MOB-PLN-2025-03 Effective Date: March 1, 2025 Applies To: All residential and small business mobile customers\\nPurpose: To ensure customers have transparent and flexible options when modifying or upgrading their existing mobile service plans.\\n\ud83d\udd04 Plan Changes & Upgrades\\nEligibility: Customers must have an active account in good standing (no outstanding balance > $50).\\nUpgrade Rules:\\nDevice upgrades are permitted once every 12 months if the customer is on an eligible plan.\\nEarly upgrades incur a $99 early-change fee unless the new plan\u2019s monthly cost is higher by at least $15.\\nDowngrades: Customers can switch to a lower-tier plan at any time; changes take effect at the next billing cycle.\\nCS Rep Tip: When customers request plan changes, confirm their next billing cycle and remind them that prorated charges may apply. Always check for active device installment agreements before confirming a downgrade.\\n\ud83d\udcb0 Billing & Credits\\nBilling Cycle: Monthly, aligned with the activation date.\\nCredit Adjustments:\\nOvercharges under $10 are automatically credited to the next bill.\\nFor amounts >$10, open a \u201cBilling Adjustment \u2013 Tier 2\u201d ticket for supervisor review.\\nRefund Policy:\\nRefunds are issued to the original payment method within 7\u201310 business days.\\nFor prepaid accounts, credits are applied to the balance\u2014no cash refunds.\\nCS Rep Tip: If a customer reports a billing discrepancy within 30 days, you can issue an immediate one-time goodwill credit (up to $25) without manager approval.\\n\ud83d\udedc Network & Outage Handling\\nPlanned Maintenance: Customers receive SMS alerts for outages >1 hour.\\nUnplanned Outages:\\nCheck the internal \u201cNetwork Status Dashboard\u201d before escalating.\\nIf multiple customers in a region report the same issue, tag the ticket as \u201cRegional Event \u2013 Network Ops.\u201d\\nCompensation: Customers experiencing service interruption exceeding 24 consecutive hours are eligible for a 1-day service credit upon request.\\n\ud83d\udcde Retention & Cancellations\\nNotice Period: 30 days for postpaid accounts; immediate for prepaid.\\nRetention Offers:\\nAgents may offer up to 20% off the next 3 billing cycles if the customer cites \u201ccost concerns.\u201d\\nRetention codes must be logged under \u201cRET-SAVE20.\u201d\\nCancellation Fee:\\nApplies only to term contracts (usually $199 flat rate).\\nFee waived for verified relocation to non-serviceable area.\\nCS Rep Tip: Before processing a cancellation, review alternative retention offers\u2014customers frequently stay when offered a temporary discount or bonus data package.\\n\ud83e\uddfe Documentation Checklist for CS Reps\\nVerify customer ID and account number.\\nCheck account standing (billing, contracts, upgrades).\\nRecord all interactions in the CRM ticket.\\nConfirm next billing cycle date for any changes.\\nApply standard note template:\\n\u201cCustomer requested [plan/billing/support] change. Informed of applicable fees, next cycle adjustment, and confirmation reference #[ticket].\u201d\\n\u26a0\ufe0f Compliance & Privacy\\nAll interactions must comply with CCPA and FCC privacy standards.\\nDo not record or store personal payment information outside the secure billing system.\\nUse the \u201cSecure Verification Flow\u201d for identity confirmation before discussing account details.\\n\ud83e\udde0 Example\"",
+          "format": "cel"
+        },
+        "max_output_tokens": 2048,
+        "messages": [],
+        "model": {
+          "expression": "\"gpt-4.1-mini\"",
+          "format": "cel"
+        },
+        "reads_from_history": true,
+        "reasoning": {
+          "effort": null,
+          "summary": null
+        },
+        "show_progress_to_user": false,
+        "temperature": 1.0,
+        "text": {
+          "format": {
+            "type": "text"
+          },
+          "verbosity": null
+        },
+        "tools": [],
+        "top_p": 1.0,
+        "user_visible": false,
+        "variable_mapping": [],
+        "writes_to_history": true
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false,
+          "required": []
+        },
+        "additionalProperties": false
+      },
+      "label": "Information agent",
+      "node_type": "builtins.Agent"
+    },
+    {
+      "id": "node_adizz848",
+      "config": {
+        "expr": {
+          "expression": "{\"output_parsed\": {\"classification\": input.output_parsed.classification}}",
+          "format": "cel"
+        }
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {
+            "output_parsed": {
+              "type": "object",
+              "properties": {
+                "classification": {
+                  "type": "string",
+                  "enum": [
+                    "return_item",
+                    "cancel_subscription",
+                    "get_information"
+                  ],
+                  "description": "classification of user intent",
+                  "default": ""
+                }
+              },
+              "additionalProperties": false,
+              "required": ["classification", "classification", "classification"]
+            }
+          },
+          "additionalProperties": false,
+          "required": ["output_parsed"]
+        },
+        "additionalProperties": false
+      },
+      "label": "End",
+      "node_type": "builtins.End"
+    },
+    {
+      "id": "node_shp02dmp",
+      "config": {
+        "continue_on_error": false,
+        "expr": {
+          "expression": "workflow.input_as_text",
+          "format": "cel"
+        },
+        "guardrails": [
+          {
+            "type": "jailbreak",
+            "config": {
+              "confidence_threshold": 0.7,
+              "model": "gpt-5-nano"
+            }
+          }
+        ]
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false,
+          "required": []
+        },
+        "additionalProperties": false
+      },
+      "label": "Jailbreak guardrail",
+      "node_type": "builtins.Guardrails"
+    },
+    {
+      "id": "node_bo86wyb4",
+      "config": {
+        "expr": {
+          "expression": "{\"input_text\": input.input_text, \"guardrails\": {\"pii\": {\"failed\": input.guardrails.pii.failed, \"detected_counts\": input.guardrails.pii.detected_counts}, \"moderation\": {\"failed\": input.guardrails.moderation.failed, \"flagged_categories\": input.guardrails.moderation.flagged_categories}, \"jailbreak\": {\"failed\": input.guardrails.jailbreak.failed}, \"hallucination\": {\"failed\": input.guardrails.hallucination.failed, \"reasoning\": input.guardrails.hallucination.reasoning, \"hallucination_type\": input.guardrails.hallucination.hallucination_type, \"hallucinated_statements\": input.guardrails.hallucination.hallucinated_statements}}}",
+          "format": "cel"
+        }
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {
+            "input_text": {
+              "type": "string"
+            },
+            "guardrails": {
+              "type": "object",
+              "properties": {
+                "pii": {
+                  "type": "object",
+                  "properties": {
+                    "failed": {
+                      "type": "boolean"
+                    },
+                    "detected_counts": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                "moderation": {
+                  "type": "object",
+                  "properties": {
+                    "failed": {
+                      "type": "boolean"
+                    },
+                    "flagged_categories": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                "jailbreak": {
+                  "type": "object",
+                  "properties": {
+                    "failed": {
+                      "type": "boolean"
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                "hallucination": {
+                  "type": "object",
+                  "properties": {
+                    "failed": {
+                      "type": "boolean"
+                    },
+                    "reasoning": {
+                      "type": "string"
+                    },
+                    "hallucination_type": {
+                      "type": "string"
+                    },
+                    "hallucinated_statements": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "required": ["input_text", "guardrails"],
+          "additionalProperties": false
+        },
+        "additionalProperties": false
+      },
+      "label": "End",
+      "node_type": "builtins.End"
+    },
+    {
+      "id": "node_svpu68r1",
+      "config": {
+        "message": "Does this work for you?",
+        "variable_mapping": []
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false,
+          "required": []
+        },
+        "additionalProperties": false
+      },
+      "label": "User approval",
+      "node_type": "builtins.BinaryApproval"
+    },
+    {
+      "id": "node_bv4bbypd",
+      "config": {
+        "expr": {
+          "expression": "{\"message\": \"Your return is on the way.\"}",
+          "format": "cel"
+        }
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false,
+          "required": []
+        },
+        "additionalProperties": false
+      },
+      "label": "End",
+      "node_type": "builtins.End"
+    },
+    {
+      "id": "node_p5i23uf1",
+      "config": {
+        "expr": {
+          "expression": "{\"message\": \"What else can I help you with?\"}",
+          "format": "cel"
+        }
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false,
+          "required": []
+        },
+        "additionalProperties": false
+      },
+      "label": "End",
+      "node_type": "builtins.End"
+    }
+  ],
+  "start_node_id": "node_lk9g0572",
+  "state_variable_json_schema": {
+    "type": "object",
+    "properties": {},
+    "required": [],
+    "additionalProperties": false
+  },
+  "state_vars": [],
+  "ui_metadata": {
+    "positionsByNodeId": {
+      "node_lk9g0572": {
+        "x": "-279.5",
+        "y": 48
+      },
+      "node_l5auwluo": {
+        "x": 32,
+        "y": 32
+      },
+      "node_9q7s8m0t": {
+        "x": 256,
+        "y": -32
+      },
+      "node_mjag8hqa": {
+        "x": 640,
+        "y": "-50.125"
+      },
+      "node_knzmjx1y": {
+        "x": 640,
+        "y": "15.875"
+      },
+      "node_fzvtn6ss": {
+        "x": 640,
+        "y": "81.25"
+      },
+      "node_adizz848": {
+        "x": 640,
+        "y": "146.375"
+      },
+      "node_shp02dmp": {
+        "x": -160,
+        "y": 16
+      },
+      "node_bo86wyb4": {
+        "x": 32,
+        "y": 97
+      },
+      "node_svpu68r1": {
+        "x": 848,
+        "y": -80
+      },
+      "node_bv4bbypd": {
+        "x": "1107.1261203585148",
+        "y": "-80.26379191217285"
+      },
+      "node_p5i23uf1": {
+        "x": "1109.0256081946222",
+        "y": "9.961880302935981"
+      },
+      "node_50qzix7h": {
+        "x": 256,
+        "y": -160
+      },
+      "node_k29o5nji": {
+        "x": 640,
+        "y": -160
+      },
+      "node_n0dhttio": {
+        "x": 32,
+        "y": -160
+      },
+      "node_5f5r4woc": {
+        "x": -160,
+        "y": -160
+      },
+      "node_mz8ltxqo": {
+        "x": 847,
+        "y": "-164.7344065495534"
+      },
+      "node_hwxylhfp": {
+        "x": 1104,
+        "y": -160
+      },
+      "node_fa7yrm8q": {
+        "x": 832,
+        "y": 145
+      }
+    },
+    "uiNodes": [
+      {
+        "id": "node_50qzix7h",
+        "type": "note",
+        "data": {
+          "name": null,
+          "userDefinedPassthroughVariables": [],
+          "text": "Route to the correct agent."
+        }
+      },
+      {
+        "id": "node_k29o5nji",
+        "type": "note",
+        "data": {
+          "name": null,
+          "userDefinedPassthroughVariables": [],
+          "text": "Handle each customer intent differently."
+        }
+      },
+      {
+        "id": "node_n0dhttio",
+        "type": "note",
+        "data": {
+          "name": null,
+          "userDefinedPassthroughVariables": [],
+          "text": "Identify the user's intent."
+        }
+      },
+      {
+        "id": "node_5f5r4woc",
+        "type": "note",
+        "data": {
+          "name": null,
+          "userDefinedPassthroughVariables": [],
+          "text": "Determine if user input is reasonable."
+        }
+      },
+      {
+        "id": "node_mz8ltxqo",
+        "type": "note",
+        "data": {
+          "name": null,
+          "userDefinedPassthroughVariables": [],
+          "text": "Provide the user an offer and ask them to accept it."
+        }
+      },
+      {
+        "id": "node_hwxylhfp",
+        "type": "note",
+        "data": {
+          "name": null,
+          "userDefinedPassthroughVariables": [],
+          "text": "Add specific behavior for these end conditions, or consider adding an MCP server to trigger actions externally."
+        }
+      },
+      {
+        "id": "node_fa7yrm8q",
+        "type": "note",
+        "data": {
+          "name": null,
+          "userDefinedPassthroughVariables": [],
+          "text": "You can add a hallucination guardrail here with a vector store to check for accuracy."
+        }
+      }
+    ],
+    "dataByNodeId": {
+      "node_lk9g0572": {},
+      "node_l5auwluo": {
+        "widgetTools": []
+      },
+      "node_9q7s8m0t": {
+        "caseNames": ["", "", ""]
+      },
+      "node_mjag8hqa": {
+        "widgetTools": []
+      },
+      "node_knzmjx1y": {
+        "widgetTools": []
+      },
+      "node_fzvtn6ss": {
+        "widgetTools": []
+      },
+      "node_adizz848": {
+        "workflowOutput": null
+      },
+      "node_shp02dmp": {},
+      "node_bo86wyb4": {
+        "workflowOutput": null
+      },
+      "node_svpu68r1": {},
+      "node_bv4bbypd": {
+        "workflowOutput": {
+          "name": "WorkflowOutput",
+          "strict": true,
+          "schema": {
+            "type": "object",
+            "properties": {
+              "message": {
+                "type": "string",
+                "description": "Confirmation message stating the return is on the way.",
+                "default": "Your return is on the way."
+              }
+            },
+            "additionalProperties": false,
+            "required": ["message"],
+            "title": "return_status_message"
+          }
+        }
+      },
+      "node_p5i23uf1": {
+        "workflowOutput": {
+          "name": "WorkflowOutput",
+          "strict": true,
+          "schema": {
+            "type": "object",
+            "properties": {
+              "message": {
+                "type": "string",
+                "description": "A message offering further assistance, e.g., 'What else can I help you with?'",
+                "default": "What else can I help you with?"
+              }
+            },
+            "additionalProperties": false,
+            "required": ["message"],
+            "title": "help_message"
+          }
+        }
+      }
+    },
+    "dimensionsByNodeId": {},
+    "draft": {}
+  },
+  "updated_at": 1761187946,
+  "version": "draft",
+  "version_stage": "draft",
+  "workflow_type": "chat"
+}

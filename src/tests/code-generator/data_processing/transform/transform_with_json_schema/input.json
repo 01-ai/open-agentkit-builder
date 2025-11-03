@@ -1,0 +1,133 @@
+{
+  "id": "wf_68ef545aed24819097a88144f663daaf0db0d140782a910b",
+  "object": "workflow",
+  "created_at": 1760515162,
+  "creator_user_id": "user-paPVpBSglKhRmNVhFPSQqO10",
+  "default_version": null,
+  "edges": [
+    {
+      "id": "xy-edge__node_7x0ios0snode_7x0ios0s-out-node_jt8umsdfnode_jt8umsdf-target",
+      "source_node_id": "node_7x0ios0s",
+      "source_port_id": "out",
+      "target_node_id": "node_b8pz0f4d",
+      "target_port_id": "in"
+    }
+  ],
+  "highest_version": null,
+  "input_variable_json_schema": {
+    "type": "object",
+    "properties": {
+      "input_as_text": {
+        "type": "string"
+      }
+    },
+    "required": ["input_as_text"],
+    "additionalProperties": false
+  },
+  "is_default": false,
+  "is_moderation_flagged": false,
+  "label": "TDD",
+  "moderation_flagged_categories": null,
+  "moderation_violations": null,
+  "name": "TDD",
+  "nodes": [
+    {
+      "id": "node_7x0ios0s",
+      "label": "Start",
+      "node_type": "builtins.Start"
+    },
+    {
+      "id": "node_b8pz0f4d",
+      "config": {
+        "expr": {
+          "expression": "{\"first_name\": \"\", \"last_name\": \"\", \"age\": undefined, \"email\": \"\"}",
+          "format": "cel"
+        }
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false,
+          "required": []
+        },
+        "additionalProperties": false
+      },
+      "label": "Transform",
+      "node_type": "builtins.Transform"
+    }
+  ],
+  "start_node_id": "node_7x0ios0s",
+  "state_variable_json_schema": {
+    "type": "object",
+    "properties": {},
+    "required": [],
+    "additionalProperties": false
+  },
+  "state_vars": [],
+  "ui_metadata": {
+    "positionsByNodeId": {
+      "node_7x0ios0s": {
+        "x": 96,
+        "y": 16
+      },
+      "node_b8pz0f4d": {
+        "x": "202.16666666666666",
+        "y": "13.666666666666664"
+      }
+    },
+    "uiNodes": [],
+    "dataByNodeId": {
+      "node_7x0ios0s": {},
+      "node_b8pz0f4d": {
+        "objectSchema": {
+          "name": "ObjectSchema",
+          "strict": true,
+          "schema": {
+            "type": "object",
+            "properties": {
+              "first_name": {
+                "type": "string",
+                "description": "The person's first name.",
+                "default": ""
+              },
+              "last_name": {
+                "type": "string",
+                "description": "The person's last name.",
+                "default": ""
+              },
+              "age": {
+                "type": "number",
+                "description": "The person's age in years (must be non-negative integer)."
+              },
+              "email": {
+                "type": "string",
+                "description": "The person's email address.",
+                "default": ""
+              }
+            },
+            "additionalProperties": false,
+            "required": ["first_name", "last_name", "age", "email"],
+            "title": "people_basic_info"
+          }
+        },
+        "expressions": [
+          {
+            "id": "expression_dobfxsrf",
+            "key": "result",
+            "expression": "workflow.input_as_text "
+          }
+        ],
+        "outputKind": "object"
+      }
+    },
+    "dimensionsByNodeId": {},
+    "draft": {}
+  },
+  "updated_at": 1760515183,
+  "version": "draft",
+  "version_stage": "draft",
+  "workflow_type": "chat"
+}

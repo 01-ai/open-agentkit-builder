@@ -1,0 +1,325 @@
+{
+  "id": "wf_68ef545aed24819097a88144f663daaf0db0d140782a910b",
+  "object": "workflow",
+  "created_at": 1760515162,
+  "creator_user_id": "user-paPVpBSglKhRmNVhFPSQqO10",
+  "default_version": null,
+  "edges": [
+    {
+      "id": "xy-edge__node_7x0ios0snode_7x0ios0s-out-node_ac73fwilnode_ac73fwil-target",
+      "source_node_id": "node_7x0ios0s",
+      "source_port_id": "out",
+      "target_node_id": "node_g7kb7sgg",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_g7kb7sggnode_g7kb7sgg-on_approve-node_rsexufptnode_rsexufpt-target",
+      "source_node_id": "node_g7kb7sgg",
+      "source_port_id": "on_approve",
+      "target_node_id": "node_f0qh9zff",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_f0qh9zffnode_f0qh9zff-on_result-node_l9o3yd36node_l9o3yd36-target",
+      "source_node_id": "node_f0qh9zff",
+      "source_port_id": "on_result",
+      "target_node_id": "node_84axnpex",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_84axnpexnode_84axnpex-case-0-node_bf2nhvponode_bf2nhvpo-target",
+      "source_node_id": "node_84axnpex",
+      "source_port_id": "case-0",
+      "target_node_id": "node_9g4fx070",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_9g4fx070node_9g4fx070-on_result-node_098uqshsnode_098uqshs-target",
+      "source_node_id": "node_9g4fx070",
+      "source_port_id": "on_result",
+      "target_node_id": "node_8pydcbk9",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_8pydcbk9node_8pydcbk9-on_pass-node_22ckzlunnode_22ckzlun-target",
+      "source_node_id": "node_8pydcbk9",
+      "source_port_id": "on_pass",
+      "target_node_id": "node_vzjy8y7r",
+      "target_port_id": "in"
+    }
+  ],
+  "highest_version": null,
+  "input_variable_json_schema": {
+    "type": "object",
+    "properties": {
+      "input_as_text": {
+        "type": "string"
+      }
+    },
+    "required": ["input_as_text"],
+    "additionalProperties": false
+  },
+  "is_default": false,
+  "is_moderation_flagged": false,
+  "label": "TDD",
+  "moderation_flagged_categories": null,
+  "moderation_violations": null,
+  "name": "TDD",
+  "nodes": [
+    {
+      "id": "node_7x0ios0s",
+      "label": "Start",
+      "node_type": "builtins.Start"
+    },
+    {
+      "id": "node_g7kb7sgg",
+      "config": {
+        "message": "",
+        "variable_mapping": []
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false,
+          "required": []
+        },
+        "additionalProperties": false
+      },
+      "label": "User approval",
+      "node_type": "builtins.BinaryApproval"
+    },
+    {
+      "id": "node_f0qh9zff",
+      "config": {
+        "hidden_properties": null,
+        "messages": [],
+        "model": {
+          "expression": "\"gpt-5\"",
+          "format": "cel"
+        },
+        "reads_from_history": true,
+        "reasoning": {
+          "effort": "low",
+          "summary": "auto"
+        },
+        "show_progress_to_user": true,
+        "text": {
+          "format": {
+            "type": "text"
+          },
+          "verbosity": "medium"
+        },
+        "tools": [],
+        "user_visible": true,
+        "variable_mapping": [],
+        "writes_to_history": true
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false,
+          "required": []
+        },
+        "additionalProperties": false
+      },
+      "label": "Agent",
+      "node_type": "builtins.Agent"
+    },
+    {
+      "id": "node_84axnpex",
+      "config": {
+        "cases": [
+          {
+            "label": "case-0",
+            "output_port_id": "case-0",
+            "predicate": {
+              "expression": "input.output_text ",
+              "format": "cel"
+            }
+          }
+        ],
+        "fallback": {
+          "label": "fallback",
+          "output_port_id": "fallback"
+        }
+      },
+      "label": "If / else",
+      "node_type": "builtins.IfElse"
+    },
+    {
+      "id": "node_9g4fx070",
+      "config": {
+        "hidden_properties": null,
+        "messages": [],
+        "model": {
+          "expression": "\"gpt-5\"",
+          "format": "cel"
+        },
+        "reads_from_history": true,
+        "reasoning": {
+          "effort": "low",
+          "summary": "auto"
+        },
+        "show_progress_to_user": true,
+        "text": {
+          "format": {
+            "type": "text"
+          },
+          "verbosity": "medium"
+        },
+        "tools": [],
+        "user_visible": true,
+        "variable_mapping": [],
+        "writes_to_history": true
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false,
+          "required": []
+        },
+        "additionalProperties": false
+      },
+      "label": "Agent",
+      "node_type": "builtins.Agent"
+    },
+    {
+      "id": "node_8pydcbk9",
+      "config": {
+        "continue_on_error": true,
+        "expr": {
+          "expression": "input.output_text",
+          "format": "cel"
+        },
+        "guardrails": []
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {
+            "output_text": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false,
+          "required": ["output_text"]
+        },
+        "additionalProperties": false
+      },
+      "label": "Guardrails",
+      "node_type": "builtins.Guardrails"
+    },
+    {
+      "id": "node_vzjy8y7r",
+      "config": {
+        "expr": {
+          "expression": "{\"safe_text\": input.safe_text}",
+          "format": "cel"
+        }
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {
+            "safe_text": {
+              "type": "string"
+            }
+          },
+          "required": ["safe_text"],
+          "additionalProperties": false
+        },
+        "additionalProperties": false
+      },
+      "label": "End",
+      "node_type": "builtins.End"
+    }
+  ],
+  "start_node_id": "node_7x0ios0s",
+  "state_variable_json_schema": {
+    "type": "object",
+    "properties": {
+      "string_var_name": {
+        "type": "string",
+        "default": "tom"
+      }
+    },
+    "required": ["string_var_name"],
+    "additionalProperties": false
+  },
+  "state_vars": [
+    {
+      "id": "string_var_name",
+      "default": "tom",
+      "name": "string_var_name"
+    }
+  ],
+  "ui_metadata": {
+    "positionsByNodeId": {
+      "node_7x0ios0s": {
+        "x": "235.3049237194729",
+        "y": 112
+      },
+      "node_g7kb7sgg": {
+        "x": "341.30492371947287",
+        "y": 80
+      },
+      "node_f0qh9zff": {
+        "x": 512,
+        "y": 112
+      },
+      "node_84axnpex": {
+        "x": 640,
+        "y": 65
+      },
+      "node_9g4fx070": {
+        "x": 800,
+        "y": 96
+      },
+      "node_8pydcbk9": {
+        "x": 928,
+        "y": 64
+      },
+      "node_vzjy8y7r": {
+        "x": "1089.0995356978547",
+        "y": "89.60119520242648"
+      }
+    },
+    "uiNodes": [],
+    "dataByNodeId": {
+      "node_7x0ios0s": {},
+      "node_g7kb7sgg": {},
+      "node_f0qh9zff": {
+        "widgetTools": []
+      },
+      "node_84axnpex": {
+        "caseNames": [""]
+      },
+      "node_9g4fx070": {
+        "widgetTools": []
+      },
+      "node_8pydcbk9": {},
+      "node_vzjy8y7r": {
+        "workflowOutput": null
+      }
+    },
+    "dimensionsByNodeId": {},
+    "draft": {}
+  },
+  "updated_at": 1760515183,
+  "version": "draft",
+  "version_stage": "draft",
+  "workflow_type": "chat"
+}

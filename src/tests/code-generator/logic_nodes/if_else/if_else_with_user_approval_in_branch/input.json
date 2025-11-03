@@ -1,0 +1,313 @@
+{
+  "id": "wf_68ef545aed24819097a88144f663daaf0db0d140782a910b",
+  "object": "workflow",
+  "created_at": 1760515162,
+  "creator_user_id": "user-paPVpBSglKhRmNVhFPSQqO10",
+  "default_version": null,
+  "edges": [
+    {
+      "id": "xy-edge__node_7x0ios0snode_7x0ios0s-out-node_cp04azsanode_cp04azsa-target",
+      "source_node_id": "node_7x0ios0s",
+      "source_port_id": "out",
+      "target_node_id": "node_6cmy4w9g",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_6cmy4w9gnode_6cmy4w9g-fallback-node_i3v1v0b4node_i3v1v0b4-target",
+      "source_node_id": "node_6cmy4w9g",
+      "source_port_id": "fallback",
+      "target_node_id": "node_rm62kd5r",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_6cmy4w9gnode_6cmy4w9g-case-0-node_nr1vuhqinode_nr1vuhqi-target",
+      "source_node_id": "node_6cmy4w9g",
+      "source_port_id": "case-0",
+      "target_node_id": "node_f95sw3y5",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_f95sw3y5node_f95sw3y5-on_approve-node_wle9yxzjnode_wle9yxzj-target",
+      "source_node_id": "node_f95sw3y5",
+      "source_port_id": "on_approve",
+      "target_node_id": "node_t4cftwv9",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_t4cftwv9node_t4cftwv9-on_result-node_vn8jllmnnode_vn8jllmn-target",
+      "source_node_id": "node_t4cftwv9",
+      "source_port_id": "on_result",
+      "target_node_id": "node_u1bhb3zu",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_f95sw3y5node_f95sw3y5-on_reject-node_muqzxensnode_muqzxens-target",
+      "source_node_id": "node_f95sw3y5",
+      "source_port_id": "on_reject",
+      "target_node_id": "node_b846pgjp",
+      "target_port_id": "in"
+    }
+  ],
+  "highest_version": null,
+  "input_variable_json_schema": {
+    "type": "object",
+    "properties": {
+      "input_as_text": {
+        "type": "string"
+      }
+    },
+    "required": ["input_as_text"],
+    "additionalProperties": false
+  },
+  "is_default": false,
+  "is_moderation_flagged": false,
+  "label": "TDD",
+  "moderation_flagged_categories": null,
+  "moderation_violations": null,
+  "name": "TDD",
+  "nodes": [
+    {
+      "id": "node_7x0ios0s",
+      "label": "Start",
+      "node_type": "builtins.Start"
+    },
+    {
+      "id": "node_6cmy4w9g",
+      "config": {
+        "cases": [
+          {
+            "label": "case-0",
+            "output_port_id": "case-0",
+            "predicate": {
+              "expression": "state.string_var_name ",
+              "format": "cel"
+            }
+          }
+        ],
+        "fallback": {
+          "label": "fallback",
+          "output_port_id": "fallback"
+        }
+      },
+      "label": "If / else",
+      "node_type": "builtins.IfElse"
+    },
+    {
+      "id": "node_rm62kd5r",
+      "config": {
+        "expr": {
+          "expression": "input",
+          "format": "cel"
+        }
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false,
+          "required": []
+        },
+        "additionalProperties": false
+      },
+      "label": "End",
+      "node_type": "builtins.End"
+    },
+    {
+      "id": "node_f95sw3y5",
+      "config": {
+        "message": "",
+        "variable_mapping": []
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false,
+          "required": []
+        },
+        "additionalProperties": false
+      },
+      "label": "User approval",
+      "node_type": "builtins.BinaryApproval"
+    },
+    {
+      "id": "node_t4cftwv9",
+      "config": {
+        "hidden_properties": null,
+        "messages": [],
+        "model": {
+          "expression": "\"gpt-5\"",
+          "format": "cel"
+        },
+        "reads_from_history": true,
+        "reasoning": {
+          "effort": "low",
+          "summary": "auto"
+        },
+        "show_progress_to_user": true,
+        "text": {
+          "format": {
+            "type": "text"
+          },
+          "verbosity": "medium"
+        },
+        "tools": [],
+        "user_visible": true,
+        "variable_mapping": [],
+        "writes_to_history": true
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false,
+          "required": []
+        },
+        "additionalProperties": false
+      },
+      "label": "Agent",
+      "node_type": "builtins.Agent"
+    },
+    {
+      "id": "node_u1bhb3zu",
+      "config": {
+        "expr": {
+          "expression": "{\"output_text\": input.output_text}",
+          "format": "cel"
+        }
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "title": "ResponseSchema",
+          "type": "object",
+          "properties": {
+            "output_text": {
+              "type": "string"
+            }
+          },
+          "required": ["output_text"],
+          "additionalProperties": false
+        },
+        "additionalProperties": false
+      },
+      "label": "End",
+      "node_type": "builtins.End"
+    },
+    {
+      "id": "node_b846pgjp",
+      "config": {
+        "expr": {
+          "expression": "input",
+          "format": "cel"
+        }
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false,
+          "required": []
+        },
+        "additionalProperties": false
+      },
+      "label": "End",
+      "node_type": "builtins.End"
+    }
+  ],
+  "start_node_id": "node_7x0ios0s",
+  "state_variable_json_schema": {
+    "type": "object",
+    "properties": {
+      "string_var_name": {
+        "type": "string",
+        "default": "tom"
+      },
+      "num_var": {
+        "type": "number",
+        "default": 0
+      }
+    },
+    "required": ["string_var_name", "num_var"],
+    "additionalProperties": false
+  },
+  "state_vars": [
+    {
+      "id": "string_var_name",
+      "default": "tom",
+      "name": "string_var_name"
+    },
+    {
+      "id": "num_var",
+      "default": 0,
+      "name": "num_var"
+    }
+  ],
+  "ui_metadata": {
+    "positionsByNodeId": {
+      "node_7x0ios0s": {
+        "x": "187.15707126262603",
+        "y": 0
+      },
+      "node_6cmy4w9g": {
+        "x": "292.5926194693925",
+        "y": "-13.416666666666707"
+      },
+      "node_rm62kd5r": {
+        "x": "466.97056818045775",
+        "y": "99.82649739583329"
+      },
+      "node_f95sw3y5": {
+        "x": "473.7797497286112",
+        "y": "-30.173502604166714"
+      },
+      "node_t4cftwv9": {
+        "x": "632.223208197639",
+        "y": "-40.50000000000008"
+      },
+      "node_u1bhb3zu": {
+        "x": 752,
+        "y": -48
+      },
+      "node_b846pgjp": {
+        "x": 640,
+        "y": 32
+      }
+    },
+    "uiNodes": [],
+    "dataByNodeId": {
+      "node_7x0ios0s": {},
+      "node_6cmy4w9g": {
+        "caseNames": [""]
+      },
+      "node_rm62kd5r": {
+        "workflowOutput": null
+      },
+      "node_f95sw3y5": {},
+      "node_t4cftwv9": {
+        "widgetTools": []
+      },
+      "node_u1bhb3zu": {
+        "workflowOutput": null
+      },
+      "node_b846pgjp": {
+        "workflowOutput": null
+      }
+    },
+    "dimensionsByNodeId": {},
+    "draft": {}
+  },
+  "updated_at": 1760515183,
+  "version": "draft",
+  "version_stage": "draft",
+  "workflow_type": "chat"
+}

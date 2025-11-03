@@ -1,0 +1,311 @@
+{
+  "id": "wf_68ef545aed24819097a88144f663daaf0db0d140782a910b",
+  "object": "workflow",
+  "created_at": 1760515162,
+  "creator_user_id": "user-paPVpBSglKhRmNVhFPSQqO10",
+  "default_version": null,
+  "edges": [
+    {
+      "id": "xy-edge__node_7x0ios0snode_7x0ios0s-out-node_xxw44iajnode_xxw44iaj-target",
+      "source_node_id": "node_7x0ios0s",
+      "source_port_id": "out",
+      "target_node_id": "node_onllzjt9",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_onllzjt9node_onllzjt9-on_result-node_uesw4kb3node_uesw4kb3-target",
+      "source_node_id": "node_onllzjt9",
+      "source_port_id": "on_result",
+      "target_node_id": "node_1ny8nobs",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_1ny8nobsnode_1ny8nobs-out-node_eioxdmk3node_eioxdmk3-target",
+      "source_node_id": "node_1ny8nobs",
+      "source_port_id": "out",
+      "target_node_id": "node_up6lmsjj",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_up6lmsjjnode_up6lmsjj-out-node_l6sif7mpnode_l6sif7mp-target",
+      "source_node_id": "node_up6lmsjj",
+      "source_port_id": "out",
+      "target_node_id": "node_yy87gwm2",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_yy87gwm2node_yy87gwm2-on_result-node_8lvmze7vnode_8lvmze7v-target",
+      "source_node_id": "node_yy87gwm2",
+      "source_port_id": "on_result",
+      "target_node_id": "node_2soo35kb",
+      "target_port_id": "in"
+    }
+  ],
+  "highest_version": null,
+  "input_variable_json_schema": {
+    "type": "object",
+    "properties": {
+      "input_as_text": {
+        "type": "string"
+      }
+    },
+    "required": ["input_as_text"],
+    "additionalProperties": false
+  },
+  "is_default": false,
+  "is_moderation_flagged": false,
+  "label": "TDD",
+  "moderation_flagged_categories": null,
+  "moderation_violations": null,
+  "name": "TDD",
+  "nodes": [
+    {
+      "id": "node_7x0ios0s",
+      "label": "Start",
+      "node_type": "builtins.Start"
+    },
+    {
+      "id": "node_onllzjt9",
+      "config": {
+        "hidden_properties": null,
+        "messages": [],
+        "model": {
+          "expression": "\"gpt-5\"",
+          "format": "cel"
+        },
+        "reads_from_history": true,
+        "reasoning": {
+          "effort": "low",
+          "summary": "auto"
+        },
+        "show_progress_to_user": true,
+        "text": {
+          "format": {
+            "type": "text"
+          },
+          "verbosity": "medium"
+        },
+        "tools": [],
+        "user_visible": true,
+        "variable_mapping": [],
+        "writes_to_history": true
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false,
+          "required": []
+        },
+        "additionalProperties": false
+      },
+      "label": "Agent1",
+      "node_type": "builtins.Agent"
+    },
+    {
+      "id": "node_1ny8nobs",
+      "config": {
+        "assignments": [
+          {
+            "expression": {
+              "expression": "state.num_var +1",
+              "format": "cel"
+            },
+            "name": "num_var"
+          }
+        ]
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false,
+          "required": []
+        },
+        "additionalProperties": false
+      },
+      "label": "Set state",
+      "node_type": "builtins.SetState"
+    },
+    {
+      "id": "node_up6lmsjj",
+      "config": {
+        "expr": {
+          "expression": "{\"result\": state.num_var }",
+          "format": "cel"
+        }
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false,
+          "required": []
+        },
+        "additionalProperties": false
+      },
+      "label": "Transform",
+      "node_type": "builtins.Transform"
+    },
+    {
+      "id": "node_yy87gwm2",
+      "config": {
+        "hidden_properties": null,
+        "messages": [],
+        "model": {
+          "expression": "\"gpt-5\"",
+          "format": "cel"
+        },
+        "reads_from_history": true,
+        "reasoning": {
+          "effort": "low",
+          "summary": "auto"
+        },
+        "show_progress_to_user": true,
+        "text": {
+          "format": {
+            "type": "text"
+          },
+          "verbosity": "medium"
+        },
+        "tools": [],
+        "user_visible": true,
+        "variable_mapping": [],
+        "writes_to_history": true
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false,
+          "required": []
+        },
+        "additionalProperties": false
+      },
+      "label": "Agent",
+      "node_type": "builtins.Agent"
+    },
+    {
+      "id": "node_2soo35kb",
+      "config": {
+        "expr": {
+          "expression": "{\"output_text\": input.output_text}",
+          "format": "cel"
+        }
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "title": "ResponseSchema",
+          "type": "object",
+          "properties": {
+            "output_text": {
+              "type": "string"
+            }
+          },
+          "required": ["output_text"],
+          "additionalProperties": false
+        },
+        "additionalProperties": false
+      },
+      "label": "End",
+      "node_type": "builtins.End"
+    }
+  ],
+  "start_node_id": "node_7x0ios0s",
+  "state_variable_json_schema": {
+    "type": "object",
+    "properties": {
+      "string_var_name": {
+        "type": "string",
+        "default": "tom"
+      },
+      "num_var": {
+        "type": "number",
+        "default": 0
+      }
+    },
+    "required": ["string_var_name", "num_var"],
+    "additionalProperties": false
+  },
+  "state_vars": [
+    {
+      "id": "string_var_name",
+      "default": "tom",
+      "name": "string_var_name"
+    },
+    {
+      "id": "num_var",
+      "default": 0,
+      "name": "num_var"
+    }
+  ],
+  "ui_metadata": {
+    "positionsByNodeId": {
+      "node_7x0ios0s": {
+        "x": "280.16657736417255",
+        "y": 0
+      },
+      "node_onllzjt9": {
+        "x": "385.16821981607063",
+        "y": 0
+      },
+      "node_1ny8nobs": {
+        "x": "500.1674655669922",
+        "y": 0
+      },
+      "node_up6lmsjj": {
+        "x": "626.4163007049392",
+        "y": 0
+      },
+      "node_yy87gwm2": {
+        "x": "760.4163007049392",
+        "y": 0
+      },
+      "node_2soo35kb": {
+        "x": "871.6651358428862",
+        "y": 0
+      }
+    },
+    "uiNodes": [],
+    "dataByNodeId": {
+      "node_7x0ios0s": {},
+      "node_onllzjt9": {
+        "widgetTools": []
+      },
+      "node_1ny8nobs": {},
+      "node_up6lmsjj": {
+        "objectSchema": null,
+        "expressions": [
+          {
+            "id": "expression_nnwofug3",
+            "key": "result",
+            "expression": "state.num_var "
+          }
+        ],
+        "outputKind": "expressions"
+      },
+      "node_yy87gwm2": {
+        "widgetTools": []
+      },
+      "node_2soo35kb": {
+        "workflowOutput": null
+      }
+    },
+    "dimensionsByNodeId": {},
+    "draft": {}
+  },
+  "updated_at": 1760515183,
+  "version": "draft",
+  "version_stage": "draft",
+  "workflow_type": "chat"
+}

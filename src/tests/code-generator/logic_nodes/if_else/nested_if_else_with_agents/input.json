@@ -1,0 +1,289 @@
+{
+  "id": "wf_68ef545aed24819097a88144f663daaf0db0d140782a910b",
+  "object": "workflow",
+  "created_at": 1760515162,
+  "creator_user_id": "user-paPVpBSglKhRmNVhFPSQqO10",
+  "default_version": null,
+  "edges": [
+    {
+      "id": "xy-edge__node_7x0ios0snode_7x0ios0s-out-node_0jumvlyenode_0jumvlye-target",
+      "source_node_id": "node_7x0ios0s",
+      "source_port_id": "out",
+      "target_node_id": "node_zsnusg8u",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_zsnusg8unode_zsnusg8u-case-0-node_bhb79nb9node_bhb79nb9-target",
+      "source_node_id": "node_zsnusg8u",
+      "source_port_id": "case-0",
+      "target_node_id": "node_y6u50gz8",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_y6u50gz8node_y6u50gz8-on_result-node_dr4mehuynode_dr4mehuy-target",
+      "source_node_id": "node_y6u50gz8",
+      "source_port_id": "on_result",
+      "target_node_id": "node_75403zdc",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_75403zdcnode_75403zdc-case-0-node_2zfbj7h4node_2zfbj7h4-target",
+      "source_node_id": "node_75403zdc",
+      "source_port_id": "case-0",
+      "target_node_id": "node_lkq719dt",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_lkq719dtnode_lkq719dt-on_result-node_bwnwtwx6node_bwnwtwx6-target",
+      "source_node_id": "node_lkq719dt",
+      "source_port_id": "on_result",
+      "target_node_id": "node_akq9azfr",
+      "target_port_id": "in"
+    }
+  ],
+  "highest_version": null,
+  "input_variable_json_schema": {
+    "type": "object",
+    "properties": {
+      "input_as_text": {
+        "type": "string"
+      }
+    },
+    "required": ["input_as_text"],
+    "additionalProperties": false
+  },
+  "is_default": false,
+  "is_moderation_flagged": false,
+  "label": "TDD",
+  "moderation_flagged_categories": null,
+  "moderation_violations": null,
+  "name": "TDD",
+  "nodes": [
+    {
+      "id": "node_7x0ios0s",
+      "label": "Start",
+      "node_type": "builtins.Start"
+    },
+    {
+      "id": "node_zsnusg8u",
+      "config": {
+        "cases": [
+          {
+            "label": "case-0",
+            "output_port_id": "case-0",
+            "predicate": {
+              "expression": "state.string_var_name ",
+              "format": "cel"
+            }
+          }
+        ],
+        "fallback": {
+          "label": "fallback",
+          "output_port_id": "fallback"
+        }
+      },
+      "label": "If / else",
+      "node_type": "builtins.IfElse"
+    },
+    {
+      "id": "node_y6u50gz8",
+      "config": {
+        "hidden_properties": null,
+        "messages": [],
+        "model": {
+          "expression": "\"gpt-5\"",
+          "format": "cel"
+        },
+        "reads_from_history": true,
+        "reasoning": {
+          "effort": "low",
+          "summary": "auto"
+        },
+        "show_progress_to_user": true,
+        "text": {
+          "format": {
+            "type": "text"
+          },
+          "verbosity": "medium"
+        },
+        "tools": [],
+        "user_visible": true,
+        "variable_mapping": [],
+        "writes_to_history": true
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false,
+          "required": []
+        },
+        "additionalProperties": false
+      },
+      "label": "Agent",
+      "node_type": "builtins.Agent"
+    },
+    {
+      "id": "node_75403zdc",
+      "config": {
+        "cases": [
+          {
+            "label": "case-0",
+            "output_port_id": "case-0",
+            "predicate": {
+              "expression": "input.output_text ",
+              "format": "cel"
+            }
+          }
+        ],
+        "fallback": {
+          "label": "fallback",
+          "output_port_id": "fallback"
+        }
+      },
+      "label": "If / else",
+      "node_type": "builtins.IfElse"
+    },
+    {
+      "id": "node_lkq719dt",
+      "config": {
+        "hidden_properties": null,
+        "messages": [],
+        "model": {
+          "expression": "\"gpt-5\"",
+          "format": "cel"
+        },
+        "reads_from_history": true,
+        "reasoning": {
+          "effort": "low",
+          "summary": "auto"
+        },
+        "show_progress_to_user": true,
+        "text": {
+          "format": {
+            "type": "text"
+          },
+          "verbosity": "medium"
+        },
+        "tools": [],
+        "user_visible": true,
+        "variable_mapping": [],
+        "writes_to_history": true
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false,
+          "required": []
+        },
+        "additionalProperties": false
+      },
+      "label": "Agent",
+      "node_type": "builtins.Agent"
+    },
+    {
+      "id": "node_akq9azfr",
+      "config": {
+        "expr": {
+          "expression": "{\"output_text\": input.output_text}",
+          "format": "cel"
+        }
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "title": "ResponseSchema",
+          "type": "object",
+          "properties": {
+            "output_text": {
+              "type": "string"
+            }
+          },
+          "required": ["output_text"],
+          "additionalProperties": false
+        },
+        "additionalProperties": false
+      },
+      "label": "End",
+      "node_type": "builtins.End"
+    }
+  ],
+  "start_node_id": "node_7x0ios0s",
+  "state_variable_json_schema": {
+    "type": "object",
+    "properties": {
+      "string_var_name": {
+        "type": "string",
+        "default": "tom"
+      }
+    },
+    "required": ["string_var_name"],
+    "additionalProperties": false
+  },
+  "state_vars": [
+    {
+      "id": "string_var_name",
+      "default": "tom",
+      "name": "string_var_name"
+    }
+  ],
+  "ui_metadata": {
+    "positionsByNodeId": {
+      "node_7x0ios0s": {
+        "x": 512,
+        "y": -384
+      },
+      "node_zsnusg8u": {
+        "x": "468.51760269005007",
+        "y": "-318.49540253905525"
+      },
+      "node_y6u50gz8": {
+        "x": 496,
+        "y": "-188.49540253905522"
+      },
+      "node_75403zdc": {
+        "x": 480,
+        "y": "-123.04760227639433"
+      },
+      "node_lkq719dt": {
+        "x": "498.4781701400673",
+        "y": "13.015741059283933"
+      },
+      "node_akq9azfr": {
+        "x": 496,
+        "y": 80
+      }
+    },
+    "uiNodes": [],
+    "dataByNodeId": {
+      "node_7x0ios0s": {},
+      "node_zsnusg8u": {
+        "caseNames": [""]
+      },
+      "node_y6u50gz8": {
+        "widgetTools": []
+      },
+      "node_75403zdc": {
+        "caseNames": [""]
+      },
+      "node_lkq719dt": {
+        "widgetTools": []
+      },
+      "node_akq9azfr": {
+        "workflowOutput": null
+      }
+    },
+    "dimensionsByNodeId": {},
+    "draft": {}
+  },
+  "updated_at": 1760515183,
+  "version": "draft",
+  "version_stage": "draft",
+  "workflow_type": "chat"
+}

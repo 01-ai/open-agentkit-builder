@@ -1,0 +1,503 @@
+{
+  "object": "workflow",
+  "created_at": 1761188198,
+  "default_version": null,
+  "edges": [
+    {
+      "id": "edge_1d1lgn8f",
+      "source_node_id": "node_pgzxrho3",
+      "source_port_id": "out",
+      "target_node_id": "node_lde8jox5",
+      "target_port_id": "in"
+    },
+    {
+      "id": "edge_sucjl9eh",
+      "source_node_id": "node_4lhrqi2r",
+      "source_port_id": "on_result",
+      "target_node_id": "node_6zvb2fw6",
+      "target_port_id": "in"
+    },
+    {
+      "id": "edge_pioqetye",
+      "source_node_id": "node_6zvb2fw6",
+      "source_port_id": "case-0",
+      "target_node_id": "node_j01qerjf",
+      "target_port_id": "in"
+    },
+    {
+      "id": "edge_b9t07j5d",
+      "source_node_id": "node_6zvb2fw6",
+      "source_port_id": "case-1",
+      "target_node_id": "node_d9t9m4k1",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_lde8jox5node_lde8jox5-on_result-node_4lhrqi2rnode_4lhrqi2r-target",
+      "source_node_id": "node_lde8jox5",
+      "source_port_id": "on_result",
+      "target_node_id": "node_4lhrqi2r",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_6zvb2fw6node_6zvb2fw6-fallback-node_c8vqcansnode_c8vqcans-target",
+      "source_node_id": "node_6zvb2fw6",
+      "source_port_id": "fallback",
+      "target_node_id": "node_c8vqcans",
+      "target_port_id": "in"
+    }
+  ],
+  "highest_version": null,
+  "input_variable_json_schema": {
+    "type": "object",
+    "properties": {
+      "input_as_text": {
+        "type": "string"
+      }
+    },
+    "required": ["input_as_text"],
+    "additionalProperties": false
+  },
+  "is_default": false,
+  "is_moderation_flagged": false,
+  "label": "New workflow",
+  "moderation_flagged_categories": null,
+  "moderation_violations": null,
+  "name": "New workflow",
+  "nodes": [
+    {
+      "id": "node_pgzxrho3",
+      "label": "Start",
+      "node_type": "builtins.Start"
+    },
+    {
+      "id": "node_lde8jox5",
+      "config": {
+        "hidden_properties": null,
+        "instructions": {
+          "expression": "\"Rewrite the user's question to be more specific and relevant to the knowledge base.\"",
+          "format": "cel"
+        },
+        "messages": [
+          {
+            "role": "user",
+            "content": [
+              {
+                "type": "input_text",
+                "text": "Original question: {{workflow.input_as_text}}"
+              }
+            ]
+          }
+        ],
+        "model": {
+          "expression": "\"gpt-5\"",
+          "format": "cel"
+        },
+        "reads_from_history": true,
+        "reasoning": {
+          "effort": "low",
+          "summary": null
+        },
+        "show_progress_to_user": true,
+        "text": {
+          "format": {
+            "type": "text"
+          },
+          "verbosity": "medium"
+        },
+        "tools": [],
+        "user_visible": true,
+        "variable_mapping": [
+          {
+            "expression": {
+              "expression": "workflow.input_as_text",
+              "format": "cel"
+            },
+            "name": "workflow.input_as_text"
+          }
+        ],
+        "writes_to_history": true
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false,
+          "required": []
+        },
+        "additionalProperties": false
+      },
+      "label": "Query rewrite",
+      "node_type": "builtins.Agent"
+    },
+    {
+      "id": "node_4lhrqi2r",
+      "config": {
+        "hidden_properties": null,
+        "instructions": {
+          "expression": "\"Determine whether the question should use the Q&A or fact-finding process.\"",
+          "format": "cel"
+        },
+        "messages": [
+          {
+            "role": "user",
+            "content": [
+              {
+                "type": "input_text",
+                "text": "Question: {{input.output_text}}"
+              }
+            ]
+          }
+        ],
+        "model": {
+          "expression": "\"gpt-5\"",
+          "format": "cel"
+        },
+        "reads_from_history": true,
+        "reasoning": {
+          "effort": "low",
+          "summary": null
+        },
+        "show_progress_to_user": true,
+        "text": {
+          "format": {
+            "name": "operating_procedure_enum",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "operating_procedure": {
+                  "type": "string",
+                  "description": "Select the right operating procedure",
+                  "enum": ["q-and-a", "fact-finding", "other"]
+                }
+              },
+              "required": ["operating_procedure"],
+              "additionalProperties": false
+            },
+            "type": "json_schema",
+            "strict": true
+          },
+          "verbosity": "medium"
+        },
+        "tools": [],
+        "user_visible": true,
+        "variable_mapping": [
+          {
+            "expression": {
+              "expression": "input.output_text",
+              "format": "cel"
+            },
+            "name": "input.output_text"
+          }
+        ],
+        "writes_to_history": true
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {
+            "output_text": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false,
+          "required": ["output_text"]
+        },
+        "additionalProperties": false
+      },
+      "label": "Classify",
+      "node_type": "builtins.Agent"
+    },
+    {
+      "id": "node_6zvb2fw6",
+      "config": {
+        "cases": [
+          {
+            "label": "case-0",
+            "output_port_id": "case-0",
+            "predicate": {
+              "expression": "input.output_parsed.operating_procedure == \"q-and-a\"",
+              "format": "cel"
+            }
+          },
+          {
+            "label": "case-1",
+            "output_port_id": "case-1",
+            "predicate": {
+              "expression": "input.output_parsed.operating_procedure == \"fact-finding\"",
+              "format": "cel"
+            }
+          }
+        ],
+        "fallback": {
+          "label": "fallback",
+          "output_port_id": "fallback"
+        }
+      },
+      "label": "If",
+      "node_type": "builtins.IfElse"
+    },
+    {
+      "id": "node_j01qerjf",
+      "config": {
+        "hidden_properties": null,
+        "instructions": {
+          "expression": "\"Answer the user's question using the knowledge tools you have on hand (file or web search). Be concise and answer succinctly, using bullet points and summarizing the answer up front\"",
+          "format": "cel"
+        },
+        "messages": [],
+        "model": {
+          "expression": "\"gpt-5\"",
+          "format": "cel"
+        },
+        "reads_from_history": true,
+        "reasoning": {
+          "effort": "low",
+          "summary": null
+        },
+        "show_progress_to_user": true,
+        "text": {
+          "format": {
+            "type": "text"
+          },
+          "verbosity": "medium"
+        },
+        "tools": [
+          {
+            "type": "web_search",
+            "search_context_size": "medium",
+            "user_location": {
+              "type": "approximate"
+            }
+          }
+        ],
+        "user_visible": true,
+        "variable_mapping": [],
+        "writes_to_history": true
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false,
+          "required": []
+        },
+        "additionalProperties": false
+      },
+      "label": "Internal Q&A",
+      "node_type": "builtins.Agent"
+    },
+    {
+      "id": "node_d9t9m4k1",
+      "config": {
+        "hidden_properties": null,
+        "instructions": {
+          "expression": "\"Explore external information using the tools you have (web search, file search, code interpreter). \\nAnalyze any relevant data, checking your work.\\n\\nMake sure to output a concise answer followed by summarized bullet point of supporting evidence\"",
+          "format": "cel"
+        },
+        "messages": [],
+        "model": {
+          "expression": "\"gpt-5\"",
+          "format": "cel"
+        },
+        "reads_from_history": true,
+        "reasoning": {
+          "effort": "low",
+          "summary": null
+        },
+        "show_progress_to_user": true,
+        "text": {
+          "format": {
+            "type": "text"
+          },
+          "verbosity": "medium"
+        },
+        "tools": [
+          {
+            "type": "web_search",
+            "search_context_size": "medium",
+            "user_location": {
+              "type": "approximate"
+            }
+          }
+        ],
+        "user_visible": true,
+        "variable_mapping": [],
+        "writes_to_history": true
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false,
+          "required": []
+        },
+        "additionalProperties": false
+      },
+      "label": "External fact finding",
+      "node_type": "builtins.Agent"
+    },
+    {
+      "id": "node_c8vqcans",
+      "config": {
+        "hidden_properties": null,
+        "instructions": {
+          "expression": "\"Ask the user to provide more detail so you can help them by either answering their question or running data analysis relevant to their query\"",
+          "format": "cel"
+        },
+        "max_output_tokens": 2048,
+        "messages": [],
+        "model": {
+          "expression": "\"gpt-4.1-nano\"",
+          "format": "cel"
+        },
+        "reads_from_history": true,
+        "reasoning": {
+          "effort": null,
+          "summary": null
+        },
+        "show_progress_to_user": true,
+        "temperature": 1.0,
+        "text": {
+          "format": {
+            "type": "text"
+          },
+          "verbosity": null
+        },
+        "tools": [],
+        "top_p": 1.0,
+        "user_visible": true,
+        "variable_mapping": [],
+        "writes_to_history": true
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false,
+          "required": []
+        },
+        "additionalProperties": false
+      },
+      "label": "Agent",
+      "node_type": "builtins.Agent"
+    }
+  ],
+  "start_node_id": "node_pgzxrho3",
+  "state_variable_json_schema": {
+    "type": "object",
+    "properties": {},
+    "required": [],
+    "additionalProperties": false
+  },
+  "state_vars": [],
+  "ui_metadata": {
+    "positionsByNodeId": {
+      "node_pgzxrho3": {
+        "x": 48,
+        "y": 96
+      },
+      "node_lde8jox5": {
+        "x": 208,
+        "y": "97.375"
+      },
+      "node_4lhrqi2r": {
+        "x": 400,
+        "y": 96
+      },
+      "node_6zvb2fw6": {
+        "x": 576,
+        "y": 48
+      },
+      "node_j01qerjf": {
+        "x": 768,
+        "y": 48
+      },
+      "node_d9t9m4k1": {
+        "x": 768,
+        "y": 127
+      },
+      "node_c8vqcans": {
+        "x": 768,
+        "y": 192
+      },
+      "node_9w5lt8mp": {
+        "x": 192,
+        "y": "-5.625"
+      },
+      "node_aqpctann": {
+        "x": 544,
+        "y": -32
+      },
+      "node_lgfr0ax2": {
+        "x": 752,
+        "y": -48
+      }
+    },
+    "uiNodes": [
+      {
+        "id": "node_9w5lt8mp",
+        "type": "note",
+        "data": {
+          "name": null,
+          "userDefinedPassthroughVariables": [],
+          "text": "Rewrite the user's question to be more specific and relevant to the knowledge base."
+        }
+      },
+      {
+        "id": "node_aqpctann",
+        "type": "note",
+        "data": {
+          "name": null,
+          "userDefinedPassthroughVariables": [],
+          "text": "Based on the question asked, triage to a particular agent."
+        }
+      },
+      {
+        "id": "node_lgfr0ax2",
+        "type": "note",
+        "data": {
+          "name": null,
+          "userDefinedPassthroughVariables": [],
+          "text": "Create additional sub-workflows to handle specialized requests."
+        }
+      }
+    ],
+    "dataByNodeId": {
+      "node_pgzxrho3": {},
+      "node_lde8jox5": {
+        "widgetTools": []
+      },
+      "node_4lhrqi2r": {
+        "widgetTools": []
+      },
+      "node_6zvb2fw6": {
+        "caseNames": ["Q&A", "Fact finding"]
+      },
+      "node_j01qerjf": {
+        "widgetTools": []
+      },
+      "node_d9t9m4k1": {
+        "widgetTools": []
+      },
+      "node_c8vqcans": {
+        "widgetTools": []
+      }
+    },
+    "dimensionsByNodeId": {},
+    "draft": {}
+  },
+  "updated_at": 1761188198,
+  "version": "draft",
+  "version_stage": "draft",
+  "workflow_type": "chat"
+}

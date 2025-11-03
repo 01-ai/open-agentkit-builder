@@ -1,0 +1,254 @@
+{
+  "id": "wf_68ef545aed24819097a88144f663daaf0db0d140782a910b",
+  "object": "workflow",
+  "created_at": 1760515162,
+  "creator_user_id": "user-paPVpBSglKhRmNVhFPSQqO10",
+  "default_version": null,
+  "edges": [
+    {
+      "id": "xy-edge__node_7x0ios0snode_7x0ios0s-out-node_eo4sr08knode_eo4sr08k-target",
+      "source_node_id": "node_7x0ios0s",
+      "source_port_id": "out",
+      "target_node_id": "node_0dymnldy",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_0dymnldynode_0dymnldy-on_result-node_tolupi09node_tolupi09-target",
+      "source_node_id": "node_0dymnldy",
+      "source_port_id": "on_result",
+      "target_node_id": "node_jalwgegy",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_jalwgegynode_jalwgegy-out-node_eucvqxdenode_eucvqxde-target",
+      "source_node_id": "node_jalwgegy",
+      "source_port_id": "out",
+      "target_node_id": "node_c7elqr4o",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_c7elqr4onode_c7elqr4o-on_result-node_tjx57s02node_tjx57s02-target",
+      "source_node_id": "node_c7elqr4o",
+      "source_port_id": "on_result",
+      "target_node_id": "node_yqwmwifo",
+      "target_port_id": "in"
+    }
+  ],
+  "highest_version": null,
+  "input_variable_json_schema": {
+    "type": "object",
+    "properties": {
+      "input_as_text": {
+        "type": "string"
+      }
+    },
+    "required": ["input_as_text"],
+    "additionalProperties": false
+  },
+  "is_default": false,
+  "is_moderation_flagged": false,
+  "label": "TDD",
+  "moderation_flagged_categories": null,
+  "moderation_violations": null,
+  "name": "TDD",
+  "nodes": [
+    {
+      "id": "node_7x0ios0s",
+      "label": "Start",
+      "node_type": "builtins.Start"
+    },
+    {
+      "id": "node_0dymnldy",
+      "config": {
+        "max_results": 10,
+        "query": {
+          "expression": "",
+          "format": "cel"
+        },
+        "vector_store_id": ""
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false,
+          "required": []
+        },
+        "additionalProperties": false
+      },
+      "label": "File Search",
+      "node_type": "builtins.tool.FileSearch"
+    },
+    {
+      "id": "node_jalwgegy",
+      "config": {
+        "expr": {
+          "expression": "{\"result\": }",
+          "format": "cel"
+        }
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false,
+          "required": []
+        },
+        "additionalProperties": false
+      },
+      "label": "Transform",
+      "node_type": "builtins.Transform"
+    },
+    {
+      "id": "node_c7elqr4o",
+      "config": {
+        "hidden_properties": null,
+        "messages": [],
+        "model": {
+          "expression": "\"gpt-5\"",
+          "format": "cel"
+        },
+        "reads_from_history": true,
+        "reasoning": {
+          "effort": "low",
+          "summary": "auto"
+        },
+        "show_progress_to_user": true,
+        "text": {
+          "format": {
+            "type": "text"
+          },
+          "verbosity": "medium"
+        },
+        "tools": [],
+        "user_visible": true,
+        "variable_mapping": [],
+        "writes_to_history": true
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false,
+          "required": []
+        },
+        "additionalProperties": false
+      },
+      "label": "Agent",
+      "node_type": "builtins.Agent"
+    },
+    {
+      "id": "node_yqwmwifo",
+      "config": {
+        "expr": {
+          "expression": "{\"output_text\": input.output_text}",
+          "format": "cel"
+        }
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "title": "ResponseSchema",
+          "type": "object",
+          "properties": {
+            "output_text": {
+              "type": "string"
+            }
+          },
+          "required": ["output_text"],
+          "additionalProperties": false
+        },
+        "additionalProperties": false
+      },
+      "label": "End",
+      "node_type": "builtins.End"
+    }
+  ],
+  "start_node_id": "node_7x0ios0s",
+  "state_variable_json_schema": {
+    "type": "object",
+    "properties": {
+      "string_var_name": {
+        "type": "string",
+        "default": "tom"
+      },
+      "num_var": {
+        "type": "number",
+        "default": 0
+      }
+    },
+    "required": ["string_var_name", "num_var"],
+    "additionalProperties": false
+  },
+  "state_vars": [
+    {
+      "id": "string_var_name",
+      "default": "tom",
+      "name": "string_var_name"
+    },
+    {
+      "id": "num_var",
+      "default": 0,
+      "name": "num_var"
+    }
+  ],
+  "ui_metadata": {
+    "positionsByNodeId": {
+      "node_7x0ios0s": {
+        "x": "208.0083116820926",
+        "y": 0
+      },
+      "node_0dymnldy": {
+        "x": "313.1262583986428",
+        "y": 0
+      },
+      "node_jalwgegy": {
+        "x": "450.4126445146314",
+        "y": 0
+      },
+      "node_c7elqr4o": {
+        "x": "584.4126445146314",
+        "y": 0
+      },
+      "node_yqwmwifo": {
+        "x": "695.69903063062",
+        "y": 0
+      }
+    },
+    "uiNodes": [],
+    "dataByNodeId": {
+      "node_7x0ios0s": {},
+      "node_0dymnldy": {},
+      "node_jalwgegy": {
+        "objectSchema": null,
+        "expressions": [
+          {
+            "id": "expression_nnwofug3",
+            "key": "result",
+            "expression": ""
+          }
+        ],
+        "outputKind": "expressions"
+      },
+      "node_c7elqr4o": {
+        "widgetTools": []
+      },
+      "node_yqwmwifo": {
+        "workflowOutput": null
+      }
+    },
+    "dimensionsByNodeId": {},
+    "draft": {}
+  },
+  "updated_at": 1760515183,
+  "version": "draft",
+  "version_stage": "draft",
+  "workflow_type": "chat"
+}

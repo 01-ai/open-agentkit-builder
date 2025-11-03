@@ -1,0 +1,226 @@
+{
+  "id": "wf_68ef545aed24819097a88144f663daaf0db0d140782a910b",
+  "object": "workflow",
+  "created_at": 1760515162,
+  "creator_user_id": "user-paPVpBSglKhRmNVhFPSQqO10",
+  "default_version": null,
+  "edges": [
+    {
+      "id": "xy-edge__node_7x0ios0snode_7x0ios0s-out-node_rb01bhahnode_rb01bhah-target",
+      "source_node_id": "node_7x0ios0s",
+      "source_port_id": "out",
+      "target_node_id": "node_rb01bhah",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_rb01bhahnode_rb01bhah-on_pass-node_umw3rlegnode_umw3rleg-target",
+      "source_node_id": "node_rb01bhah",
+      "source_port_id": "on_pass",
+      "target_node_id": "node_xe8ft8xc",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_xe8ft8xcnode_xe8ft8xc-on_pass-node_ouhprdbvnode_ouhprdbv-target",
+      "source_node_id": "node_xe8ft8xc",
+      "source_port_id": "on_pass",
+      "target_node_id": "node_xfjlk6v2",
+      "target_port_id": "in"
+    },
+    {
+      "id": "xy-edge__node_xfjlk6v2node_xfjlk6v2-on_pass-node_cnyifjrbnode_cnyifjrb-target",
+      "source_node_id": "node_xfjlk6v2",
+      "source_port_id": "on_pass",
+      "target_node_id": "node_c3wu8zmo",
+      "target_port_id": "in"
+    }
+  ],
+  "highest_version": null,
+  "input_variable_json_schema": {
+    "type": "object",
+    "properties": {
+      "input_as_text": {
+        "type": "string"
+      }
+    },
+    "required": ["input_as_text"],
+    "additionalProperties": false
+  },
+  "is_default": false,
+  "is_moderation_flagged": false,
+  "label": "TDD",
+  "moderation_flagged_categories": null,
+  "moderation_violations": null,
+  "name": "TDD",
+  "nodes": [
+    {
+      "id": "node_7x0ios0s",
+      "label": "Start",
+      "node_type": "builtins.Start"
+    },
+    {
+      "id": "node_rb01bhah",
+      "config": {
+        "continue_on_error": false,
+        "expr": {
+          "expression": "workflow.input_as_text",
+          "format": "cel"
+        },
+        "guardrails": []
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false,
+          "required": []
+        },
+        "additionalProperties": false
+      },
+      "label": "Guardrails1",
+      "node_type": "builtins.Guardrails"
+    },
+    {
+      "id": "node_xe8ft8xc",
+      "config": {
+        "continue_on_error": false,
+        "expr": {
+          "expression": "input.safe_text",
+          "format": "cel"
+        },
+        "guardrails": []
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {
+            "safe_text": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false,
+          "required": ["safe_text"]
+        },
+        "additionalProperties": false
+      },
+      "label": "Guardrails2",
+      "node_type": "builtins.Guardrails"
+    },
+    {
+      "id": "node_xfjlk6v2",
+      "config": {
+        "continue_on_error": false,
+        "expr": {
+          "expression": "input.safe_text",
+          "format": "cel"
+        },
+        "guardrails": []
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {
+            "safe_text": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false,
+          "required": ["safe_text"]
+        },
+        "additionalProperties": false
+      },
+      "label": "Guardrails3",
+      "node_type": "builtins.Guardrails"
+    },
+    {
+      "id": "node_c3wu8zmo",
+      "config": {
+        "continue_on_error": false,
+        "expr": {
+          "expression": "input.safe_text",
+          "format": "cel"
+        },
+        "guardrails": []
+      },
+      "input_schema": {
+        "name": "input",
+        "strict": true,
+        "schema": {
+          "type": "object",
+          "properties": {
+            "safe_text": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false,
+          "required": ["safe_text"]
+        },
+        "additionalProperties": false
+      },
+      "label": "Guardrails4",
+      "node_type": "builtins.Guardrails"
+    }
+  ],
+  "start_node_id": "node_7x0ios0s",
+  "state_variable_json_schema": {
+    "type": "object",
+    "properties": {
+      "string_var_name": {
+        "type": "string",
+        "default": "tom"
+      }
+    },
+    "required": ["string_var_name"],
+    "additionalProperties": false
+  },
+  "state_vars": [
+    {
+      "id": "string_var_name",
+      "default": "tom",
+      "name": "string_var_name"
+    }
+  ],
+  "ui_metadata": {
+    "positionsByNodeId": {
+      "node_7x0ios0s": {
+        "x": 576,
+        "y": "-426.4217224121094"
+      },
+      "node_rb01bhah": {
+        "x": 560,
+        "y": "-362.2380065917969"
+      },
+      "node_xe8ft8xc": {
+        "x": 560,
+        "y": "-297.2380065917969"
+      },
+      "node_xfjlk6v2": {
+        "x": 560,
+        "y": "-233.05429077148438"
+      },
+      "node_c3wu8zmo": {
+        "x": 560,
+        "y": "-169.0479736328125"
+      }
+    },
+    "uiNodes": [],
+    "dataByNodeId": {
+      "node_7x0ios0s": {},
+      "node_rb01bhah": {},
+      "node_xe8ft8xc": {},
+      "node_xfjlk6v2": {},
+      "node_c3wu8zmo": {}
+    },
+    "dimensionsByNodeId": {},
+    "draft": {}
+  },
+  "updated_at": 1760515183,
+  "version": "draft",
+  "version_stage": "draft",
+  "workflow_type": "chat"
+}
