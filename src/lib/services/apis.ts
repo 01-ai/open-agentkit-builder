@@ -3,7 +3,7 @@ import {
   WorkflowCreateResponse,
   WorkflowDetail,
 } from '@/types/workflow'
-import { Template } from '../types'
+import { SessionInfo, Template } from '../types'
 import axiosInstance from './axios'
 
 export interface User {
@@ -149,4 +149,10 @@ export const updateWorkflow = (
 
 export const deleteWorkflow = (workflow_id: string) => {
   return axiosInstance.delete(`/workflows/${workflow_id}`) as Promise<void>
+}
+
+export const getSession = (ticket: string) => {
+  return axiosInstance.get(
+    `/auth/session?ticket=${ticket}`
+  ) as Promise<SessionInfo>
 }

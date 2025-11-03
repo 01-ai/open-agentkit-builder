@@ -34,6 +34,10 @@ const axiosInstance: AxiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
   (config) => {
     // console.log('Sending request:', config);
+    const access_token = localStorage.getItem('access_token')
+    if (access_token) {
+      config.headers.Authorization = `Bearer ${access_token}`
+    }
     return config
   },
   (error) => {
@@ -114,6 +118,5 @@ axiosInstance.interceptors.response.use(
     return Promise.reject(error)
   }
 )
-
 
 export default axiosInstance
