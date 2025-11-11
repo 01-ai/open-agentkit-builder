@@ -1,10 +1,11 @@
 'use client'
 
+import { AuthGuard } from '@/components/auth-guard'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { generateWorkflowId } from '@/lib/export/export-workflow'
-import { createWorkflow, getWorkflows } from '@/lib/services/apis'
+import { createWorkflow, getWorkflows } from '@/lib/services/workflows'
 import { useAuthStore } from '@/lib/store/auth-store'
 import type { WorkflowDetail } from '@/types/workflow'
 import { IconPlus } from '@tabler/icons-react'
@@ -136,80 +137,67 @@ export default function Page() {
 
   const templates = Object.values(TEMPLATE_METADATA) as Template[]
 
-  // 未初始化或未登录状态
-  if (!isInitialized || !user) {
-    return (
-      <div className="flex items-center justify-center min-h-full">
-        <div className="text-center space-y-4">
-          <div className="text-lg font-medium">Welcome to Agent Builder</div>
-          <p className="text-muted-foreground">
-            Sign in with GitHub to get started
-          </p>
-          <Button size="lg" className="rounded-full">
-            Login with GitHub
+  return (
+    <AuthGuard>
+      <div className="container mx-auto p-8 h-full">
+        <div className="text-lg font-bold">Agent Builder</div>
+        <div className="flex flex-col items-center px-4 py-12 gap-4">
+          <h2 className="text-2xl font-bold">Create a workflow</h2>
+          <p>Build a chat agent workflow with custom logic and tools</p>
+          <Button
+            onClick={handleCreateWorkflow}
+            size="lg"
+            className="mt-4 cursor-pointer rounded-full"
+          >
+            <IconPlus /> Create
           </Button>
         </div>
-      </div>
-    )
-  }
 
-  return (
-    <div className="container mx-auto p-8 h-full">
-      <div className="text-lg font-bold">Agent Builder</div>
-      <div className="flex flex-col items-center px-4 py-12 gap-4">
-        <h2 className="text-2xl font-bold">Create a workflow</h2>
-        <p>Build a chat agent workflow with custom logic and tools</p>
-        <Button
-          onClick={handleCreateWorkflow}
-          size="lg"
-          className="mt-4 cursor-pointer rounded-full"
+        <Tabs
+          value={activeTab}
+          onValueChange={(value) =>
+            setActiveTab(value as 'drafts' | 'templates')
+          }
+          className="w-full"
         >
-          <IconPlus /> Create
-        </Button>
-      </div>
+          <TabsList className="mb-8">
+            <TabsTrigger value="drafts">Drafts</TabsTrigger>
+            <TabsTrigger value="templates">Templates</TabsTrigger>
+          </TabsList>
 
-      <Tabs
-        value={activeTab}
-        onValueChange={(value) => setActiveTab(value as 'drafts' | 'templates')}
-        className="w-full"
-      >
-        <TabsList className="mb-8">
-          <TabsTrigger value="drafts">Drafts</TabsTrigger>
-          <TabsTrigger value="templates">Templates</TabsTrigger>
-        </TabsList>
-
-        <TabsContent value="drafts">
-          {loading ? (
-            <div className="max-w-screen-xl grid grid-cols-1 gap-5 *:data-[slot=card]:shadow-xs @xl/main:grid-cols-2 @5xl/main:grid-cols-3 @7xl/main:grid-cols-4">
-              {Array.from({ length: 4 }).map((_, idx) => (
-                <div
-                  key={idx}
-                  className="@container/card py-0 shadow-2xl rounded-lg overflow-hidden"
-                >
-                  <div className="p-4 space-y-4">
-                    <Skeleton className="h-7 w-7 rounded-md" />
-                    <Skeleton className="h-5 w-24" />
-                    <Skeleton className="h-4 w-32" />
+          <TabsContent value="drafts">
+            {loading ? (
+              <div className="max-w-screen-xl grid grid-cols-1 gap-5 *:data-[slot=card]:shadow-xs @xl/main:grid-cols-2 @5xl/main:grid-cols-3 @7xl/main:grid-cols-4">
+                {Array.from({ length: 4 }).map((_, idx) => (
+                  <div
+                    key={idx}
+                    className="@container/card py-0 shadow-2xl rounded-lg overflow-hidden"
+                  >
+                    <div className="p-4 space-y-4">
+                      <Skeleton className="h-7 w-7 rounded-md" />
+                      <Skeleton className="h-5 w-24" />
+                      <Skeleton className="h-4 w-32" />
+                    </div>
                   </div>
-                </div>
-              ))}
-            </div>
-          ) : workflows.length === 0 ? (
-            <div className="text-center py-12 text-muted-foreground">
-              No workflows yet. Create one or use a template to get started.
-            </div>
-          ) : (
-            <WorkflowCards workflows={workflows} />
-          )}
-        </TabsContent>
+                ))}
+              </div>
+            ) : workflows.length === 0 ? (
+              <div className="text-center py-12 text-muted-foreground">
+                No workflows yet. Create one or use a template to get started.
+              </div>
+            ) : (
+              <WorkflowCards workflows={workflows} />
+            )}
+          </TabsContent>
 
-        <TabsContent value="templates">
-          <TemplateCards
-            templates={templates}
-            onSelectTemplate={createFromTemplate}
-          />
-        </TabsContent>
-      </Tabs>
-    </div>
+          <TabsContent value="templates">
+            <TemplateCards
+              templates={templates}
+              onSelectTemplate={createFromTemplate}
+            />
+          </TabsContent>
+        </Tabs>
+      </div>
+    </AuthGuard>
   )
 }

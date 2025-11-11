@@ -1,5 +1,7 @@
 import { create } from 'zustand'
-import { getCurrentUser, getSession, User } from '../services/apis'
+import { devtools } from 'zustand/middleware'
+import { getCurrentUser, getSession, logout } from '../services'
+import { User } from '../types'
 
 interface AuthState {
   user: User | null
@@ -20,52 +22,86 @@ const getTicketFromUrl = (): string | null => {
   return searchParams.get('ticket')
 }
 
-export const useAuthStore = create<AuthState>((set) => ({
-  user: null,
-  isLoading: true,
-  isInitialized: false,
+// Helper function to get token from localStorage
+const getTokenFromStorage = (): string | null => {
+  if (typeof localStorage === 'undefined') return null
+  return localStorage.getItem('access_token')
+}
 
-  setUser: (user) => set({ user }),
-  setIsLoading: (isLoading) => set({ isLoading }),
-  setIsInitialized: (isInitialized) => set({ isInitialized }),
+// Helper function to clear token from localStorage
+const clearToken = (): void => {
+  if (typeof localStorage !== 'undefined') {
+    localStorage.removeItem('access_token')
+  }
+  if (typeof window !== 'undefined') {
+    document.cookie =
+      'sb-access-token=; path=/; domain=.lingyiwanwu.com; expires=Thu, 01 Jan 1970 00:00:00 UTC;'
+  }
+}
 
-  fetchUser: async () => {
-    set({ isLoading: true })
-    try {
-      let user: User | null = null
-      const ticket = getTicketFromUrl()
+export const useAuthStore = create<AuthState, [['zustand/devtools', never]]>(
+  devtools((set, get) => ({
+    user: null,
+    isLoading: false,
+    isInitialized: false,
 
-      if (ticket) {
-        // If ticket is present in URL, use getSession instead
-        try {
-          const response = await getSession(ticket)
-          if (response.access_token) {
-            localStorage.setItem('access_token', response.access_token)
-            // Remove ticket from URL after successful authentication
-            window.history.replaceState({}, '', window.location.pathname)
-            user = await getCurrentUser()
+    setUser: (user) => set({ user }),
+    setIsLoading: (isLoading) => set({ isLoading }),
+    setIsInitialized: (isInitialized) => set({ isInitialized }),
+
+    fetchUser: async () => {
+      set({ isLoading: true })
+      try {
+        let token = getTokenFromStorage()
+        const ticket = getTicketFromUrl()
+
+        // Step 1: If ticket exists in URL, exchange it for token
+        if (ticket) {
+          try {
+            const response = await getSession(ticket)
+            if (response.access_token) {
+              token = response.access_token
+              localStorage.setItem('access_token', token!)
+              // Remove ticket from URL after successful exchange
+              window.history.replaceState({}, '', window.location.pathname)
+            }
+          } catch (error) {
+            console.error('Failed to exchange ticket for token:', error)
+            token = null
+          } finally {
+            set({ isLoading: false })
           }
-        } catch (error) {
-          console.error('Failed to get session with ticket:', error)
-          // Fallback to regular authentication
-          user = await getCurrentUser()
         }
-      } else {
-        console.log('no ticket')
-        // Regular authentication flow
-        user = await getCurrentUser()
+
+        // Step 2: If token exists, try to fetch user information
+        if (token) {
+          try {
+            const user = await getCurrentUser()
+            set({ user, isInitialized: true })
+          } catch (error) {
+            console.error('Failed to fetch user:', error)
+            // Clear token if user fetch fails
+            clearToken()
+            set({ user: null, isInitialized: true })
+          } finally {
+            set({ isLoading: false })
+          }
+        } else {
+          // Step 3: No token available, mark user as not logged in
+          set({ user: null, isInitialized: true, isLoading: false })
+        }
+      } catch (error) {
+        console.error('Error in fetchUser:', error)
+        set({ user: null, isInitialized: true })
+      } finally {
+        set({ isLoading: false })
       }
+    },
 
-      set({ user, isInitialized: true })
-    } catch (error) {
-      console.error('Failed to fetch user:', error)
-      set({ user: null, isInitialized: true })
-    } finally {
-      set({ isLoading: false })
-    }
-  },
-
-  logout: () => {
-    set({ user: null })
-  },
-}))
+    logout: async () => {
+      await logout()
+      clearToken()
+      set({ user: null })
+    },
+  }))
+)

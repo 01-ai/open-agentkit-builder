@@ -2,21 +2,6 @@ import axios, { type AxiosInstance, type AxiosResponse } from 'axios'
 
 import { toast } from 'sonner'
 
-/**
- * Flag to prevent multiple concurrent 401 redirects to login page.
- *
- * When multiple API requests fail with 401 simultaneously, each error interceptor
- * would execute window.location.href = "/login" independently, causing:
- * - Race conditions
- * - Multiple redirects (though only one takes effect)
- * - Unpredictable state changes
- *
- * Solution: Use a flag to ensure only the first 401 response triggers the redirect.
- * This flag is set to true when redirecting and never reset, as the page will
- * navigate away anyway.
- */
-let isRedirectingToLogin = false
-
 // Create axios instance
 const axiosInstance: AxiosInstance = axios.create({
   // baseURL: import.meta.env.VITE_API_BASE_URL,
@@ -27,7 +12,7 @@ const axiosInstance: AxiosInstance = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
-  withCredentials: true,
+  // withCredentials: true,
 })
 
 // Request interceptor
@@ -59,10 +44,10 @@ axiosInstance.interceptors.response.use(
 
     const data = response.data
 
-    if (data.code && data.data?.redirect_url && data.code === 10001) {
-      window.location.href = data.data.redirect_url
-      return
-    }
+    // if (data.code && data.data?.redirect_url && data.code === 10001) {
+    //   window.location.href = data.data.redirect_url
+    //   return
+    // }
     if (data.code === 200) {
       return data.data
     } else {
@@ -79,11 +64,7 @@ axiosInstance.interceptors.response.use(
         case 401:
           // Check if we're already redirecting to prevent race conditions
           // when multiple requests fail with 401 simultaneously
-          if (!isRedirectingToLogin) {
-            isRedirectingToLogin = true
-            localStorage.removeItem('token')
-            window.location.href = '/login'
-          }
+
           break
         case 403:
           toast.error('No permission to access this resource')

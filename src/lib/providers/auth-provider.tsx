@@ -4,14 +4,13 @@ import { useAuthStore } from '@/lib/store/auth-store'
 import { useEffect } from 'react'
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const fetchUser = useAuthStore((state) => state.fetchUser)
-  const isInitialized = useAuthStore((state) => state.isInitialized)
+  const { isInitialized, isLoading, fetchUser } = useAuthStore()
 
   useEffect(() => {
-    if (!isInitialized) {
+    if (!isInitialized && !isLoading) {
       fetchUser()
     }
-  }, [isInitialized, fetchUser])
+  }, [isInitialized, isLoading, fetchUser])
 
   return <>{children}</>
 }

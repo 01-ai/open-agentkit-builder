@@ -3,7 +3,6 @@
 import {
   IconCreditCard,
   IconDotsVertical,
-  IconLogin,
   IconLogout,
   IconMoon,
   IconNotification,
@@ -14,7 +13,6 @@ import { useTheme } from 'next-themes'
 import * as React from 'react'
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -31,56 +29,26 @@ import {
   useSidebar,
 } from '@/components/ui/sidebar'
 import { useAuthStore } from '@/lib/store/auth-store'
+import { useRouter } from 'next/navigation'
 
 export function NavUser() {
   const { isMobile } = useSidebar()
-  const { user, isLoading, logout, fetchUser } = useAuthStore()
+  const { user, logout } = useAuthStore()
   const { theme, setTheme } = useTheme()
   const [mounted, setMounted] = React.useState(false)
-
+  const router = useRouter()
   React.useEffect(() => {
     setMounted(true)
   }, [])
 
-  const user_id = user?.user_id
-
-  async function handleLogin() {
-    console.log('handleLogin')
-  }
-
   async function handleLogout() {
-    console.log('handleLogout')
-  }
-
-  if (isLoading) {
-    return (
-      <SidebarMenu>
-        <SidebarMenuItem>
-          <div className="px-2 py-1.5 text-xs text-muted-foreground">
-            Loading...
-          </div>
-        </SidebarMenuItem>
-      </SidebarMenu>
-    )
+    await logout()
+    router.push('/')
   }
 
   // 未登录状态
   if (!user) {
-    return (
-      <SidebarMenu>
-        <SidebarMenuItem>
-          <Button
-            onClick={handleLogin}
-            variant="outline"
-            size="sm"
-            className="w-full justify-start"
-          >
-            <IconLogin className="mr-2 h-4 w-4" />
-            Login with GitHub
-          </Button>
-        </SidebarMenuItem>
-      </SidebarMenu>
-    )
+    return null
   }
 
   // 已登录状态

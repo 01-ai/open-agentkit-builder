@@ -38,3 +38,20 @@ export interface UserMetadata {
   sub: string
   user_name: string
 }
+
+export interface User {
+  user_id: string
+  email: string
+  user_name: string
+  create_time: string
+  update_time: string
+  // Legacy fields for compatibility
+  id?: number
+  username?: string
+  avatar_url?: string
+  name?: string
+}
+
+export interface LoginResponse {
+  redirect_url?: string
+}

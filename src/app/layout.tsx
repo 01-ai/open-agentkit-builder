@@ -1,5 +1,6 @@
 import { Toaster } from '@/components/ui/sonner'
 import { AuthProvider } from '@/lib/providers/auth-provider'
+import { LoginDialogProvider } from '@/lib/providers/login-dialog-provider'
 import type { Metadata } from 'next'
 import { ThemeProvider } from 'next-themes'
 import { Geist, Geist_Mono } from 'next/font/google'
@@ -51,7 +52,9 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <AuthProvider>{children}</AuthProvider>
+          <AuthProvider>
+            <LoginDialogProvider>{children}</LoginDialogProvider>
+          </AuthProvider>
           <Toaster />
         </ThemeProvider>
       </body>

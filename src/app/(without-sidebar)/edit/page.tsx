@@ -26,7 +26,7 @@ import {
   deleteWorkflow,
   getWorkflow,
   updateWorkflow,
-} from '@/lib/services/apis'
+} from '@/lib/services/workflows'
 import { useAuthStore } from '@/lib/store/auth-store'
 import { Workflow } from '@/types/workflow'
 import {
